@@ -143,10 +143,29 @@ header .uk-active {
 .uk-sticky .logo-color {
   display: none;
 }
+
+.curly-overlay-header {
+  position: relative;
+}
+
+.curly-overlay-header::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 100%;
+  height: 380px;
+  background-image: url('./img/path-header.png');
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  display: block;
+  bottom: -2px;
+}
 .nav .uk-subnav li a {
   color: #FFFFFF;
 }
-
+.curly-overlay-header .header-center-content{
+  height: 620px;
+}
 .nav ul li a {
   color: #FFFFFF;
   font-family: 'Anton';
@@ -163,6 +182,26 @@ header .uk-active {
 
 .uk-sticky.uk-active div .nav ul li a:hover {
   color: #F6A431 !important;
+}
+.header-min-height{
+  min-height: 200px;
+}
+.typing{
+  position: relative;
+}
+.typing::after{ 
+    position: absolute;
+    bottom: 2px;    
+    animation: blink .3s infinite;
+    background-color: #F6A431;
+    content: "";
+    height: 5rem;
+    width: 1rem; 
+    margin-left: 10px;
+}
+@keyframes blink {
+  from { opacity: 0; }
+  to { opacity: .8; }
 }
 
 @media only screen and (min-width:1440px) {
@@ -280,7 +319,7 @@ h1, .uk-h1 {
   bottom: 18px;
 }
 
-p {
+p, li {
   font-size: 18px;
   font-weight: 300;
   font-family: 'Outfit';
@@ -291,6 +330,22 @@ p {
 }
 .uk-light {
   color:#FFFFFF !important;
+}
+/* List */
+.check-list > *{
+  position: relative;
+  margin-bottom: 15px;
+}
+.check-list > ::before{
+  content: "\f00c";
+  position: relative;
+  font-weight: 900;
+  font-family: 'Font Awesome 6 Free';
+  line-height: inherit;
+  color: #F6A431;
+  top: 0;
+  left:0;
+  margin-right: 15px;
 }
 /* Button */
 

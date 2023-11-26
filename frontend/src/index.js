@@ -10,6 +10,9 @@ import Navbar from "./components/nav"
 import ReportPage from "./pages/ReportPage"
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NoPage from './pages/NoPage';
+import AboutUs from './pages/AboutUs';
+
+
 
 const navList = [
     {
@@ -22,24 +25,22 @@ const navList = [
     },
     {
         name: 'About Us',
-        url: '/aboutus',
+        url: '/about-us',
     },
-    {
-        name: 'Blog',
-        url: '/blog',
-    }
 
 ]
 function Template() {
     return ( 
         <>
-        {/* <App /> */}
-        <Navbar items={navList}/>
+        {/* <App /> 
+        <Navbar items={navList}/>*/}
+        
         <BrowserRouter>
             <Routes>
                 <Route index path="/" element={<App></App>}></Route>
                 <Route path="*" element={<NoPage></NoPage>}></Route>
                 <Route path="/Report" element={<ReportPage></ReportPage>}></Route>
+                <Route path="/about-us" element={<AboutUs></AboutUs>}></Route>
             </Routes>
         </BrowserRouter>
         <Footer />
@@ -48,5 +49,5 @@ function Template() {
   }
 
 
-// ReactDOM.render(<Navbar items={navList}/>, document.getElementById("header"));
+ReactDOM.render(<Navbar items={navList}/>, document.getElementById("header"));
 ReactDOM.render(<Template />, document.getElementById("root"));
