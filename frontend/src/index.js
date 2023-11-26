@@ -10,6 +10,7 @@ import Navbar from "./components/nav"
 import ReportPage from "./pages/ReportPage"
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NoPage from './pages/NoPage';
+import HateSpeechPage from "./pages/HateSpeechPage";
 
 const navList = [
     {
@@ -17,8 +18,8 @@ const navList = [
         url: '/report',
     },
     {
-        name: 'Hatespeech',
-        url: '/hatespeech',
+        name: 'Hate Speech',
+        url: '/hateSpeech',
     },
     {
         name: 'About Us',
@@ -40,6 +41,7 @@ function Template() {
                 <Route index path="/" element={<App></App>}></Route>
                 <Route path="*" element={<NoPage></NoPage>}></Route>
                 <Route path="/Report" element={<ReportPage></ReportPage>}></Route>
+                <Route path="/HateSpeech" element={<HateSpeechPage></HateSpeechPage>}></Route>
             </Routes>
         </BrowserRouter>
         <Footer />
