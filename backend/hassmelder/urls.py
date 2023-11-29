@@ -5,7 +5,8 @@ from apps.report import views as viewReport
 
 urlpatterns = [
     path('', viewIndex.index, name='index'),
-    path('report/', viewReport.report, name='report'),
+    path('report/', viewReport.post_report, name='report'),
     path('dashboard/', include('dashboard.urls')),
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls'))
 ]

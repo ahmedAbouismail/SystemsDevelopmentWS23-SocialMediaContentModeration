@@ -9,13 +9,13 @@ class Platform(models.Model):
                  (FACEBOOK, 'Facebook'),
                  (INSTAGRAM, "Instagrm"),
                   (REDDIT, "Rddit")]
-    platfrom_name = models.CharField(max_length=255, unique=True, choices=Platforms)
+    platform_name = models.CharField(max_length=255, unique=True, choices=Platforms)
 
-    #class Meta:
-      #  app_label = 'default_db'
+    # class Meta:
+    #    app_label = 'db_platform'
 
     def __str__(self) -> str:
-        return self.plattfrom_name
+        return self.platform_name
 
 class Label(models.Model):
     label_name = models.CharField(max_length= 255)
@@ -26,7 +26,7 @@ class Label(models.Model):
     def __str__(self) -> str:
         return self.label_name
     
-class ClassifierRespoonse(models.Model):
+class ClassifierResponse(models.Model):
     Label = models.ForeignKey(Label, on_delete=models.SET_NULL, null=True)
     timestamp = models.DateTimeField().auto_created
 
@@ -43,7 +43,7 @@ class Post(models.Model):
     post_image = models.CharField(max_length=1024, blank=True, null=True)
     user_prediction = models.CharField(max_length=255)
     platform = models.ForeignKey(Platform, on_delete=models.SET_NULL, null=True)
-    classifier_response = models.ForeignKey(ClassifierRespoonse, on_delete=models.SET_NULL, null=True)
+    classifier_response = models.ForeignKey(ClassifierResponse, on_delete=models.SET_NULL, null=True)
     timestamp = models.DateTimeField().auto_created
 
     #class Meta:
