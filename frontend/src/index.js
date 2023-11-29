@@ -13,6 +13,7 @@ import NoPage from './pages/NoPage';
 import AboutUs from './pages/AboutUs';
 
 
+import HateSpeechPage from "./pages/HateSpeechPage";
 
 const navList = [
     {
@@ -20,8 +21,8 @@ const navList = [
         url: '/report',
     },
     {
-        name: 'Hatespeech',
-        url: '/hatespeech',
+        name: 'Hate Speech',
+        url: '/hateSpeech',
     },
     {
         name: 'About Us',
@@ -41,6 +42,7 @@ function Template() {
                 <Route path="*" element={<NoPage></NoPage>}></Route>
                 <Route path="/Report" element={<ReportPage></ReportPage>}></Route>
                 <Route path="/about-us" element={<AboutUs></AboutUs>}></Route>
+                <Route path="/HateSpeech" element={<HateSpeechPage></HateSpeechPage>}></Route>
             </Routes>
         </BrowserRouter>
         <Footer />
