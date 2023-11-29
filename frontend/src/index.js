@@ -9,8 +9,10 @@ import Footer from "./components/footer"
 import Navbar from "./components/nav"
 import ReportPage from "./pages/ReportPage"
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import NoPage from './pages/NoPage';
+import NotFoundPage from './pages/NoPage';
 import AboutUs from './pages/AboutUs';
+import YesPage from './pages/HSResponsePage';
+import NoPage from './pages/NoHSReponsePage';
 
 
 import HateSpeechPage from "./pages/HateSpeechPage";
@@ -36,10 +38,12 @@ function Template() {
         <BrowserRouter>
             <Routes>
                 <Route index path="/" element={<App></App>}></Route>
-                <Route path="*" element={<NoPage></NoPage>}></Route>
-                <Route path="/Report" element={<ReportPage></ReportPage>}></Route>
+                <Route path="*" element={<NotFoundPage></NotFoundPage>}></Route>
+                <Route path="/report" element={<ReportPage></ReportPage>}></Route>
                 <Route path="/about-us" element={<AboutUs></AboutUs>}></Route>
                 <Route path="/hate-speech" element={<HateSpeechPage></HateSpeechPage>}></Route>
+                <Route path="/hate-speech=true" element={<YesPage></YesPage>}></Route>
+                <Route path="/hate-speech=false" element={<NoPage></NoPage>}></Route>
             </Routes>
         </BrowserRouter>
         <Footer />
