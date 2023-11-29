@@ -19,11 +19,16 @@ const mainSliderItems = [
     }
 
 ]
+const heroTextTyping = [
+    'United Against Hate, Mute the Dissonance',
+    'Stand for Respect, Speak Against Hate.',
+    'Erase Hate, Embrace Unity.'
+  ]
 class App extends Component {
     state = {}
     render() {
         return <>
-            <HeroImage image="phone-women.png" alt="" text="United Against Hate, Mute the Dissonance!" buttonName="Report hate speech now!" buttonURL="#" />
+            <HeroImage image="phone-women.png" alt="" text={heroTextTyping} buttonName="Report hate speech now!" buttonURL="#" />
 
             <div className="uk-container">
                 <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@m uk-flex uk-flex-center uk-flex-middle" data-uk-grid>
@@ -46,7 +51,6 @@ class App extends Component {
                     </div>
                 </div>
             </div>
-
             <div className="background-pfad-left">
                 <div className="uk-container">
                     <div>
@@ -60,21 +64,21 @@ class App extends Component {
                                 <h3 className="uk-h1">Lorem ipsum dolor sit amet.</h3>
                                 <p>Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
                             </div>
-                                <textarea className='uk-textarea uk-border-rounded uk-box-shadow-medium uk-padding textarea-report' rows={10} placeholder="Enter text here .. "></textarea>
-                                <p className="uk-h4">How would you classify this content?</p>
-                                <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                                    <label><input className="uk-checkbox" type="checkbox" /> violence & murder</label>
-                                    <label><input className="uk-checkbox" type="checkbox" /> racist or sexist stereotyping</label>
-                                    <label><input className="uk-checkbox" type="checkbox" /> discriminatory</label>
-                                    <label><input className="uk-checkbox" type="checkbox" /> dehumanization</label>
-                                </div>
-                                <p className="uk-h4">What is the source of this text?</p>
-                                <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid uk-form-controls uk-form-controls-text">
-                                    <label><input className="uk-checkbox" type="radio" name="radio" /> Facebook</label>
-                                    <label><input className="uk-checkbox" type="radio" name="radio" /> Instagram</label>
-                                    <label><input className="uk-checkbox" type="radio" name="radio" /> Reddit</label>
-                                    <label><input className="uk-checkbox" type="radio" name="radio" /> X</label>
-                                </div>
+                            <textarea className='uk-textarea uk-border-rounded uk-box-shadow-medium uk-padding textarea-report' rows={10} placeholder="Enter text here .. "></textarea>
+                            <p className="uk-h4">How would you classify this content?</p>
+                            <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                                <label><input className="uk-checkbox" type="checkbox" /> violence & murder</label>
+                                <label><input className="uk-checkbox" type="checkbox" /> racist or sexist stereotyping</label>
+                                <label><input className="uk-checkbox" type="checkbox" /> discriminatory</label>
+                                <label><input className="uk-checkbox" type="checkbox" /> dehumanization</label>
+                            </div>
+                            <p className="uk-h4">What is the source of this text?</p>
+                            <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid uk-form-controls uk-form-controls-text">
+                                <label><input className="uk-checkbox" type="radio" name="radio" /> Facebook</label>
+                                <label><input className="uk-checkbox" type="radio" name="radio" /> Instagram</label>
+                                <label><input className="uk-checkbox" type="radio" name="radio" /> Reddit</label>
+                                <label><input className="uk-checkbox" type="radio" name="radio" /> X</label>
+                            </div>
                             <div>
                                 <a className="uk-button uk-button-secondary" href="#">Send</a>
                             </div>
@@ -87,58 +91,52 @@ class App extends Component {
                     </div>
                 </div>
             </div>
-
-            <div className="uk-container">
-                <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@m" data-uk-grid>
-                    <div>
-                        <div className="uk-border-rounded uk-box-shadow-medium uk-padding">
-                            <form>
-                                <fieldset className="uk-fieldset">
-                                    <div className="uk-margin">
-                                        <input
-                                            className="uk-input"
-                                            type="text"
-                                            placeholder="Link of Source"
-                                            aria-label="Link"
-                                        />
-                                    </div>
-                                    <div className="uk-margin">
-                                        <input
-                                            className="uk-input"
-                                            type="text"
-                                            placeholder="Name"
-                                            aria-label="Name"
-                                        />
-                                    </div>
-                                    <div className="uk-margin">
-                                        <input
-                                            className="uk-input"
-                                            type="text"
-                                            placeholder="E-Mail"
-                                            aria-label="E-Mail"
-                                        />
-                                    </div>
-                                    <div>
-                                        <a className="uk-button uk-button-secondary" href="#">
-                                            Send
-                                        </a>
-                                    </div>
-                                </fieldset>
-                            </form>
+            <div>
+                <div className="uk-container">
+                    <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@m" data-uk-grid>
+                        <div>
+                            <div className="uk-border-rounded uk-box-shadow-medium uk-padding">
+                                <form>
+                                    <fieldset className="uk-fieldset">
+                                        <div className="uk-margin">
+                                            <input
+                                                className="uk-input"
+                                                type="text"
+                                                placeholder="Link of Source"
+                                                aria-label="Link"
+                                            />
+                                        </div>
+                                        <div className="uk-margin">
+                                            <input
+                                                className="uk-input"
+                                                type="text"
+                                                placeholder="Name"
+                                                aria-label="Name"
+                                            />
+                                        </div>
+                                        <div className="uk-margin">
+                                            <input
+                                                className="uk-input"
+                                                type="text"
+                                                placeholder="E-Mail"
+                                                aria-label="E-Mail"
+                                            />
+                                        </div>
+                                        <div>
+                                            <a className="uk-button uk-button-secondary" href="#">
+                                                Send
+                                            </a>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                        <div>
+                            <p className="small-title-left">Send Link</p>
+                            <h3 className="uk-h1">Donec vitae sapien ut libero venenatis</h3>
+                            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
                         </div>
                     </div>
-                    <div>
-                        <p className="small-title-left">Send Link</p>
-                        <h3 className="uk-h1">Donec vitae sapien ut libero venenatis</h3>
-                        <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
-                    </div>
-                </div>
-            </div>
-            <div className="background-pfad-right">
-                <div className="uk-container blog-expected-height">
-                    <p className="small-title-center">Unser Blog</p>
-                    <h3 className="uk-h1 uk-text-center">Vivamus elementum semper</h3>
-                    <p className="uk-h1 uk-text-center">TODO BLOG</p>
                 </div>
             </div>
             <div className="uk-container">

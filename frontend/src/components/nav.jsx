@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
+import { useLocation } from 'react-router-dom';
 
 class Navbar extends Component {
     state = {}
     render() {
         const { items } = this.props;
-        console.log(items);
+        const isIndexPage = window.location.pathname === '/';
         return <>
             <div uk-sticky="top: 120; animation: uk-animation-slide-top; " className="uk-sticky">
                 <div className="uk-container">
                     
                     <div data-uk-grid className="uk-flex uk-flex-middle uk-padding uk-padding-remove-horizontal">
                         <div className="uk-width-2-3 uk-width-1-4@m logo-header uk-first-column">
-                            <a className="uk-display-inline-block" href="/"><img data-uk-svg class="logo-white" src="./assets/img/nohatenet-color-logo.svg"/><img data-uk-svg class="logo-color" src="./assets/img/logo-transparent.svg" width="400" height="auto"/></a>
+                            <a className="uk-display-inline-block" href="/">{
+                            isIndexPage ? (
+                                <img data-uk-svg className="logo-white" src="./assets/img/logo/nohatenet-color-logo.svg"/>
+                            ) :(
+                                <img className="logo-white" src="./assets/img/logo/white-blue.png" width="400" height="auto"/>
+                            )}    
+                            <img data-uk-svg className="logo-color" src="./assets/img/logo/nohatenet-color-logo.svg"/>               
+                               
+                            </a>
                         </div>
                         <div className="uk-width-1-3 uk-width-3-4@m">
                             <nav className="nav">

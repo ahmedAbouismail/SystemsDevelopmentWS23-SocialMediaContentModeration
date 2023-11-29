@@ -8,7 +8,7 @@ class Footer extends Component {
                     <div data-uk-grid className="uk-grid-large">
                         <div className="uk-width-1-6@m uk-width-1-4@l uk-flex uk-flex-center uk-flex-left@m logo-bottom uk-first-column">
                             <div className="footer-logo">
-                                <a href="#"><img data-uk-svg src="./assets/img/nohatenet-color-whiteicon-yellowfont.svg" width="400" height="auto" /></a>
+                                <a href="#"><img data-uk-svg src="./assets/img/logo/nohatenet-color-whiteicon-yellowfont.svg" width="400" height="auto" /></a>
                             </div>
                         </div>
                         <div className="uk-width-1-4@l uk-width-1-6@m ">
