@@ -22,7 +22,7 @@ const navList = [
     },
     {
         name: 'Hate Speech',
-        url: '/hateSpeech',
+        url: '/hate-speech',
     },
     {
         name: 'About Us',
@@ -32,17 +32,14 @@ const navList = [
 ]
 function Template() {
     return ( 
-        <>
-        {/* <App /> 
-        <Navbar items={navList}/>*/}
-        
+        <>        
         <BrowserRouter>
             <Routes>
                 <Route index path="/" element={<App></App>}></Route>
                 <Route path="*" element={<NoPage></NoPage>}></Route>
                 <Route path="/Report" element={<ReportPage></ReportPage>}></Route>
                 <Route path="/about-us" element={<AboutUs></AboutUs>}></Route>
-                <Route path="/HateSpeech" element={<HateSpeechPage></HateSpeechPage>}></Route>
+                <Route path="/hate-speech" element={<HateSpeechPage></HateSpeechPage>}></Route>
             </Routes>
         </BrowserRouter>
         <Footer />

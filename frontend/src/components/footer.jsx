@@ -13,7 +13,7 @@ class Footer extends Component {
                         </div>
                         <div className="uk-width-1-4@l uk-width-1-6@m ">
                             <h4 className="uk-text-center uk-text-left@m">Stop Hate Speech</h4>
-                            <p className="uk-text-center uk-text-left@m">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+                            <p className="uk-text-center uk-text-left@m">Join us in building a safer, more inclusive internet for all.</p>
                         </div>
                         <div className="uk-width-1-4@l uk-width-1-3@m">
                             <h4 className="uk-text-center uk-text-left@m">Contact us</h4>
