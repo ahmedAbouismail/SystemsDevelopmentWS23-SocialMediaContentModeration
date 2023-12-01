@@ -50,6 +50,13 @@ function Template() {
     );
   }
 
+  function SendReportButton() {
+    const sendReport = () => {
+        // Redirect to the Django login URL
+        window.location.href = 'http://localhost:8000/report/'; // Replace with your Django login URL
+    };
+  }
+
 
 ReactDOM.render(<Navbar items={navList}/>, document.getElementById("header"));
 ReactDOM.render(<Template />, document.getElementById("root"));
