@@ -52,11 +52,17 @@ function Template() {
 
   function SendReportButton() {
     const sendReport = () => {
-        // Redirect to the Django login URL
-        window.location.href = 'http://localhost:8000/report/'; // Replace with your Django login URL
-    };
-  }
 
+        //TODO Create JSON file with data and send post request to following URL
+        window.location.href = 'http://localhost:8000/report'; 
+    };
+
+    return (
+        <button onClick={sendReport} className="uk-button uk-button-secondary">Send</button>
+    );
+}
+
+export default SendReportButton;
 
 ReactDOM.render(<Navbar items={navList}/>, document.getElementById("header"));
 ReactDOM.render(<Template />, document.getElementById("root"));

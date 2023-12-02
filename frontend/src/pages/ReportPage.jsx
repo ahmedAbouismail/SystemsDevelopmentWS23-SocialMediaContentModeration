@@ -1,6 +1,6 @@
 import { React, Component } from 'react'
 import HeroJustText from '../components/hero-just-text';
-
+import SendReportButton from '..';
 
 class ReportPage extends Component {
     state = {}
@@ -45,7 +45,8 @@ class ReportPage extends Component {
                                     <label><input className="uk-checkbox" type="radio" name="radio" /> X</label>
                                 </div>
                                 <div>
-                                    <a className="uk-button uk-button-secondary" href={sendReport}>Send</a>
+                                    {/* <a className="uk-button uk-button-secondary" href={sendReport}>Send</a> */}
+                                    <SendReportButton ></SendReportButton>
                                 </div>
                             </div>
                             <div>
