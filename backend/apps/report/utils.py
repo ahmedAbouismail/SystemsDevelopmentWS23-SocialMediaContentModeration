@@ -5,13 +5,16 @@ from django.shortcuts import render
 from PIL import Image
 import io
 import uuid
-import base64
+import os
 
-
+current_directory = os.path.dirname(os.path.abspath(__file__))
+relative_path_to_config = '..\..\..\config.ini'
+config_file_path = os.path.join(current_directory, relative_path_to_config)
+print(config_file_path)
 
 def UploadImageToMinio(request_image):
     config = configparser.ConfigParser(allow_no_value=True)
-    config.read(r'C:\Users\INKA Research Group\Documents\Uni\Master\2.Semester\SnF\Repo2\systemsdevelopmentws23-socialmediacontentmoderation\config.ini')
+    config.read(config_file_path)
     # #Upload to minio and get url
     minio_client = Minio(
         config.get("minio","endpoint"),
@@ -46,7 +49,7 @@ def UploadImageToMinio(request_image):
 
 def GetImageFromMinio(id: str):
     config = configparser.ConfigParser(allow_no_value=True)
-    config.read(r'C:\Users\INKA Research Group\Documents\Uni\Master\2.Semester\SnF\Repo2\systemsdevelopmentws23-socialmediacontentmoderation\config.ini')
+    config.read(config_file_path)
     # #Upload to minio and get url
     minio_client = Minio(
         config.get("minio","endpoint"),
