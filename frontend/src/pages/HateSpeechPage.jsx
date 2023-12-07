@@ -10,7 +10,7 @@ class HateSpeechPage extends Component {
             <div className="background-pfad-left">
                 <div className="uk-container">
                     <div
-                        className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@m"
+                        className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@l"
                         data-uk-grid
                     >
                         <div>
@@ -98,7 +98,7 @@ class HateSpeechPage extends Component {
                                 </ul>
                             </div>
                         </div>
-                        <div>
+                        <div className="uk-flex-first uk-flex-last@l">
                             <div className="uk-box-shadow-medium uk-border-rounded uk-background-default">
                                 <img
                                     src={"/assets/img/smartphone-with-text.png"}
@@ -109,7 +109,7 @@ class HateSpeechPage extends Component {
                         </div>
                     </div>
                     <div
-                        className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@m"
+                        className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@l"
                         data-uk-grid
                     >
                         <div>

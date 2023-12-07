@@ -9,7 +9,7 @@ class CardsImageSmall extends Component {
                 <div className="uk-card uk-box-shadow-medium uk-border-rounded  uk-background-default uk-flex uk-flex-center">
                     <div className="uk-padding">
                         <div className="icon uk-text-center uk-margin-small-bottom">
-                            <img src={"/assets/img/partners/" + this.props.image} alt={this.props.alt} />
+                            <img src={"/assets/img/" + this.props.image} alt={this.props.alt} />
                         </div>
                         <div className="text uk-text-center"><p>{this.props.name}</p></div>
                     </div>

@@ -20,7 +20,7 @@ class ReportPage extends Component {
                                 <a className="uk-button uk-button-secondary uk-margin-left" href="#">Share Link</a>
                             </div>
                         </div>
-                        <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@m" data-uk-grid>
+                        <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@l" data-uk-grid>
                             <div>
                                 <div>
                                     <p className="small-title-left">Submit a Text</p>
@@ -47,8 +47,8 @@ class ReportPage extends Component {
                                     <a className="uk-button uk-button-secondary" href="#">Send</a>
                                 </div>
                             </div>
-                            <div>
-                                <div className="uk-box-shadow-medium uk-border-rounded uk-background-default">
+                            <div class="uk-flex-first uk-flex-last@l">
+                                <div className="uk-box-shadow-medium uk-border-rounded uk-background-default responsive-image-height-m">
                                     <img src={"/assets/img/hands-with-smarthphone.jpg"} className="uk-border-rounded" alt="Mann melde Post" />
                                 </div>
                             </div>
@@ -58,7 +58,7 @@ class ReportPage extends Component {
 
                 <div>
                 <div className="uk-container">
-                    <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@m" data-uk-grid>
+                    <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@l" data-uk-grid>
                         <div>
                             <div className="uk-border-rounded uk-box-shadow-medium uk-padding">
                                 <form>
@@ -96,7 +96,7 @@ class ReportPage extends Component {
                                 </form>
                             </div>
                         </div>
-                        <div>
+                        <div className='uk-flex-first uk-flex-last@l'>
                             <p className="small-title-left">Send a Link</p>
                             <h3 className="uk-h1">Share the origin of harmful content</h3>
                             <p>Empower our mission by providing the link to suspected hate speech. Your input is invaluable in our commitment to swiftly address and eradicate harmful content, creating a safer digital space for all."</p>
