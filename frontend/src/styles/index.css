@@ -178,8 +178,14 @@ header .uk-active {
 .nav ul li a:hover {
   color: #1F2041;
 }
-
-
+.offcanvas ul li a{
+  font-family: 'Outfit';
+  color:white;
+}
+.offcanvas ul li a:hover{
+  font-family: 'Outfit';
+  color:#1F2041;
+}
 .uk-sticky.uk-active div .nav ul li a:hover {
   color: #F6A431 !important;
 }
@@ -217,7 +223,9 @@ header .uk-active {
   }
 }
 
-
+.open-offcanvas{
+  transition: all .3s ease-in-out;
+}
 /**** Body ****/
 html, body {
   overflow-x: hidden;
@@ -488,4 +496,111 @@ label {
 
 .footer-logo {
   margin: 35px 0px;
+}
+@media only screen and (max-width:1440px){
+  .header-center-container{
+    margin-top:150px !important;
+  }
+}
+@media only screen and (max-width:1200px){
+  .footer .uk-container {
+    margin-top: 180px;
+  }
+
+}
+/** Responsive **/
+@media only screen and (max-width:1200px) and (min-width:961px){
+  .background-path-secondary::before{
+    background-size: 90% 65% !important;
+  }
+  .background-path-secondary .uk-container{
+    margin-top: 90px;
+  }
+  .header-center-content p{
+    font-size: 50px;
+  }
+}
+@media only screen and (max-width:960px){
+  .header-center-content p, h1, .uk-h1{
+    font-size: 40px;
+  }
+  .logo-white, .logo-color{
+    max-width: 50%;
+  }
+  .background-path-secondary::before{
+    background-size: 90% 50% !important;
+  }
+  .header-center-container {
+    margin-top: 120px !important;
+  }
+  .small-title-left, .small-title-center{
+    font-size: 24px;
+  }
+  .main-menu-mobile a svg{
+    width: 30px;
+    height: auto;
+  }
+  .main-menu-mobile a svg path{
+    fill: #1F2041;
+  }
+  .main-menu-mobile a svg path:hover{
+    /*fill: #F6A431;*/
+  }
+}
+
+@media only screen and (min-width:961px)  and (max-width:1200px){
+  .responsive-image-height-m{
+    height: 500px;
+    overflow: hidden;
+  }
+}
+@media only screen and (max-width:960px) and (min-width:601px){
+  .typing::after{
+    height: 3rem;
+  }
+  .nav ul li a {
+    font-size: 18px !important;
+
+  }
+  .curly-overlay-header .header-center-content{
+    height: 520px;
+  }
+}
+@media only screen and (max-width:650px){
+  .typing::after{
+    height: 3rem;
+    background-color: white;
+  }
+  .nav ul li a {
+    font-size: 18px !important;
+
+  }
+  .curly-overlay-header .header-center-content{
+    height: 320px;
+  }
+  .background-path-secondary::before{
+    display: none;
+  }
+  .background-path-secondary{
+    background-color: #F6A431;
+  }
+  .header-center-content{
+    padding: 60px 30px;
+  }
+  .header-center-content .uk-button-primary:hover{
+    background-color: #FFFFFF;
+    color:#1F2041;
+  }
+  .header-center-content div p{
+    color: white;
+  }
+  .header-min-height{
+    min-height: 0px;
+  }
+  .logo-white, .logo-color{
+    max-width: 100%;
+  }
+  .header-landing-page{
+    background: #FFFFFF;
+  }
 }
