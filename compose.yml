@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:16
+    volumes:
+      - db_vol:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+  django:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: sh -c "/usr/src/hassmelder/backend/wait-for-db.sh db && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/usr/src/hassmelder/backend
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_NAME=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - db
+    container_name: 'django'
+    restart: always
+volumes:
+  db_vol:
