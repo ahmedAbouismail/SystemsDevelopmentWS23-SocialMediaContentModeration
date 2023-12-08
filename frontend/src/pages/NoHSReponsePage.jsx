@@ -10,7 +10,7 @@ class NoHSResponsePage extends Component {
             
             <div className="background-pfad-left">
                 <div className="uk-container">
-                    <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@m" data-uk-grid>
+                    <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@l uk-flex uk-flex-middle" data-uk-grid>
                         <div>
                             <div>   
                                 <p className="small-title-left">What now?</p>
@@ -29,14 +29,14 @@ class NoHSResponsePage extends Component {
 
                         <div>
                             <div className="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-2@m uk-grid-match" data-uk-height-match="target: .uk-card" data-uk-grid>
-                                <CardsImageSmall name="Read More about Hate Speech" url="/hate-speech"/>
-                                <CardsImageSmall  name="Read More about the Consequences of Hate Speech" url="/hate-speech"/>
+                                <CardsImageSmall name="Read More about Hate Speech" url="/hate-speech" image="hate.png"/>
+                                <CardsImageSmall  name="Read More about the Consequences of Hate Speech" url="/hate-speech" image="consequence.png"/>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="uk-container">
-                    <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@m" data-uk-grid>
+                    <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@l" data-uk-grid>
                         <div>   
                             <p className="small-title-left">Please do not hesitate to contact us</p>
                             <h3 className="uk-h1">Next Steps</h3>
@@ -46,7 +46,7 @@ class NoHSResponsePage extends Component {
                         </div>
                         
                         <div>
-                            <div className="uk-border-rounded uk-box-shadow-medium uk-padding">
+                            <div className="uk-border-rounded uk-box-shadow-medium uk-padding uk-background-default">
                                 <form>
                                     <fieldset className="uk-fieldset">
                                         <div className="uk-margin">
