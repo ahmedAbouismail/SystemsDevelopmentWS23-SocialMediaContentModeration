@@ -1,0 +1,606 @@
+/* Fonts */
+
+/* outfit-100 - latin */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 100;
+  src: url('./fonts/outfit-v11-latin-100.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* outfit-200 - latin */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 200;
+  src: url('./fonts/outfit-v11-latin-200.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* outfit-300 - latin */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 300;
+  src: url('./fonts/outfit-v11-latin-300.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* outfit-regular - latin */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/outfit-v11-latin-regular.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* outfit-500 - latin */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 500;
+  src: url('./fonts/outfit-v11-latin-500.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* outfit-600 - latin */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 600;
+  src: url('./fonts/outfit-v11-latin-600.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* outfit-700 - latin */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./fonts/outfit-v11-latin-700.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* outfit-800 - latin */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 800;
+  src: url('./fonts/outfit-v11-latin-800.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* outfit-900 - latin */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 900;
+  src: url('./fonts/outfit-v11-latin-900.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* anton-regular - latin */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/anton-v25-latin-regular.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/**** Generel ****/
+/* Primary Color (Blau) = #1F2041;
+Secundary Color (Yellow) = #F6A431;
+White = #FFFFFF
+Black = #00000
+font color = #353535
+Font-size 
+p=18px
+border-radius = 18px*/
+
+/**** Header ****/
+header {
+  z-index: 24;
+}
+header .uk-active {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .08);
+  background-color: #FFFFFF;
+}
+.header-center-content p {
+  font-family: 'Anton';
+  font-size: 60px;
+}
+.uk-sticky.uk-active div nav ul li a {
+  color:#1F2041 !important;
+}
+.uk-sticky.uk-active .logo-white {
+  display: none;
+}
+.uk-sticky.uk-active .logo-color {
+  display: block;
+}
+.uk-sticky .logo-color {
+  display: none;
+}
+
+.curly-overlay-header {
+  position: relative;
+}
+
+.curly-overlay-header::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 100%;
+  height: 380px;
+  background-image: url('./img/path-header.png');
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  display: block;
+  bottom: -2px;
+}
+.nav .uk-subnav li a {
+  color: #FFFFFF;
+}
+.curly-overlay-header .header-center-content{
+  height: 620px;
+}
+.nav ul li a {
+  color: #FFFFFF;
+  font-family: 'Anton';
+  font-weight: 400;
+  font-size: 21px !important;
+  text-transform: none !important;
+  letter-spacing: 0.04em;
+}
+
+.nav ul li a:hover {
+  color: #1F2041;
+}
+.offcanvas ul li a{
+  font-family: 'Outfit';
+  color:white;
+}
+.offcanvas ul li a:hover{
+  font-family: 'Outfit';
+  color:#1F2041;
+}
+.uk-sticky.uk-active div .nav ul li a:hover {
+  color: #F6A431 !important;
+}
+.header-min-height{
+  min-height: 200px;
+}
+.typing{
+  position: relative;
+}
+.typing::after{ 
+    position: absolute;
+    bottom: 2px;    
+    animation: blink .3s infinite;
+    background-color: #F6A431;
+    content: "";
+    height: 5rem;
+    width: 1rem; 
+    margin-left: 10px;
+}
+@keyframes blink {
+  from { opacity: 0; }
+  to { opacity: .8; }
+}
+
+@media only screen and (min-width:1440px) {
+  .responsive-remove-padding-left {
+    padding-left: 0px !important;
+  }
+
+  .hero-image img {
+    left: 10%;
+    position: relative;
+    width: 100%;
+    margin-top: 100px;
+  }
+}
+
+.open-offcanvas{
+  transition: all .3s ease-in-out;
+}
+/**** Body ****/
+html, body {
+  overflow-x: hidden;
+  font-family: 'Outfit';
+}
+
+.uk-container {
+  max-width: 1370px;
+}
+
+@media only screen and (min-width:960px) {
+  .uk-container {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+
+
+}
+@media only screen and (min-width:1200px) {
+  .uk-padding-large {
+    padding: 60px;
+  }
+
+
+}
+
+/* Schriften */
+h1,
+.uk-h1,
+h2,
+.uk-h2,
+h3,
+.uk-h3,
+h4,
+.uk-h4 {
+  font-family: 'Anton';
+  margin-top: 25px;
+  line-height: 1.5em;
+}
+
+h1, .uk-h1 {
+  font-size: 44px;
+  color: #353535;
+}
+
+.small-title-center+h1,
+.small-title-center+h2,
+.small-title-center+.uk-h1,
+.small-title-center+.uk-h2,
+.small-title-left+h1,
+.small-title-center+h1,
+.small-title-left+.uk-h1,
+.small-title-left+h2,
+.small-title-left+.uk-h2 {
+  margin-top: 10px;
+}
+
+
+.small-title-left,
+.small-title-center {
+  font-family: 'Outfit';
+  font-weight: 500;
+  color: #F6A431;
+  font-size: 28px;
+  position: relative;
+  /*display: inline-block;*/
+  margin-bottom: 0px;
+
+}
+
+.small-title-left::after, .small-title-center::after {
+  content:'';
+  position: absolute;
+  bottom: 18px;
+  width: 60px;
+  border-bottom: 2px solid #F6A431;
+  margin: 0 15px;
+}
+.small-title-left.uk-light, .small-title-center.uk-light {
+  color:#FFFFFF !important;
+}
+.small-title-left.uk-light::after, .small-title-center.uk-light::after {
+  border-bottom: 2px solid #FFFFFF !important;
+}
+.small-title-center {
+  margin: 0 auto;
+  display: table;
+}
+.small-title-center::before {
+  content: "";
+  display: block;
+  background-color: #F6A431;
+  width: 100%;
+  max-width: 60px;
+  height: 2px;
+  position: absolute;
+  left: 0;
+  transform: translateX(calc(-100% - 15px));
+  bottom: 18px;
+}
+
+p, li {
+  font-size: 18px;
+  font-weight: 300;
+  font-family: 'Outfit';
+  color: #353535;
+}
+.uk-light p {
+  color:#FFFFFF;
+}
+.uk-light {
+  color:#FFFFFF !important;
+}
+/* List */
+.check-list > *{
+  position: relative;
+  margin-bottom: 15px;
+}
+.check-list > ::before{
+  content: "\f00c";
+  position: relative;
+  font-weight: 900;
+  font-family: 'Font Awesome 6 Free';
+  line-height: inherit;
+  color: #F6A431;
+  top: 0;
+  left:0;
+  margin-right: 15px;
+}
+/* Button */
+
+.uk-button {
+  font-family: 'Outfit';
+  font-size: 18px;
+  text-transform: none !important;
+  font-weight: 300;
+  margin-top: 45px;
+}
+.uk-button-primary {
+  background-color: #1F2041;
+  color: #FFFFFF;
+  border-radius: 8px;
+}
+
+.uk-button-primary:hover {
+  background-color: #F6A431;
+}
+
+.uk-button-secondary:hover {
+  background-color: #1F2041;
+}
+
+.uk-button-secondary {
+  background-color: #F6A431;
+  color: #FFFFFF;
+  border-radius: 8px;
+}
+/* Background */ 
+.uk-background-primary {
+  background-color: #1F2041 !important;
+}
+.uk-background-secondary {
+  background-color: #F6A431;
+}
+
+.half-background-primary {
+  background: linear-gradient(180deg, #1F2041 65%, #FFFFFF 50%);
+}
+.background-pfad-left, .background-pfad-right {
+  position: relative;
+}
+
+.background-pfad-left::before,
+.background-pfad-right::before,
+.background-path-secondary::before {
+  content: '';
+  position: absolute;
+  background-image: url('./img/background-left.png');
+  display: block;
+  background-size: 40% 100% !important;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  top: 0;
+}
+
+.background-pfad-right::before {
+  background-image: url('./img/background-right.png');
+  right: 0;
+  left: 60%;
+}
+
+.background-path-secondary::before {
+  background-image: url('./img/background-yellow.png');
+  left: 35% !important;
+  background-size: 80% 95% !important;
+}
+
+/* style */
+
+.uk-border-rounded {
+  border-radius: 18px;
+}
+
+.card-number {
+  background-image: url('./img/number-path.svg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 30px 40px 30px 30px;
+  margin-top: -18px;
+  z-index: 0;
+}
+
+.card-number p {
+  font-weight: 500;
+  font-size: 20px;
+  color: #F6A431;
+  margin-top: 10px;
+}
+
+/* formular */
+.uk-input{
+  border: none; 
+  border-bottom: 1px solid #F6A431;
+}
+
+label {
+  font-family: 'Outfit';
+  color: #353535
+}
+
+.uk-checkbox {
+  -webkit-appearance: checkbox;
+}
+
+.textarea-report {
+  overflow:'auto';
+  resize: 'vertical';
+}
+
+/**** Blog Styles ****/
+/* delete later this style */
+.blog-expected-height {
+  height: 800px;
+}
+/**** Footer ****/
+.footer {
+  min-height: 380px;
+}
+
+.curly-overlay {
+  position: relative;
+}
+
+.curly-overlay::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 100%;
+  height: 380px;
+  background-image: url('./img/path-footer.png');
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  display: block;
+  top: -10px;
+}
+
+.footer-logo {
+  margin: 35px 0px;
+}
+@media only screen and (max-width:1440px){
+  .header-center-container{
+    margin-top:150px !important;
+  }
+}
+@media only screen and (max-width:1200px){
+  .footer .uk-container {
+    margin-top: 180px;
+  }
+
+}
+/** Responsive **/
+@media only screen and (max-width:1200px) and (min-width:961px){
+  .background-path-secondary::before{
+    background-size: 90% 65% !important;
+  }
+  .background-path-secondary .uk-container{
+    margin-top: 90px;
+  }
+  .header-center-content p{
+    font-size: 50px;
+  }
+}
+@media only screen and (max-width:960px){
+  .header-center-content p, h1, .uk-h1{
+    font-size: 40px;
+  }
+  .logo-white, .logo-color{
+    max-width: 50%;
+  }
+  .background-path-secondary::before{
+    background-size: 90% 50% !important;
+  }
+  .header-center-container {
+    margin-top: 120px !important;
+  }
+  .small-title-left, .small-title-center{
+    font-size: 24px;
+  }
+  .main-menu-mobile a svg{
+    width: 30px;
+    height: auto;
+  }
+  .main-menu-mobile a svg path{
+    fill: #1F2041;
+  }
+  .main-menu-mobile a svg path:hover{
+    /*fill: #F6A431;*/
+  }
+}
+
+@media only screen and (min-width:961px)  and (max-width:1200px){
+  .responsive-image-height-m{
+    height: 500px;
+    overflow: hidden;
+  }
+}
+@media only screen and (max-width:960px) and (min-width:601px){
+  .typing::after{
+    height: 3rem;
+  }
+  .nav ul li a {
+    font-size: 18px !important;
+
+  }
+  .curly-overlay-header .header-center-content{
+    height: 520px;
+  }
+}
+@media only screen and (max-width:650px){
+  .typing::after{
+    height: 3rem;
+    background-color: white;
+  }
+  .nav ul li a {
+    font-size: 18px !important;
+
+  }
+  .curly-overlay-header .header-center-content{
+    height: 320px;
+  }
+  .background-path-secondary::before{
+    display: none;
+  }
+  .background-path-secondary{
+    background-color: #F6A431;
+  }
+  .header-center-content{
+    padding: 60px 30px;
+  }
+  .header-center-content .uk-button-primary:hover{
+    background-color: #FFFFFF;
+    color:#1F2041;
+  }
+  .header-center-content div p{
+    color: white;
+  }
+  .header-min-height{
+    min-height: 0px;
+  }
+  .logo-white, .logo-color{
+    max-width: 100%;
+  }
+  .header-landing-page{
+    background: #FFFFFF;
+  }
+}
