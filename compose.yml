@@ -26,6 +26,18 @@ services:
       - db
     container_name: 'django'
     restart: always
+  minio:
+    image: minio/minio
+    volumes:
+      - ./backend/start-minio.sh:/usr/src/hassmelder/backend/start-minio.sh
+      - minio_data:/var/lib/minio/data
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    ports:
+      - "9000:9000" # Minio server port
+      - "9001:9001" # Minio console port (browser access)
+    entrypoint: ["/bin/sh", "/usr/src/hassmelder/backend/start-minio.sh"]
   react:
     build:
       context: ./frontend
@@ -38,3 +50,4 @@ services:
 
 volumes:
   db_vol:
+  minio_data:
