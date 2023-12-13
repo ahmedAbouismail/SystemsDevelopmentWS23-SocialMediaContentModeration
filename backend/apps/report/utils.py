@@ -1,15 +1,14 @@
+import io
+import os
+import uuid
 import configparser
+from PIL import Image
 from minio import Minio
 from minio.error import S3Error
+from django.conf import settings
 from django.shortcuts import render
-from PIL import Image
-import io
-import uuid
-import os
 
-current_directory = os.path.dirname(os.path.abspath(__file__))
-relative_path_to_config = '..\..\..\config.ini'
-config_file_path = os.path.join(current_directory, relative_path_to_config)
+config_file_path = os.path.abspath(os.path.join(settings.BASE_DIR, '../config.ini'))
 print(config_file_path)
 
 
