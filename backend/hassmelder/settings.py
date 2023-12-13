@@ -28,22 +28,20 @@ SECRET_KEY = 'django-insecure-=yk3joc*f*uk9i2yz)dj%$$4h*g3211kj!x+r=@87=q9i6my9v
 DEBUG = True
 
 ALLOWED_HOSTS = []
-CORS_ORIGIN_ALLOW_ALL = True
+
 
 # Application definition
 
 INSTALLED_APPS = [
+    'apps.dashboard.apps.DashboardConfig',
+    'apps.report.apps.ReportConfig',
+    'apps.index.apps.IndexConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.report.apps.ReportConfig',
-    'apps.index.apps.IndexConfig',
-    'apps.dashboard.apps.DashboardConfig', 
-    'rest_framework',
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -51,22 +49,12 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'hassmelder.urls'
-CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000'
-]
-
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny' # CHANGE THIS WHEN DASHBOARD READY 
-    ]
-}
 
 TEMPLATES = [
     {
