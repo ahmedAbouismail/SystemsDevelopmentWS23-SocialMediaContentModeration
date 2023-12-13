@@ -11,7 +11,7 @@ class SVM:
                        "normalization of existing discrimination", "disguise as irony", "harmful slander", "skip"]
 
     def predict(self, text):
-        path = os.path.join('SVM_Model.pkl')
+        path = os.path.join('../backend/classifier/hate_speech_service/SVM_Model.pkl')
         cv, clf = pd.read_pickle(path)
 
         clean_text = DataPreprocessing.clean_text([text])
