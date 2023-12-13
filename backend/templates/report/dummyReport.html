@@ -10,11 +10,11 @@
                     </div>
                     <div class="card-body">
                         <!-- <form action="{% url 'reportForm' %}" method="POST"> -->
-                        <form onsubmit="return createImage(event)" action="{% url 'reportForm' %}">
+                        <form onsubmit="return createReport(event)" action="{% url 'reportForm' %}">
                             {% csrf_token %}
 
                             <label for="post_content">Post Content:</label>
-                            <textarea name="post_content" rows="4" cols="50" required></textarea><br>
+                            <textarea name="post_content" rows="4" cols="50"></textarea><br>
 
                             <label for="post_link">Post Link:</label>
                             <input type="text" name="post_link"><br>
@@ -40,21 +40,30 @@
                             <input type="submit" value="Create Post">
                         </form>
                         <script>
-                            const endpoint = 'http://localhost:8000/report/form/'
+                            const endpoint = 'http://localhost:8000/report/form/';
                             const imageInput = document.querySelector('#imageInput');
 
-
-                            const createImage = async (event) => {
+                            const createReport = async (event) => {
                                 event.preventDefault();
-                                let image = imageInput.files[0];
-                                let formData = new FormData();
-                                formData.append('file', image)
+                                const formData = new FormData();
 
-                                let newImage = await fetch(endpoint, 
-                                {
-                                    method: 'POST',
-                                    body: formData,
-                                }).then(response => response.json()).catch(error => {console.log(error)})
+                                formData.append('file', imageInput.files[0]);
+
+                                try {
+                                    const response = await fetch(endpoint, {
+                                        method: 'POST',
+                                        body: formData,
+                                    });
+
+                                    if (response.ok) {
+                                        const newImage = await response.json();
+                                        console.log(newImage);
+                                    } else {
+                                        console.error('Error:', response.status);
+                                    }
+                                } catch (error) {
+                                    console.error('Fetch error:', error);
+                                }
                             }
                         </script>
                     </div>
