@@ -53,10 +53,6 @@ class App extends Component {
             </div>
             <div className="background-pfad-left">
                 <div className="uk-container">
-                    <div>
-                        <p className="small-title-center">Lorem Ipsum</p>
-                        <h2 className="uk-h1 uk-text-center">Sed frigilla mauris sit amet nibh</h2>
-                    </div>
                     <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@l" data-uk-grid>
                         <div>
                             <div>
