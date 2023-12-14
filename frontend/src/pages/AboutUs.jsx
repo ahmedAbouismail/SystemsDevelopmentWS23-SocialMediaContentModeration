@@ -10,7 +10,7 @@ class ReportPage extends Component {
             
             <div className="background-pfad-left">
                 <div className="uk-container">
-                    <div class="uk-child-width-1-2@l uk-child-width-1-1 uk-margin-large-bottom " data-uk-grid>
+                    <div className="uk-child-width-1-2@l uk-child-width-1-1 uk-margin-large-bottom " data-uk-grid>
                         <div>
                             <p className="small-title-left">About us</p>
                             <h2 className="uk-h1">Who we are</h2>
@@ -39,11 +39,11 @@ class ReportPage extends Component {
                         </div>
                     </div>
                     <div className="uk-margin-xlarge-bottom uk-margin-xlarge-top" data-uk-grid>
-                        <div class="uk-width-1-3@l uk-width-1-1">
+                        <div className="uk-width-1-3@l uk-width-1-1">
                             <p className="small-title-left">Our Partners</p>
                             <h3 className="uk-h1">In the Fight Against Hate Speech</h3>
                         </div>
-                        <div class="uk-width-2-3@l uk-width-1-1">
+                        <div className="uk-width-2-3@l uk-width-1-1">
                             <div data-uk-grid className="uk-child-width-1-2@m uk-child-width-1-1" data-uk-height-match="target: a > div > .uk-card">
                                 <CardsImageSmall name="Hochschule für Technik und Wirtschaft Berlin" url="https://www.htw-berlin.de/" image="partners/htw.png" />
                                 <CardsImageSmall  name="City of Berlin" url="https://www.berlin.de/deeptech/standort/kompetenzfeld-it-security/" image="partners/berlin.png"/>

@@ -1,5 +1,5 @@
 import React from "react"
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import "/node_modules/uikit/dist/css/uikit.min.css"
 import "/node_modules/uikit/dist/js/uikit.min.js"
 import "/node_modules/uikit/dist/js/uikit-core.min.js"
@@ -52,6 +52,14 @@ function Template() {
     );
   }
 
+// Render Navbar using createRoot
+const headerRoot = createRoot(document.getElementById("header"));
+headerRoot.render(<Navbar items={navList} />);
 
-ReactDOM.render(<Navbar items={navList}/>, document.getElementById("header"));
-ReactDOM.render(<Template />, document.getElementById("root"));
+// Render Template using createRoot
+const root = createRoot(document.getElementById("root"));
+root.render(<Template />);
+
+// deprecated
+// ReactDOM.render(<Navbar items={navList}/>, document.getElementById("header"));
+// ReactDOM.render(<Template />, document.getElementById("root"));
