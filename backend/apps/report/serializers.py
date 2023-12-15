@@ -1,13 +1,14 @@
 from rest_framework import serializers
-from .models import Post, ClassifierRespoonse
+from .models import Post, ClassifierResponse
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ['post_content', 'post_link', 'post_image', 'user_prediction', 'post_platform', 'classifier_response']
 
-class ClassifierRespoonseSerializer(serializers.ModelSerializer):
-    id = serializers.ReadOnlyField()
+
+
+class ClassifierResponseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ClassifierRespoonse
-        fields = '__all__'
+        model = ClassifierResponse
+        fields = ['Label']

@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from .models import Platform
+from .models import Platform, Label
 from .serializers import *
 from .utils import ExportReportDBtoCSV, UploadImageToMinio
 
@@ -38,29 +38,28 @@ def post_report(request):
     #     report['post_image'] = 1
     report['post_image'] = 1
 
-    # USER PREDICTION - HAS TO BE CHANGED
-    report['user_prediction'] = ''
+    # USER PREDICTION
+    report['user_prediction'] = request.data['user_prediction']
 
     # PLATFORM 
-    report['platform'] = get_platform_id(request.data['platform'])
+    report['post_platform'] = get_platform_id(request.data['platform'])
 
     # CLASSIFIER    
     hate_class_id = classify_report(request.data['post_content'])
     if hate_class_id != None:
-        print(hate_class_id)
-        report['classifierResponse'] = hate_class_id
+        report['classifier_response'] = hate_class_id
     else:
-        print('Class none')
-        report['classifierResponse'] = 1
+        report['classifier_response'] = 10 #default for did not work
 
     #Serialize and save in DB
     serializer = PostSerializer(data=report)
     if serializer.is_valid():
         serializer.save()
-        print('Report post')
+        print('Report gespeichert')
         return Response(status=status.HTTP_201_CREATED)
     else:
-        Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        print('Report nicht gespeichert')
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 def get_platform_id(name):
     p = PLATFORMS.filter(platform_name=name).first()
@@ -76,13 +75,14 @@ def classify_report(content):
     try:
         output = subprocess.check_output(script_command, shell=True, text=True)
         print(output)
-        #TODO save in DB with label id like platform
-        class_resp = {1}
-        serializer = ClassifierRespoonse(data=class_resp)
+        #TODO get class and save in DB with label id (like platform)
+        class_resp = {'Label': 1}
+        serializer = ClassifierResponseSerializer(data=class_resp)
         if serializer.is_valid():
             serializer.save()
-            return serializer.id
+            return ClassifierResponse.objects.all().last().pk
         else:
+            print('Response nicht gespeichert')
             return None
     except subprocess.CalledProcessError as e:
         print(f"Script failed with error: {e}")  

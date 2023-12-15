@@ -12,7 +12,7 @@ class Label(models.Model):
     def __str__(self) -> str:
         return self.label_name
     
-class ClassifierRespoonse(models.Model):
+class ClassifierResponse(models.Model):
     Label = models.ForeignKey(Label, on_delete=models.SET_NULL, null=True)
     timestamp = models.DateTimeField().auto_created
     def __str__(self) -> str:
@@ -26,7 +26,7 @@ class Post(models.Model):
     post_image = models.CharField(max_length=1024, blank=True, null=True)
     user_prediction = models.CharField(max_length=255)
     post_platform = models.ForeignKey(Platform, on_delete=models.SET_NULL, null=True)
-    classifier_response = models.ForeignKey(ClassifierRespoonse, on_delete=models.SET_NULL, null=True)
+    classifier_response = models.ForeignKey(ClassifierResponse, on_delete=models.SET_NULL, null=True)
     timestamp = models.DateTimeField().auto_created
 
     def __str__(self) -> str:
