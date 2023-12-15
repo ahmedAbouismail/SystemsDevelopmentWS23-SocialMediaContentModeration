@@ -1,0 +1,81 @@
+<section id="register" class="bg-light py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4>
+                            <i class="fas fa-user-plus"></i> Register
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- <form action="{% url 'reportForm' %}" method="POST"> -->
+                        <form onsubmit="return createImage(event)" action="{% url 'reportForm' %}">
+                            {% csrf_token %}
+
+                            <label for="post_content">Post Content:</label>
+                            <textarea name="post_content" rows="4" cols="50" required></textarea><br>
+
+                            <label for="post_link">Post Link:</label>
+                            <input type="text" name="post_link"><br>
+
+                            <label for="post_image">Post Image:</label>
+                            <input type="file" name="post_image" accept="image/*" id="imageInput"><br>
+
+                            <label for="user_prediction">User Prediction:</label><br>
+                            <input type="checkbox" name="user_prediction" value="A"> A
+                            <input type="checkbox" name="user_prediction" value="B"> B
+                            <input type="checkbox" name="user_prediction" value="C"> C
+                            <input type="checkbox" name="user_prediction" value="D"> D<br>
+                        
+                            <label for="platform">Platform:</label><br>
+                            <input type="radio" name="platform" value="X"> X
+                            <input type="radio" name="platform" value="Facebook"> Facebook
+                            <input type="radio" name="platform" value="Instagram"> Instagram
+                            <input type="radio" name="platform" value="Reddit"> Reddit<br>
+                        
+                            <label for="classifier_response">Classifier Response:</label><br>
+                            <input type="text" name="classifier_response"><br>
+
+                            <input type="submit" value="Create Post">
+                        </form>
+                        <br>
+                        <button method='GET' onclick="return downloadCSV(event)" action="{% url 'download' %}" >El Button</button>
+                        <script>
+                            const endpoint = 'http://localhost:8000/report/form/'
+                            const endpoint2 = 'http://localhost:8000/report/form/down'
+                            const imageInput = document.querySelector('#imageInput');
+
+
+                            const createImage = async (event) => {
+                                event.preventDefault();
+                                let image = imageInput.files[0];
+                                let formData = new FormData();
+                                formData.append('file', image)
+
+                                let newImage = await fetch(endpoint, 
+                                {
+                                    method: 'POST',
+                                    body: formData,
+                                }).then(response => response.json()).catch(error => {console.log(error)})
+                            }
+
+                            const downloadCSV = async (event) =>{
+                                event.preventDefault();
+                                let file = await fetch(endpoint2,
+                                {
+                                    method: 'GET'
+                                }).then(response => response.blob() )
+                                .then( blob => {
+                                var file = window.URL.createObjectURL(blob);
+                                window.location.assign(file);
+                                });
+                                console.log(file)
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
