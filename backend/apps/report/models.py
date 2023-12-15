@@ -1,11 +1,7 @@
 from django.db import models
 
 class Platform(models.Model):
-    PLATFORMS = [("X", "X/Twitter"), 
-                 ("FACEBOOK", "Facebook"),
-                 ("INSTAGRAM", "Instagram"),
-                  ("REDDIT", "Reddit")]
-    platform_name = models.CharField(max_length=255, unique=True, choices=PLATFORMS)
+    platform_name = models.CharField(max_length=255, unique=True)
 
     def __str__(self) -> str:
         return self.platform_name
@@ -29,7 +25,7 @@ class Post(models.Model):
     post_link = models.CharField(max_length=1024, blank=True, null=True)
     post_image = models.CharField(max_length=1024, blank=True, null=True)
     user_prediction = models.CharField(max_length=255)
-    platform = models.ForeignKey(Platform, on_delete=models.SET_NULL, null=True)
+    post_platform = models.ForeignKey(Platform, on_delete=models.SET_NULL, null=True)
     classifier_response = models.ForeignKey(ClassifierRespoonse, on_delete=models.SET_NULL, null=True)
     timestamp = models.DateTimeField().auto_created
 

@@ -37,9 +37,6 @@ CORS_ORIGIN_WHITELIST = (
 # Application definition
 
 INSTALLED_APPS = [
-    'apps.dashboard.apps.DashboardConfig',
-    'apps.report.apps.ReportConfig',
-    'apps.index.apps.IndexConfig',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,6 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.dashboard.apps.DashboardConfig',
+    'apps.report.apps.ReportConfig',
+    'apps.index.apps.IndexConfig',
 ]
 
 MIDDLEWARE = [
@@ -90,15 +90,13 @@ DATABASES = {
         'NAME': 'hassmelder',
         'USER': 'postgres',
         'PASSWORD': 'Casino+Poison+Unsmooth6',
-        'HOST': 'localhost'
-        
+        'HOST': 'localhost'        
     }
 }
 
 REST_FRAMEWORK = {
     'DEFAULT_PARSER_CLASSES': (
-        'rest_framework.parsers.FormParser',
-        'rest_framework.parsers.MultiPartParser'
+        'rest_framework.parsers.JSONParser',
      )
  }
 
