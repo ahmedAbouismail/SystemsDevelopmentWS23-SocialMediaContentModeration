@@ -7,7 +7,7 @@ class HeroJustText extends Component {
             <div className="uk-container">
                 <div className="uk-margin-large-top">
                     <div className="header-center-content uk-flex uk-flex-center uk-flex-middle">
-                        <p class="uk-light h1 uk-text-center">{this.props.text}</p>
+                        <p className="uk-light h1 uk-text-center">{this.props.text}</p>
                     </div>
                 </div>
             </div>
