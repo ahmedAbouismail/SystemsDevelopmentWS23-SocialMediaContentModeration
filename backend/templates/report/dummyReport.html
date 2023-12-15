@@ -39,8 +39,11 @@
 
                             <input type="submit" value="Create Post">
                         </form>
+                        <br>
+                        <button method='GET' onclick="return downloadCSV(event)" action="{% url 'download' %}" >El Button</button>
                         <script>
                             const endpoint = 'http://localhost:8000/report/form/'
+                            const endpoint2 = 'http://localhost:8000/report/form/down'
                             const imageInput = document.querySelector('#imageInput');
 
 
@@ -55,6 +58,19 @@
                                     method: 'POST',
                                     body: formData,
                                 }).then(response => response.json()).catch(error => {console.log(error)})
+                            }
+
+                            const downloadCSV = async (event) =>{
+                                event.preventDefault();
+                                let file = await fetch(endpoint2,
+                                {
+                                    method: 'GET'
+                                }).then(response => response.blob() )
+                                .then( blob => {
+                                var file = window.URL.createObjectURL(blob);
+                                window.location.assign(file);
+                                });
+                                console.log(file)
                             }
                         </script>
                     </div>

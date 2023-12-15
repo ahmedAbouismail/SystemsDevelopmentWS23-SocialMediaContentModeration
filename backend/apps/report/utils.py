@@ -1,11 +1,13 @@
+import io
+import uuid
+import os
 import configparser
 from minio import Minio
 from minio.error import S3Error
 from django.shortcuts import render
 from PIL import Image
-import io
-import uuid
-import os
+import psycopg2
+import csv
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 relative_path_to_config = '..\..\..\config.ini'
@@ -68,3 +70,19 @@ def GetImageFromMinio(id: str):
         
     image_bytes.seek(0)
     return image_bytes
+
+def ExportReportDBtoCSV():
+    directory = current_directory + '../../table.csv'
+    conn = psycopg2.connect("dbname=hassmelder user=postgres password=Casino+Poison+Unsmooth6")
+    cur = conn.cursor()
+    sql = "COPY (SELECT * FROM report_post) TO STDOUT WITH CSV DELIMITER ','"
+    response = None
+    with open(directory, "r+") as file:
+        writer = csv.writer(file)
+        writer.writerow(["Number", "Post content", "Post link", "Image ID", "User Prediction", "Classifier response","Platform"])
+        
+        cur.copy_expert(sql, file)
+        file.seek(0)
+        response = file.read()
+        
+    return response
