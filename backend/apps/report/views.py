@@ -1,7 +1,9 @@
 import json
+import os
+import subprocess
 from rest_framework import status
 from rest_framework.response import Response
-from django.http import  HttpResponse
+from django.http import  FileResponse, HttpResponse
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import MultiPartParser, FormParser
 
@@ -12,9 +14,7 @@ from .utils import UploadImageToMinio, GetImageFromMinio, ExportReportDBtoCSV
 @api_view(['GET'])
 def get_reports(request):
     data = Post.objects.all()
-
     serializer = PostSerializer(data, context={'request': request}, many=True)
-
     print('Report post')
     return Response(serializer.data)
 
@@ -61,3 +61,39 @@ def download_reports_csv(request):
         response.content = ExportReportDBtoCSV()
         return response
         
+    elif request.method == 'POST':
+        file = request.data.get('file')
+
+        if file and file != 'undefined':
+            # Handle image upload
+            id = UploadImageToMinio(file)
+            request.data['post_image'] = id
+            # Additional data for testing
+            request.data['post_content'] = 'Test'
+            request.data['user_prediction'] = 'A'
+            # Save in DB
+            serializer = PostSerializer(data=request.data)
+
+            if serializer.is_valid():
+                serializer.save()
+                obj = GetImageFromMinio(id)
+                return FileResponse(obj, content_type='image/*', as_attachment=True)
+        else:
+            classifier_response = request.data.get('classifier_response', '')
+            if classifier_response:
+                script_path = os.path.abspath('../backend/classifier/hate_speech_service/svm.py')
+                script_command = f'python {script_path} "{classifier_response}"'
+
+                try:
+                    output = subprocess.check_output(script_command, shell=True, text=True)
+                    print(f"Script Output: {output}")
+
+                    # If script succeeds, save to DB
+                    serializer = PostSerializer(data=request.data)
+                    if serializer.is_valid():
+                        serializer.save()
+                    return Response(status=status.HTTP_201_CREATED)
+                except subprocess.CalledProcessError as e:
+                    print(f"Script failed with error: {e}")
+            return Response(status=status.HTTP_201_CREATED)
+
