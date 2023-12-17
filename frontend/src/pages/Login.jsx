@@ -1,5 +1,8 @@
 import React from 'react';
 
+const LoginPage = () => {
+
+}
 class LoginInput extends React.Component {
     constructor(props) {
         super(props);
@@ -57,7 +60,41 @@ class LoginInput extends React.Component {
 }
 
 class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loginError: false,
+        };
+    }
+    handleLogin = async () => {
+        const name = document.getElementById('name').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            const response = await fetch('localhost:3000/dashboard/login', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, password }), //Anfrage zum Server senden, json.stringify um Zeichenkette zu schicken
+            });
+
+            if (response.ok) {
+                // Erfolgreich eingeloggt
+                console.log('Erfolgreich eingeloggt!');
+                this.setState({ loginError: false });
+            } else {
+                // Fehler beim Einloggen
+                console.error('Fehler beim Einloggen');
+                this.setState({ loginError: true });
+            }
+        } catch (error) {
+            console.error('Netzwerkfehler', error);
+        }
+    };
     render() {
+        const { loginError } = this.state;
         return (
             <div className="uk-container uk-margin-xlarge-top uk-margin-xlarge-bottom">
                 <div data-uk-grid className='uk-flex uk-flex-center'>
@@ -67,7 +104,12 @@ class Login extends React.Component {
                                 <div className="title"><h1>Login</h1></div>
                                 <LoginInput type="text" label="name" id="name" />
                                 <LoginInput type="password" label="password" id="password" />
-                                <a className="uk-button uk-button-primary" href='#'>Login</a>
+                                {loginError && (
+                                    <div className="uk-alert-danger" data-uk-alert>
+                                        <p>Falsches Passwort. Bitte versuchen Sie es erneut.</p>
+                                    </div>
+                                )}
+                                <a className="uk-button uk-button-primary" onClick={this.handleLogin}>Login</a>
                             </div>
                             <div className="uk-width-1-2 ">
                                 <img src="/assets/img/logo/nohatenet-blacklogologo-transparent.png" />
