@@ -13,6 +13,7 @@ import NotFoundPage from './pages/NoPage';
 import AboutUs from './pages/AboutUs';
 import YesPage from './pages/HSResponsePage';
 import NoPage from './pages/NoHSReponsePage';
+import Login from './pages/Login';
 
 
 import HateSpeechPage from "./pages/HateSpeechPage";
@@ -45,6 +46,7 @@ function Template() {
                 <Route path="/hate-speech" element={<HateSpeechPage></HateSpeechPage>}></Route>
                 <Route path="/hate-speech=true" element={<YesPage></YesPage>}></Route>
                 <Route path="/hate-speech=false" element={<NoPage></NoPage>}></Route>
+                <Route path="/login" element={<Login></Login>}></Route>
             </Routes>
         </BrowserRouter>
         <Footer />
