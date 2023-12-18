@@ -1,10 +1,12 @@
 import { React, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import HeroJustText from '../components/hero-just-text';
 
 // TODO: encapsulate report form
 
 const ReportPage = ()=> {
-
+    const navigate = useNavigate();
+  
     // manage form data
     const [formData, setFormData] = useState({
         post_content: '',
@@ -98,7 +100,14 @@ const ReportPage = ()=> {
         body: JSON.stringify(formData),
         })
         .then((response) =>{
-            response.json();    
+            let res = response.json();  
+            let temp= "this is a possible response from report page"
+            navigate(
+             '/response', {
+               state: {response: temp}
+             } //TODO: adjust redirect path according to response
+
+            );  
         })
         .then((data) => {
             console.log('Success:', data, formData);
