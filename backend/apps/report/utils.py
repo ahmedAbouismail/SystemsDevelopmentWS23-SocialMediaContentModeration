@@ -1,19 +1,23 @@
 import io
+import subprocess
 import uuid
 import os
 import configparser
 from minio import Minio
 from minio.error import S3Error
-from django.shortcuts import render
 from PIL import Image
 import psycopg2
 import csv
+
+from .serializers import ClassifierResponseSerializer
+from .models import ClassifierResponse, Platform, Label
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 relative_path_to_config = '..\..\..\config.ini'
 config_file_path = os.path.join(current_directory, relative_path_to_config)
 print(config_file_path)
 
+#Image ----------
 def UploadImageToMinio(request_image):
     config = configparser.ConfigParser(allow_no_value=True)
     config.read(config_file_path)
@@ -47,7 +51,6 @@ def UploadImageToMinio(request_image):
             print(f"Error uploading to images: {e}")
             
     return id
-
 
 def GetImageFromMinio(id: str):
     config = configparser.ConfigParser(allow_no_value=True)
@@ -86,3 +89,48 @@ def ExportReportDBtoCSV():
         response = file.read()
         
     return response
+
+
+# Report -------
+PLATFORMS = Platform.objects.all()
+LABELS = Label.objects.all()
+
+def get_platform_id(name):
+    p = PLATFORMS.filter(platform_name=name).first()
+    if p:
+        return p.pk
+    else:
+        return 1 #default
+
+def get_label(id):
+    l = LABELS.filter(pk=id).first()
+    if l:
+        return l.label_name
+    else:
+        return 1 #default
+
+def classify_report(content):
+    script_path = os.path.abspath('../backend/classifier/hate_speech_service/svm.py')
+    script_command = f'python {script_path} "{content}"'
+
+    try:
+        output = subprocess.check_output(script_command, shell=True, text=True)
+        #TODO get class and save in DB with label id (like platform)
+        class_resp = {'Label': output}
+        serializer = ClassifierResponseSerializer(data=class_resp)
+        if serializer.is_valid():
+            serializer.save()
+            return ClassifierResponse.objects.all().last().pk, get_label(output)
+        else:
+            print('Response nicht gespeichert')
+            return None, None
+    except subprocess.CalledProcessError as e:
+        print(f"Script failed with error: {e}")  
+        return None, None
+
+def create_prediction_str(predictions):
+    pred_list = ''
+    for p in predictions:
+        pred_list += p
+    return pred_list
+

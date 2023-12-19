@@ -1,16 +1,12 @@
-import os
-import subprocess
 from django.http import  HttpResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from .models import Platform, Label
 from .serializers import *
-from .utils import ExportReportDBtoCSV, UploadImageToMinio
+from .utils import *
 
-PLATFORMS = Platform.objects.all()
-LABELS = Label.objects.all()
+
 
 @api_view(['GET'])
 def get_reports(request):
@@ -53,58 +49,17 @@ def post_report(request):
         report['classifier_response'] = 1 #default 
 
     print(report)
-
     #Serialize and save in DB
     serializer = PostSerializer(data=report)
     if serializer.is_valid():
         serializer.save()
-        print('Report gespeichert')
-        
-        return Response(data=report_class, status=status.HTTP_201_CREATED)
+        response = {'class' : report_class, 'errors': 'None'}
+        print('Report gespeichert')        
+        return Response(data=response, status=status.HTTP_201_CREATED)
     else:
         print('Report nicht gespeichert')
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-def get_platform_id(name):
-    p = PLATFORMS.filter(platform_name=name).first()
-    if p:
-        return p.pk
-    else:
-        return 1 #default
-
-def get_label(id):
-    l = LABELS.filter(pk=id).first()
-    if l:
-        return l.label_name
-    else:
-        return 1 #default
-
-def classify_report(content):
-    script_path = os.path.abspath('../backend/classifier/hate_speech_service/svm.py')
-    script_command = f'python {script_path} "{content}"'
-
-    try:
-        output = subprocess.check_output(script_command, shell=True, text=True)
-        #TODO get class and save in DB with label id (like platform)
-        class_resp = {'Label': output}
-        serializer = ClassifierResponseSerializer(data=class_resp)
-        if serializer.is_valid():
-            serializer.save()
-            return ClassifierResponse.objects.all().last().pk, get_label(output)
-        else:
-            print('Response nicht gespeichert')
-            return None, None
-    except subprocess.CalledProcessError as e:
-        print(f"Script failed with error: {e}")  
-        return None, None
-
-def create_prediction_str(predictions):
-    pred_list = ''
-    for p in predictions:
-        pred_list += p
-    return pred_list
-
-
+        response = {'class' : '', 'errors': serializer.errors}
+        return Response(data=response, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
