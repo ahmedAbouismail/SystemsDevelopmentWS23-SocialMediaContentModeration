@@ -42,24 +42,31 @@ def post_report(request):
     report['post_platform'] = get_platform_id(request.data['platform'])
 
     # CLASSIFIER    
-    hate_class_id, report_class = classify_report(request.data['post_content'])
+    hate_class_id, class_label = classify_report(request.data['post_content'])
     if hate_class_id != None:
         report['classifier_response'] = hate_class_id
     else:
         report['classifier_response'] = 1 #default 
 
-    print(report)
+
     #Serialize and save in DB
     serializer = PostSerializer(data=report)
     if serializer.is_valid():
         serializer.save()
-        response = {'class' : report_class, 'errors': 'None'}
+        #Create Response
+        response = {
+            'isHateSpeech:' : class_label != 'no hate',
+            'classifierCategory' : class_label,
+            'categoryDefinition:': 'blablabla', # TODO
+            'platform' : request.data['platform'],
+            'reportingLink': 'www.report.de' #TODO
+            }
+
         print('Report gespeichert')        
         return Response(data=response, status=status.HTTP_201_CREATED)
     else:
         print('Report nicht gespeichert')
-        response = {'class' : '', 'errors': serializer.errors}
-        return Response(data=response, status=status.HTTP_400_BAD_REQUEST)
+        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
