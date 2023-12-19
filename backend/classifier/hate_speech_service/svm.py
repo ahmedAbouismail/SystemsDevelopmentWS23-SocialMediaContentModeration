@@ -33,8 +33,7 @@ def main():
     svm_classifier = SVM()
     prediction, label = svm_classifier.predict(text)
 
-    print(f"Predicted Class: {label}")
-    print(f"Class Index: {prediction}")
+    print(prediction)
 
 
 if __name__ == "__main__":
