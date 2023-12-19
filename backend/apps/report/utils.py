@@ -102,6 +102,14 @@ def get_platform_id(name):
     else:
         return 1 #default
 
+def get_platform_report_link(name):
+    p = PLATFORMS.filter(platform_name=name).first()
+    print(p)
+    if p:
+        return p.reporting_link
+    else:
+        return 'unknown' #default
+
 def get_label(id):
     l = LABELS.filter(pk=id).first()
     if l:

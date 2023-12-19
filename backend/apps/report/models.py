@@ -2,7 +2,7 @@ from django.db import models
 
 class Platform(models.Model):
     platform_name = models.CharField(max_length=255, unique=True)
-
+    reporting_link = models.CharField(max_length=255, default='unknown')
     def __str__(self) -> str:
         return self.platform_name
 

@@ -59,9 +59,9 @@ def post_report(request):
             'classifierCategory' : class_label,
             'categoryDefinition:': 'blablabla', # TODO
             'platform' : request.data['platform'],
-            'reportingLink': 'www.report.de' #TODO
+            'reportingLink': get_platform_report_link(request.data['platform']) #TODO
             }
-
+        print(response)
         print('Report gespeichert')        
         return Response(data=response, status=status.HTTP_201_CREATED)
     else:
