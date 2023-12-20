@@ -339,6 +339,12 @@ p, li {
 .uk-light {
   color:#FFFFFF !important;
 }
+
+/* response page */
+b {
+  color: #F6A431;
+}
+
 /* List */
 .check-list > *{
   position: relative;
