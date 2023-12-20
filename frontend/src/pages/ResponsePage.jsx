@@ -1,4 +1,4 @@
-import { React } from 'react'
+import { React, useEffect} from 'react'
 import HeroJustText from '../components/hero-just-text';
 import CardsImageSmall from '../components/cards-image-small';
 import { useLocation } from 'react-router-dom';
@@ -17,7 +17,11 @@ const ResponsePage =(state)=> {
         explaination:"portraying individuals or groups as less than human, stripping them of their dignity and humanity.",
         platform_reporting_page:"some_link.com",
     }]
-
+    
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []); // empty dependency array ensures to only run effect when the component mounts
+    
     return <>
         <HeroJustText text={`Hate Speech was ${dummyData[0].isHate_speech==true ? "" : "NOT "}Recognized!`} />
         
