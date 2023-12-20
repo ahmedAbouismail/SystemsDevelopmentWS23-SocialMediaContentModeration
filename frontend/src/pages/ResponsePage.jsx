@@ -93,6 +93,11 @@ const ResponsePage =(state)=> {
                             )}
                         </p>
                     </div>
+                    
+                    {/* potentially providing link instead of contact form */}
+                    <div className='uk-container uk-text-center'>
+                        <p><a href="mailto:info@stop-hate-speech">Contact us</a></p>
+                    </div>
 
                     <div>
                         <div className="uk-border-rounded uk-box-shadow-medium uk-padding uk-background-default">

@@ -52,9 +52,10 @@ class App extends Component {
                     </div>
                 </div>
             </div>
-
+            <div className="background-pfad-left">
             <ReportFormComponent/>
-            
+            </div>
+
             <div className="uk-container">
                 <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@l" data-uk-grid>
                     <div>
