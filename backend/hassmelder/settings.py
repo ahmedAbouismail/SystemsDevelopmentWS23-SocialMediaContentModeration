@@ -27,24 +27,31 @@ SECRET_KEY = 'django-insecure-=yk3joc*f*uk9i2yz)dj%$$4h*g3211kj!x+r=@87=q9i6my9v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS=['*']
+CORS_ORIGIN_ALLOW_ALL = False
 
+CORS_ORIGIN_WHITELIST = (
+       'http://localhost:3000',
+)
 # Application definition
 
 INSTALLED_APPS = [
-    'apps.dashboard.apps.DashboardConfig',
-    'apps.report.apps.ReportConfig',
-    'apps.index.apps.IndexConfig',
+    'rest_framework',
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.dashboard.apps.DashboardConfig',
+    'apps.report.apps.ReportConfig',
+    'apps.index.apps.IndexConfig',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -84,11 +91,15 @@ DATABASES = {
         'NAME': 'hassmelder',
         'USER': 'postgres',
         'PASSWORD': 'Casino+Poison+Unsmooth6',
-        'HOST': 'localhost'
-        
+        'HOST': 'localhost'        
     }
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+     )
+ }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

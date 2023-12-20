@@ -89,7 +89,7 @@ const ReportPage = ()=> {
         event.preventDefault();
         console.log("formData", formData)
 
-        fetch('http://localhost:8000/report/', {
+        fetch('http://localhost:8000/report/form/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
