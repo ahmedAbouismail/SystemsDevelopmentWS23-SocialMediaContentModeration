@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ReportFormComponent = ()=> {
     const navigate = useNavigate();
+    const [notification, setNotification] = useState(null);
 
     // manage form data
     const [formData, setFormData] = useState({
@@ -116,6 +117,49 @@ const ReportFormComponent = ()=> {
         });
     };
 
+    const handleLinkSubmit = async (event) => {
+        event.preventDefault();
+        console.log("formData", formData);
+        try {
+          const response = await fetch('http://localhost:8000/report/form/', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+          });
+    
+          if (response.ok) {
+            const responseData = await response.json();
+            console.log('Success:', responseData, formData);
+    
+            setNotification({
+              type: 'success',
+              message: 'Link sent successfully!',
+            });
+
+            // Reload the page after a short delay
+            setTimeout(() => {
+            window.location.reload();
+            }, 1000);
+
+          } else {
+            console.error('Error:', response.statusText);
+            setNotification({
+              type: 'error',
+              message: 'Failed to send link. Please try again.',
+            });
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          setNotification({
+            type: 'error',
+            message: 'An unexpected error occurred. Please try again.',
+          });
+        }
+      };
+
     // TODO: validation should also take place on server 
     const isValidLink = (link) => {
         const linkRegex = /^(https?:\/\/)?(www\.)?(facebook\.com|reddit\.com|instagram\.com|x\.com|twitter\.com)\/.*/i;
@@ -226,13 +270,21 @@ const ReportFormComponent = ()=> {
                                 </div>
                                 <div>
                                     <a className="uk-button uk-button-secondary" 
-                                        onClick={handleSubmit}
+                                        onClick={handleLinkSubmit}
                                     >
                                         Send
                                     </a>
                                 </div>
                             </fieldset>
                         </form>
+                    </div>
+                    {/* Notification Component */}
+                    <div>
+                        {notification && (
+                        <div className={`notification ${notification.type}`}>
+                            {notification.message}
+                        </div>
+                        )}
                     </div>
                 </div>
                 <div className='uk-flex-first uk-flex-last@l'>
