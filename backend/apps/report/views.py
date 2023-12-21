@@ -42,7 +42,7 @@ def post_report(request):
 
     # CLASSIFIER    
     hate_class_id, class_label = classify_report(request.data['post_content'])
-    if hate_class_id != None:
+    if hate_class_id is not None:
         report['classifier_response'] = hate_class_id
     else:
         report['classifier_response'] = 1 #default 
@@ -54,12 +54,12 @@ def post_report(request):
         serializer.save()
         #Create Response
         response = {
-            'isHateSpeech:' : class_label != 'no hate',
-            'classifierCategory' : class_label,
-            'categoryDefinition:': 'blablabla', # TODO
-            'platform' : request.data['platform'],
-            'reportingLink': get_platform_report_link(request.data['platform']) #TODO
-            }
+            'isHateSpeech:': class_label != 'no hate',
+            'classifierCategory': class_label,
+            'categoryDefinition': 'blablabla',  # TODO
+            'platform': request.data['platform'],
+            'reportingLink': get_platform_report_link(request.data['platform'])  # TODO
+        }
         print(response)
         print('Report gespeichert')        
         return Response(data=response, status=status.HTTP_201_CREATED)
