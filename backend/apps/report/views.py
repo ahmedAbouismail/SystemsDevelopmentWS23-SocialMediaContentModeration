@@ -1,11 +1,10 @@
-from django.http import  HttpResponse
+from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from .serializers import *
 from .utils import *
-
 
 
 @api_view(['GET'])

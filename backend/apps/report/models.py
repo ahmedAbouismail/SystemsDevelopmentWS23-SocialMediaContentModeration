@@ -1,23 +1,27 @@
 from django.db import models
 
+
 class Platform(models.Model):
     platform_name = models.CharField(max_length=255, unique=True)
     reporting_link = models.CharField(max_length=255, default='unknown')
+
     def __str__(self) -> str:
         return self.platform_name
 
+
 class Label(models.Model):
-    label_name = models.CharField(max_length= 255)
+    label_name = models.CharField(max_length=255)
 
     def __str__(self) -> str:
         return self.label_name
-    
+
+
 class ClassifierResponse(models.Model):
     Label = models.ForeignKey(Label, on_delete=models.SET_NULL, null=True)
     timestamp = models.DateTimeField().auto_created
+
     def __str__(self) -> str:
         return f"{self.Label.label_name if self.Label else 'No Label'} at {self.timestamp}"
-        
 
 
 class Post(models.Model):
