@@ -88,34 +88,31 @@ const ReportFormComponent = ()=> {
     };
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log("formData", formData)
+    event.preventDefault();
+    console.log("formData", formData);
 
-        fetch('http://localhost:8000/report/form/', {
+    fetch('http://localhost:8000/report/form/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-        })
-        .then((response) =>{
-            let res = response.json();  
-            let temp= "this is a possible response from report page"
-            navigate(
-             '/response', {
-               state: {response: temp}
-             } //TODO: adjust redirect path according to response
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log('Success:', data, formData);
 
-            );  
-        })
-        .then((data) => {
-            console.log('Success:', data, formData);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    };
+        navigate(
+            '/response', {
+                state: { response: data }
+            }
+        );
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+};
 
     const handleLinkSubmit = async (event) => {
         event.preventDefault();
