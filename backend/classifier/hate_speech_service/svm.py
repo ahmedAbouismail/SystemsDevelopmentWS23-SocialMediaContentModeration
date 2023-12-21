@@ -20,7 +20,7 @@ class SVM:
         prediction = int(clf.predict(text_svm.toarray())[0])
         label = self.labels[prediction]
 
-        return prediction, label
+        return prediction +1, label
 
 
 def main():
