@@ -35,24 +35,35 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'optional-default-value')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG') == 'True'
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
+=======
+>>>>>>> develop
 
+ALLOWED_HOSTS=['*']
+CORS_ORIGIN_ALLOW_ALL = False
 
+CORS_ORIGIN_WHITELIST = (
+       'http://localhost:3000',
+)
 # Application definition
 
 INSTALLED_APPS = [
-    'apps.dashboard.apps.DashboardConfig',
-    'apps.report.apps.ReportConfig',
-    'apps.index.apps.IndexConfig',
+    'rest_framework',
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.dashboard.apps.DashboardConfig',
+    'apps.report.apps.ReportConfig',
+    'apps.index.apps.IndexConfig',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -88,14 +99,27 @@ WSGI_APPLICATION = 'hassmelder.wsgi.application'
 
 DATABASES = {
     'default': {
+<<<<<<< HEAD
         'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
         'NAME': os.environ.get('DB_NAME', 'default_db_name'),
         'USER': os.environ.get('DB_USER', 'default_user'),
         'PASSWORD': os.environ.get('DB_PASSWORD', 'default_password'),
         'HOST': os.environ.get('DB_HOST', 'db'),
+=======
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'hassmelder',
+        'USER': 'postgres',
+        'PASSWORD': 'Casino+Poison+Unsmooth6',
+        'HOST': 'localhost'        
+>>>>>>> develop
     }
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+     )
+ }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

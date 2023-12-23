@@ -1,5 +1,5 @@
 import React from "react"
-import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import "/node_modules/uikit/dist/css/uikit.min.css"
 import "/node_modules/uikit/dist/js/uikit.min.js"
 import "/node_modules/uikit/dist/js/uikit-core.min.js"
@@ -11,11 +11,8 @@ import ReportPage from "./pages/ReportPage"
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NotFoundPage from './pages/NoPage';
 import AboutUs from './pages/AboutUs';
-import YesPage from './pages/HSResponsePage';
-import NoPage from './pages/NoHSReponsePage';
-
-
 import HateSpeechPage from "./pages/HateSpeechPage";
+import ResponsePage from "./pages/ResponsePage";
 
 const navList = [
     {
@@ -43,8 +40,7 @@ function Template() {
                 <Route path="/report" element={<ReportPage></ReportPage>}></Route>
                 <Route path="/about-us" element={<AboutUs></AboutUs>}></Route>
                 <Route path="/hate-speech" element={<HateSpeechPage></HateSpeechPage>}></Route>
-                <Route path="/hate-speech=true" element={<YesPage></YesPage>}></Route>
-                <Route path="/hate-speech=false" element={<NoPage></NoPage>}></Route>
+                <Route path="/response" element={<ResponsePage />}></Route>
             </Routes>
         </BrowserRouter>
         <Footer />
@@ -52,6 +48,14 @@ function Template() {
     );
   }
 
+// Render Navbar using createRoot
+const headerRoot = createRoot(document.getElementById("header"));
+headerRoot.render(<Navbar items={navList} />);
 
-ReactDOM.render(<Navbar items={navList}/>, document.getElementById("header"));
-ReactDOM.render(<Template />, document.getElementById("root"));
+// Render Template using createRoot
+const root = createRoot(document.getElementById("root"));
+root.render(<Template />);
+
+// deprecated
+// ReactDOM.render(<Navbar items={navList}/>, document.getElementById("header"));
+// ReactDOM.render(<Template />, document.getElementById("root"));
