@@ -1,0 +1,53 @@
+services:
+  db:
+    image: postgres:16
+    volumes:
+      - db_vol:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+  django:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: sh -c "/usr/src/hassmelder/backend/wait-for-db.sh db && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/usr/src/hassmelder/backend
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_NAME=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - db
+    container_name: 'django'
+    restart: always
+  minio:
+    image: minio/minio
+    volumes:
+      - ./backend/start-minio.sh:/usr/src/hassmelder/backend/start-minio.sh
+      - minio_data:/var/lib/minio/data
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    ports:
+      - "9000:9000" # Minio server port
+      - "9001:9001" # Minio console port (browser access)
+    entrypoint: ["/bin/sh", "/usr/src/hassmelder/backend/start-minio.sh"]
+  react:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/usr/src/hassmelder/frontend
+    ports:
+      - "3000:3000"
+    container_name: 'react'
+
+volumes:
+  db_vol:
+  minio_data:
