@@ -108,12 +108,14 @@ def get_platform_id(name):
 
 
 def get_platform_report_link(name):
-    p = PLATFORMS.filter(platform_name=name).first()
-    print(p)
-    if p:
-        return p.reporting_link
-    else:
-        return 'unknown' #default
+    PLATFORMS = {
+        "Facebook": "https://www.facebook.com/help/reportlinks/",
+        "Instagram": "https://help.instagram.com/2922067214679225",
+        "Reddit": "https://www.reddit.com/report",
+        "X": "https://help.twitter.com/en/rules-and-policies/x-report-violation",
+    }
+    return PLATFORMS.get(name, 'unknown')
+
 
 def get_label(id):
     l = LABELS.filter(pk=id).first()
