@@ -17,18 +17,19 @@ relative_path_to_config = '..\..\..\config.ini'
 config_file_path = os.path.join(current_directory, relative_path_to_config)
 print(config_file_path)
 
-#Image ----------
+
+# Image ----------
 def UploadImageToMinio(request_image):
     config = configparser.ConfigParser(allow_no_value=True)
     config.read(config_file_path)
     # #Upload to minio and get url
     minio_client = Minio(
-        config.get("minio","endpoint"),
-        config.get("minio","access_key"),
-        config.get("minio","secret_key"),
-        config.get("minio","session_token"),
-        config.getboolean("minio","secure")
-        )
+        config.get("minio", "endpoint"),
+        config.get("minio", "access_key"),
+        config.get("minio", "secret_key"),
+        config.get("minio", "session_token"),
+        config.getboolean("minio", "secure")
+    )
     post_image = request_image  # Access the uploaded file
     id = 'NoImage'
     if minio_client.bucket_exists("images") and post_image:
@@ -42,37 +43,38 @@ def UploadImageToMinio(request_image):
         print(id)
         try:
             minio_client.put_object(
-                bucket_name='images', 
-                object_name=id, 
-                data=img_byte_arr, 
+                bucket_name='images',
+                object_name=id,
+                data=img_byte_arr,
                 length=length)
             print(f"Successfully uploaded to images")
         except S3Error as e:
             print(f"Error uploading to images: {e}")
-            
+
     return id
+
 
 def GetImageFromMinio(id: str):
     config = configparser.ConfigParser(allow_no_value=True)
     config.read(config_file_path)
     # #Upload to minio and get url
     minio_client = Minio(
-        config.get("minio","endpoint"),
-        config.get("minio","access_key"),
-        config.get("minio","secret_key"),
-        config.get("minio","session_token"),
-        config.getboolean("minio","secure")
-        )
+        config.get("minio", "endpoint"),
+        config.get("minio", "access_key"),
+        config.get("minio", "secret_key"),
+        config.get("minio", "session_token"),
+        config.getboolean("minio", "secure")
+    )
     image_data = minio_client.get_object('images', id)
     format = id.split('.')[1].upper
-    
-    
+
     image_bytes = io.BytesIO()
-    for data in image_data.stream(32*1024):
+    for data in image_data.stream(32 * 1024):
         image_bytes.write(data)
-        
+
     image_bytes.seek(0)
     return image_bytes
+
 
 def ExportReportDBtoCSV():
     directory = current_directory + '../../table.csv'
@@ -82,12 +84,13 @@ def ExportReportDBtoCSV():
     response = None
     with open(directory, "r+") as file:
         writer = csv.writer(file)
-        writer.writerow(["Number", "Post content", "Post link", "Image ID", "User Prediction", "Classifier response","Platform"])
-        
+        writer.writerow(
+            ["Number", "Post content", "Post link", "Image ID", "User Prediction", "Classifier response", "Platform"])
+
         cur.copy_expert(sql, file)
         file.seek(0)
         response = file.read()
-        
+
     return response
 
 
@@ -95,12 +98,14 @@ def ExportReportDBtoCSV():
 PLATFORMS = Platform.objects.all()
 LABELS = Label.objects.all()
 
+
 def get_platform_id(name):
     p = PLATFORMS.filter(platform_name=name).first()
     if p:
         return p.pk
     else:
-        return 1 #default
+        return 1  # default
+
 
 def get_platform_report_link(name):
     p = PLATFORMS.filter(platform_name=name).first()
@@ -115,7 +120,8 @@ def get_label(id):
     if l:
         return l.label_name
     else:
-        return 1 #default
+        return 1  # default
+
 
 def classify_report(content):
     script_path = os.path.abspath('../backend/classifier/hate_speech_service/svm.py')
@@ -136,9 +142,9 @@ def classify_report(content):
         print(f"Script failed with error: {e}")  
         return None, None
 
+
 def create_prediction_str(predictions):
     pred_list = ''
     for p in predictions:
         pred_list += p
     return pred_list
-
