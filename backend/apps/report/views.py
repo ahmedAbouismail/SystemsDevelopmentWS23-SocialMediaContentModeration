@@ -54,7 +54,7 @@ def post_report(request):
         serializer.save()
         #Create Response
         response = {
-            'isHateSpeech:': class_label != 'no hate',
+            'isHateSpeech:': class_label != 'No Hate',
             'classifierCategory': class_label,
             'categoryDefinition': 'blablabla',  # TODO
             'platform': request.data['platform'],
