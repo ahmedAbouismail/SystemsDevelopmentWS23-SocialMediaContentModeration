@@ -24,22 +24,42 @@ const ResponsePage =(state)=> {
                             <p>
                                 {res['isHateSpeech:'] ? (
                                     <>
-                                    ..for taking the time to report a potential hate speech post on <b>{res['platform']}</b>.
+                                    ..for taking the time to report a potential hate speech post
+                                        {res['platform'] !== 'Other' ? (
+                                            <> on <b>{res['platform']}</b>.</>
+                                        ) : (
+                                            <>. </>
+                                        )}
                                     Your commitment to fostering a safer online community is truly appreciated.
-                                    We have received your report, and our AI is currently analyzing the content. 
+                                    We have received your report, and our AI is currently analyzing the content.
                                     The category assigned to the post is <b>{res['classifierCategory']}</b>. This category entails <b>{res['categoryDefinition']}</b>.
-                                    Rest assured, your report has been securely stored, and our team will thoroughly review the content. 
-                                    To take immediate action, we encourage you to report the post directly on <b>{res['platform']}</b> by visiting <b><a href={res['reportingLink']} target='_blank'>this link</a></b>.
-                                    Thank you again for being an active advocate for a positive online experience across the internet. 
-                                
+                                    Rest assured, your report has been securely stored, and our team will thoroughly review the content.{'\n'}
+                                    {res['platform'] !== 'Other' && (
+                                        <>
+                                             To take immediate action, we encourage you to report the post directly on <b>{res['platform']}</b> by visiting <b><a href={res['reportingLink']} target='_blank'>this link</a></b>.{'\n'}
+                                        </>
+                                    )}
+                                        Thank you again for being an active advocate for a positive online experience across the internet.
+
                                     </>
                                     ) : (
                                     <>
-                                    ..for taking the time to report a potential hate speech post on <b>{res['platform']}</b>.
+                                    ..for taking the time to report a potential hate speech post
+                                        {res['platform'] !== 'Other' ? (
+                                            <> on <b>{res['platform']}</b>.</>
+                                        ) : (
+                                            <>. </>
+                                        )}
                                     Your commitment to fostering a safer online community is truly appreciated.
                                     After thorough analysis, our AI was unable to conclusively determine whether the reported content constitutes hate speech. The nuances of language and context can sometimes pose challenges, and we understand the importance of maintaining a vigilant approach. 
-                                    Rest assured, your report has been securely stored, and our team will thoroughly review the content. If the post feels in violation of <b>{res['platform']}</b>'s community guidelines, we encourage you to report the post directly on <b>{res['platform']}</b> by visiting
-                                    <b><a href={res['reportingLink']} target='_blank'> this link</a></b>. Keep in mind that our AI is still in training, and your additional input on the platform can contribute to its learning process.
+                                    Rest assured, your report has been securely stored, and our team will thoroughly review the content.{'\n'}
+                                     {res['platform'] !== 'Other' && (
+                                        <>
+                                             If the post feels in violation of <b>{res['platform']}</b>'s community guidelines, we encourage you to report the post directly on <b>{res['platform']}</b> by visiting
+                                            <b><a href={res['reportingLink']} target='_blank'> this link</a></b>.{'\n'}
+                                        </>
+                                    )}
+                                        Keep in mind that our AI is still in training, and your additional input on the platform can contribute to its learning process.
                                     <br />
                                     <br />
                                     Thank you again for being an active advocate for a positive online experience across the internet. 
