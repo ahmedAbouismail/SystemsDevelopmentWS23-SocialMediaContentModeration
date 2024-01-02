@@ -188,10 +188,13 @@ const ReportFormComponent = ()=> {
                             />
                         <p className="uk-h4">How would you classify this content?</p>
                         <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                            <label><input value='violence' checked={formData.violence} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> violence & murder</label>
-                            <label><input value='racism' checked={formData.racism} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> racism or sexist stereotyping</label>
-                            <label><input value='discrinatory' checked={formData.discriminatory} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> discriminatory</label>
+                            <label><input value='violence' checked={formData.stereotyping} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> negative stereotyping</label>
                             <label><input value='dehumanization' checked={formData.dehumanization} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> dehumanization</label>
+                            <label><input value='violence' checked={formData.violence} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> violence & killing</label>
+                            <label><input value='racism' checked={formData.equation} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> equation</label>
+                            <label><input value='discrimination' checked={formData.discrimination} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> discrimination</label>
+                            <label><input value='racism' checked={formData.irony} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> disguise as irony</label>
+                            <label><input value='racism' checked={formData.slander} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> harmful slander</label>
                         </div>
                         <p className="uk-h4">What is the source of the text?</p>
                         <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid uk-form-controls uk-form-controls-text">
