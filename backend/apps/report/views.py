@@ -48,20 +48,32 @@ def post_report(request):
         report['classifier_response'] = 1 #default 
 
 
-    #Serialize and save in DB
+    category_definitions = {
+        'Negative Stereotyping': 'the propagation of discriminatory narratives that unfairly portray individuals or groups based on preconceived notions, fostering an environment of bias and reinforcing harmful stereotypes',
+        'Dehumanization': 'the degrading portrayal of individuals or communities, stripping them of their inherent humanity. Content falling under "Dehumanization" often employs language or imagery that diminishes the worth and dignity of its subjects',
+        'Violence & Killing': 'the presence of content that explicitly showcases or advocates for acts of violence and killing. Such material may involve graphic descriptions, images, or discussions that glorify or incite harm, posing serious concerns for online safety and community well-being',
+        'Equation': 'This content is offensive.',
+        'Normalization of Existing Discrimination': 'the normalization of discriminatory practices or attitudes that already exist in society, perpetuating harmful biases and reinforcing unequal power dynamics. Content falling under this category may contribute to the entrenchment of systemic discrimination by downplaying its severity or dismissing the need for societal change',
+        'Disguise as Irony': 'instances where potentially harmful or offensive content is presented under the guise of irony, using humor or sarcasm to mask the underlying negative intent. It often requires careful analysis to distinguish between genuine satire and content that may perpetuate harmful ideas',
+        'default': 'the dissemination of false and injurious statements, encompassing malicious communication aimed at harming an individual\'s reputation or character. It involves the intentional spread of damaging narratives, often with the purpose of defaming the targeted person and causing harm to their public image',
+    }
+
+    category_definition = category_definitions.get(class_label, category_definitions['default'])
+
+    # Serialize and save in DB
     serializer = PostSerializer(data=report)
     if serializer.is_valid():
         serializer.save()
-        #Create Response
+        # Create Response
         response = {
             'isHateSpeech:': class_label != 'No Hate',
             'classifierCategory': class_label,
-            'categoryDefinition': 'blablabla',  # TODO
+            'categoryDefinition': category_definition,
             'platform': request.data['platform'],
             'reportingLink': get_platform_report_link(request.data['platform'])
         }
         print(response)
-        print('Report gespeichert')        
+        print('Report gespeichert')
         return Response(data=response, status=status.HTTP_201_CREATED)
     else:
         print('Report nicht gespeichert')
