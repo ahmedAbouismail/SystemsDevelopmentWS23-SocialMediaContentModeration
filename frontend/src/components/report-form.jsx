@@ -198,10 +198,11 @@ const ReportFormComponent = ()=> {
                         </div>
                         <p className="uk-h4">What is the source of the text?</p>
                         <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid uk-form-controls uk-form-controls-text">
-                            <label><input value='Facebook' checked={formData.platform== 'Facebook'} className="uk-checkbox" type="radio" name="platform" onChange={handleSourceChange} /> Facebook</label>
-                            <label><input value='Instagram' checked={formData.platform== 'Instagram'} className="uk-checkbox" type="radio" name="platform" onChange={handleSourceChange} /> Instagram</label>
-                            <label><input value='Reddit' checked={formData.platform== 'Reddit'} className="uk-checkbox" type="radio" name="platform" onChange={handleSourceChange} /> Reddit</label>
-                            <label><input value='X' checked={formData.platform== 'X'} className="uk-checkbox" type="radio" name="platform" onChange={handleSourceChange} /> X</label>
+                            <label><input value='Facebook' checked={formData.platform=== 'Facebook'} className="uk-checkbox" type="radio" name="platform" onChange={handleSourceChange} /> Facebook</label>
+                            <label><input value='Instagram' checked={formData.platform=== 'Instagram'} className="uk-checkbox" type="radio" name="platform" onChange={handleSourceChange} /> Instagram</label>
+                            <label><input value='Reddit' checked={formData.platform=== 'Reddit'} className="uk-checkbox" type="radio" name="platform" onChange={handleSourceChange} /> Reddit</label>
+                            <label><input value='X' checked={formData.platform=== 'X'} className="uk-checkbox" type="radio" name="platform" onChange={handleSourceChange} /> X</label>
+                            <label><input value='Other' checked={formData.platform=== 'Other'} className="uk-checkbox" type="radio" name="platform" onChange={handleSourceChange} /> Other</label>
                         </div>
                         <p className="uk-h4">Optional: Attach an Image</p>
                         <div className="js-upload">
