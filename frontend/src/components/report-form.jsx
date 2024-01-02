@@ -87,32 +87,56 @@ const ReportFormComponent = ()=> {
         return acceptedImageTypes.includes(fileType);
     };
 
-    const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("formData", formData);
+    const isPlatformSelected = () => !formData.platform;
+    const isClassificationCheckboxSelected = () => formData.user_prediction.length === 0;
+    const isTextareaEmpty = () => !formData.post_content.trim();
 
-    fetch('http://localhost:8000/report/form/', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log('Success:', data, formData);
+    const validations = [
+        { check: isPlatformSelected, message: 'Please select a platform.' },
+        { check: isClassificationCheckboxSelected, message: 'Please select at least one classification checkbox.' },
+        { check: isTextareaEmpty, message: 'Please enter text in the textarea.' },
+    ];
 
-        navigate(
-            '/response', {
-                state: { response: data }
-            }
-        );
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+    const validateForm = () => {
+        const invalidValidation = validations.find((validation) => validation.check());
+
+    if (invalidValidation) {
+        // If a validation condition is true, display the associated error message
+        alert(invalidValidation.message);
+        return false;
+    }
+
+    return true;
 };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log("formData", formData);
+
+        if (!validateForm()) {
+            return;
+        }
+        fetch('http://localhost:8000/report/form/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Success:', data, formData);
+
+                navigate(
+                    '/response', {
+                        state: { response: data }
+                    });
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    };
 
     const handleLinkSubmit = async (event) => {
         event.preventDefault();
