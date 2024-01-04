@@ -690,3 +690,89 @@ label {
 .login-input-open .login-input-label {
   transform: translateY(-40px);
 }
+/* Dashboard */
+.dashboard-main-menu{
+  align-items: baseline;
+}
+.h1-dashboard{
+  font-family: 'Outfit';
+  font-weight: 600;
+  text-transform: none !important;
+  color:#000 !important;
+  font-size: 32px !important;
+}
+.button-primary-dashboard{
+  background-color: #1f2041;
+  border-radius: 50px;
+  color: #FFFFFF !important;
+  border: 2px solid #1f2041;
+
+}
+.button-primary-dashboard:hover{
+  background-color: #F6A431;
+  border-radius: 50px;
+  color: #FFFFFF!important;
+  border: 2px solid #F6A431;
+}
+.button-default-dashboard{
+  background-color: #FFFFFF;
+  border-radius: 50px;
+  color: #1f2041!important;
+  border: 2px solid #1f2041;
+}
+.button-default-dashboard:hover{
+  background-color: #1F2041;
+  color: #FFFFFF!important;
+}
+.dashboard-main-menu-container{
+  border-bottom: 1px solid #c3c3c3;
+  padding: 0px 25px 25px 0px;
+}
+.dashboard-main-left-menu{
+  list-style-type: none;
+  padding-left: 0px !important;
+}
+.dashboard-main-left-menu li{
+  padding: 10px 20px;
+  color:#FFFFFF !important;
+  font-family: 'Outfit';
+  font-size: 16px;
+  font-weight: 300;
+}
+.dashboard-main-left-menu li:hover{
+  background-color: #1f2041;
+}
+.dashboard-main-left-menu li a{
+  color:#FFFFFF;
+}
+.dashboard-main-left-menu li a:hover{
+  text-decoration: none;
+  background-color: #1f2041;
+}
+.button-left-icon{
+  position: relative;
+  left: -15px;
+  font-size: 14px;
+}
+.button-right-icon{
+  position: relative;
+  right: -15px;
+  font-size: 16px;
+}
+.main-datatable{
+  margin-top: 35px;
+  padding-right: 30px;
+}
+.dashboard-dropdow-menu li a{
+  font-size: 15px;
+  color:#000;
+  font-family: 'Outfit';
+}
+.dashboard-dropdow-menu li a:hover{
+  text-decoration: none;
+  color: #F6A431;
+}
+.bozQpI{
+  font-size: 15px;
+  color:#1F2041;
+}
