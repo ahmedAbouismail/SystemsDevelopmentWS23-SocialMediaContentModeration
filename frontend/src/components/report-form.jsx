@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const ReportFormComponent = ()=> {
     const navigate = useNavigate();
     const [notification, setNotification] = useState(null);
+    const [isLinkValid, setIsLinkValid] = useState(true);
 
     // manage form data
     const [formData, setFormData] = useState({
@@ -15,11 +16,13 @@ const ReportFormComponent = ()=> {
         platform: '',
         username: '',
         usermail: '',
-        // classifierResponse: '',
     });
 
-    const [isEmailValid, setIsEmailValid] = useState(true);
-    const [isLinkValid, setIsLinkValid] = useState(true);
+    // link
+    const [link, setLink] = useState({
+        post_link: '',
+    })
+
 
     const handleInputChange = (e) => {
         setFormData({
@@ -58,19 +61,6 @@ const ReportFormComponent = ()=> {
         setFormData({ ...formData, post_link: event.target.value });
     };
 
-    const handleUsernameChange = (event) => {
-        setFormData({ ...formData, username: event.target.value });
-    };
-
-    const handleUsermailChange = (event) => {
-        const userEmail = event.target.value;
-
-        setIsEmailValid(isValidEmail(userEmail));
-
-        // Always update the state with the input value, valid or not
-        setFormData({ ...formData, usermail: userEmail });
-    };
-
     const handleImageChange = (event) => {
         const imageFile = event.target.files[0];
 
@@ -86,11 +76,15 @@ const ReportFormComponent = ()=> {
         const acceptedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
         return acceptedImageTypes.includes(fileType);
     };
-
+   
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("formData", formData);
-
+        if (formData.post_content.trim() === '') {
+            const textarea = document.getElementById("post_text");            
+            textarea.focus();
+            return
+        }
         fetch('http://localhost:8000/report/form/', {
             method: 'POST',
             headers: {
@@ -116,20 +110,27 @@ const ReportFormComponent = ()=> {
 
     const handleLinkSubmit = async (event) => {
         event.preventDefault();
-        console.log("formData", formData);
+        console.log("link", link);
+        if (link.post_link.trim() === '') {
+            setNotification({
+                type: 'error',
+                message: 'Link is empty!',
+            });
+            return
+        }
         try {
-          const response = await fetch('http://localhost:8000/report/form/', {
+          const response = await fetch('http://localhost:8000/report/form/', { // TODO: add extra endpoint for saving links
             method: 'POST',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formData),
+            body: JSON.stringify(link),
           });
     
           if (response.ok) {
             const responseData = await response.json();
-            console.log('Success:', responseData, formData);
+            console.log('Success:', responseData, link);
     
             setNotification({
               type: 'success',
@@ -157,17 +158,12 @@ const ReportFormComponent = ()=> {
         }
       };
 
-    // TODO: validation should also take place on server 
     const isValidLink = (link) => {
         const linkRegex = /^(https?:\/\/)?(www\.)?(facebook\.com|reddit\.com|instagram\.com|x\.com|twitter\.com)\/.*/i;
         return linkRegex.test(link);
     };
-
-    const isValidEmail = (email) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    };
-      
+   
+   
    
     return <>
         <div>
@@ -180,11 +176,12 @@ const ReportFormComponent = ()=> {
                             <p>If you come across a post that you believe is harmful or contains hate speech, let us investigate it for you. Just copy and paste the content here, and if available, attach the relevant link. </p>
                             <p>Your proactive involvement is key in ensuring a safer online community.</p>
                         </div>
-                        <textarea className='uk-textarea uk-border-rounded uk-box-shadow-medium uk-padding textarea-report'
+                        <textarea id='post_text' className='uk-textarea uk-border-rounded uk-box-shadow-medium uk-padding textarea-report'
                             rows={10} 
                             placeholder="Enter text here .."
                             value={formData.post_content}
                             onChange={handleInputChange}
+                            required
                             />
                         <p className="uk-h4">How would you classify this content?</p>
                         <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid">
@@ -219,7 +216,6 @@ const ReportFormComponent = ()=> {
                                 type='submit'
                                 onClick={handleSubmit}
                             >Send</a>
-                            {/* <SendReportButton></SendReportButton> */}
                         </div>
                     </div>
                     <div className="uk-flex-first uk-flex-last@l">
@@ -248,27 +244,6 @@ const ReportFormComponent = ()=> {
                                     />
                                         {!isLinkValid && (<p className="uk-text-danger">Please enter a valid Link. (Facebook, Instagram, Reddit or X)</p>)}
                                 </div>
-                                <div className="uk-margin">
-                                    <input
-                                        value={formData.username}
-                                        className="uk-input"
-                                        type="text"
-                                        placeholder="Name"
-                                        aria-label="Name"
-                                        onChange={handleUsernameChange}
-                                    />
-                                </div>
-                                <div className="uk-margin">
-                                    <input
-                                        value={formData.usermail}
-                                        className="uk-input"
-                                        type="text"
-                                        placeholder="E-Mail"
-                                        aria-label="E-Mail"
-                                        onChange={handleUsermailChange}
-                                    />
-                                        {!isEmailValid && (<p className="uk-text-danger">Please enter a valid email address.</p>)}
-                                </div>
                                 <div>
                                     <a className="uk-button uk-button-secondary" 
                                         onClick={handleLinkSubmit}
@@ -291,7 +266,7 @@ const ReportFormComponent = ()=> {
                 <div className='uk-flex-first uk-flex-last@l'>
                     <p className="small-title-left">Send a Link</p>
                     <h3 className="uk-h1">Share the origin of harmful content</h3>
-                    <p>Empower our mission by providing the link to suspected hate speech. Your input is invaluable in our commitment to swiftly address and eradicate harmful content, creating a safer digital space for all."</p>
+                    <p>Empower our mission by providing the link to suspected hate speech. Your input is invaluable in our commitment to swiftly address and eradicate harmful content, creating a safer digital space for all.</p>
                 </div>
             </div>
         </div>

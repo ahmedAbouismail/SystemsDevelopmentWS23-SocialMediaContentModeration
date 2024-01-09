@@ -127,7 +127,7 @@ def get_label(id):
 
 def classify_report(content):
     script_path = os.path.abspath('../backend/classifier/hate_speech_service/svm.py')
-    script_command = f'python {script_path} "{content}"'
+    script_command = f'python "{script_path}" "{content}"' # adjustment to run script command on windows
 
     try:
         output = subprocess.check_output(script_command, shell=True, text=True)
