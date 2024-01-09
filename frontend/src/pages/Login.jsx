@@ -60,10 +60,10 @@ class LoginInput extends React.Component {
     }
 }
 
-const Login = () => {
+const Login = ({ setAuthenticated, history, setRememberMe }) => {
     const [loginError, setLoginError] = useState(false);
     const navigate = useNavigate();
-
+    const [rememberMe, setLocalRememberMe] = useState(false);
     const handleLogin = async () => {
         const name = document.getElementById('name').value;
         const password = document.getElementById('password').value;
@@ -81,7 +81,16 @@ const Login = () => {
             if (response.ok) {
                 console.log('Erfolgreich eingeloggt!');
                 setLoginError(false);
+                setAuthenticated(true);
                 navigate('/dashboard');
+
+                // Save rememberMe status to localStorage
+                /*if (rememberMe) {
+                    localStorage.setItem('rememberMe', 'true');
+                    localStorage.setItem('token', response.token);
+                } else {
+                    localStorage.removeItem('rememberMe');
+                }*/
             } else {
                 console.error('Fehler beim Einloggen');
                 setLoginError(true);

@@ -48,53 +48,7 @@ const CustomPagination = ({ pagination, data }) => {
     );
   };
 
-const MainDashboard = () => {
-    /***** Hier DB einbinden ****/
-  /*const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        //TODO richtige URL fehlt 
-        const response = await axios.get('http://localhost:8000/report/');
-        setData(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  /**** Daten Vorbereiten ****/
-  /*
-  const columns = [
-    { name: 'Category', selector: 'user_prediction', sortable: true },
-    { name: 'Source', selector: 'post_platform', sortable: true },
-    { name: 'Image', selector: 'post_image', sortable: true },
-    { name: 'Link', selector: 'post_link', sortable: true },
-    { name: 'Text', selector: 'post_content', sortable: true },
-    { name: 'Classifier', selector: 'classifier_response', sortable: true },
-    {
-      name: 'Actions',
-      cell: (row) => (
-        <>
-          <div>
-            <a>
-              <FontAwesomeIcon icon={faEllipsisVertical} />
-            </a>
-            <div id={row.id} data-uk-dropdown="mode:click; animation: uk-animation-slide-top-small; duration: 100">
-              <ul className="uk-nav uk-dropdown-nav">
-                <li><a onClick={() => handleEdit(row)}>Edit</a></li>
-                <li><a onClick={() => handleDelete(row)}>Delete</a></li>
-                <li><a onClick={() => handleDownload(row)}>Download</a></li>
-              </ul>
-            </div>
-          </div>
-        </>
-      ),
-    },
-  ];*/
+const MainDashboard = (isAuthenticated, setIsAuthenticated) => {
   /* Dummy daten löschen und in datatable anpassen */
   const columns = [
     { name: 'Name', selector: 'name', sortable: true },
@@ -153,12 +107,12 @@ const MainDashboard = () => {
   
   return (
             <div className="" id="dashboard-container" data-uk-grid>
-                <div className="uk-width-expand">
+                <div className="uk-width-expand@m">
                     <div className="dashboard-main-menu-container" data-uk-grid>
-                        <div className='uk-width-auto'>
+                        <div className='uk-width-auto@m uk-width-1-1'>
                             <nav className="">
                                 {/* TODO: write functions */}
-                                <ul className="uk-subnav dashboard-main-menu uk-margin-remove-bottom uk-visible@s">
+                                <ul className="uk-subnav dashboard-main-menu uk-margin-remove-bottom">
                                     <li>
                                         <p className='h1-dashboard'>My Dashboard</p>
                                     </li>
@@ -171,10 +125,10 @@ const MainDashboard = () => {
                                 </ul>
                             </nav>
                         </div>
-                        <div className='uk-width-expand'>
-                            <div className='uk-flex uk-flex-right'>
+                        <div className='uk-width-expand@l uk-width-1-1 dashboard-minus-margin-top'>
+                            <div className='uk-flex uk-flex-right@l uk-flex-left'>
                                 <nav className="">
-                                    <ul className="uk-subnav main-menu uk-margin-remove-bottom uk-flex-right uk-visible@s">
+                                    <ul className="uk-subnav main-menu uk-margin-remove-bottom uk-flex-right">
                                         <li>
                                             <a href="#" className='uk-button button-default-dashboard'>Admin</a>
                                         </li>
