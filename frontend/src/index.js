@@ -82,10 +82,12 @@ function Template() {
                 <Route path="/about-us" element={<AboutUs></AboutUs>}></Route>
                 <Route path="/hate-speech" element={<HateSpeechPage></HateSpeechPage>}></Route>
                 <Route path="/response" element={<ResponsePage />}></Route>
+                {/*<Route path='/dashboard' element={<MainDashboard />}/>
+                <Route path='/login' element={<Login />}/> */}
                 <Route path="/login" element={<Login setAuthenticated={setAuthenticated} setRememberMe={setRememberMe}/>}></Route>
                 <Route path='/' element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
                     <Route path='/dashboard' element={<MainDashboard />}/>
-                </Route>    
+                </Route>      
             </Routes>
         </BrowserRouter>
         {getCurrentPath() !== "/dashboard" && <Footer />}

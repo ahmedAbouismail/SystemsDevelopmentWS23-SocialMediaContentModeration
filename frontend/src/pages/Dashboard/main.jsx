@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -48,7 +49,32 @@ const CustomPagination = ({ pagination, data }) => {
     );
   };
 
-const MainDashboard = (isAuthenticated, setIsAuthenticated) => {
+const MainDashboard = () => {
+  
+  const [isLoggedIn, setLoggedIn] = useState(true); 
+  const navigate = useNavigate();
+  const handleLogout = async() => {
+    try {
+      const response = await fetch('http://localhost:8000/dashboard/logout', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },       
+      });
+
+      if (response.ok) {
+        console.log('erfolgreich ausgeloggt')
+        setLoggedIn(false);
+        navigate('/login');
+      } else {
+        // Fehler beim Logout
+        console.error('Logout fehlgeschlagen:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Fehler beim Logout:', error.message);
+    }
+  };
   /* Dummy daten löschen und in datatable anpassen */
   const columns = [
     { name: 'Name', selector: 'name', sortable: true },
@@ -104,7 +130,6 @@ const MainDashboard = (isAuthenticated, setIsAuthenticated) => {
     // TODO
   };
  
-  
   return (
             <div className="" id="dashboard-container" data-uk-grid>
                 <div className="uk-width-expand@m">
@@ -130,10 +155,10 @@ const MainDashboard = (isAuthenticated, setIsAuthenticated) => {
                                 <nav className="">
                                     <ul className="uk-subnav main-menu uk-margin-remove-bottom uk-flex-right">
                                         <li>
-                                            <a href="#" className='uk-button button-default-dashboard'>Admin</a>
+                                            <a href="#" className='uk-button button-default-dashboard'>Export <FontAwesomeIcon icon={faDownload} className="button-right-icon" /></a>
                                         </li>
                                         <li>
-                                            <a href="#" className='uk-button button-default-dashboard'>Export <FontAwesomeIcon icon={faDownload} className="button-right-icon" /></a>
+                                          <button onClick={handleLogout} className='uk-button button-default-dashboard'>Log out</button>
                                         </li>
                                     </ul>
                                 </nav>
