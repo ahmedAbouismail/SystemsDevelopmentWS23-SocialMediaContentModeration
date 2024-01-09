@@ -28,8 +28,8 @@ class Post(models.Model):
     post_content = models.TextField()
     post_link = models.CharField(max_length=1024, blank=True, null=True)
     post_image = models.CharField(max_length=1024, blank=True, null=True)
-    user_prediction = models.CharField(max_length=255)
-    post_platform = models.ForeignKey(Platform, on_delete=models.SET_NULL, null=True)
+    user_prediction = models.CharField(max_length=255, null=True, blank=True)
+    post_platform = models.ForeignKey(Platform, on_delete=models.SET_NULL, null=True, blank=True)
     classifier_response = models.ForeignKey(ClassifierResponse, on_delete=models.SET_NULL, null=True)
     timestamp = models.DateTimeField().auto_created
 

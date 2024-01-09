@@ -87,35 +87,10 @@ const ReportFormComponent = ()=> {
         return acceptedImageTypes.includes(fileType);
     };
 
-    const isPlatformSelected = () => !formData.platform;
-    const isClassificationCheckboxSelected = () => formData.user_prediction.length === 0;
-    const isTextareaEmpty = () => !formData.post_content.trim();
-
-    const validations = [
-        { check: isPlatformSelected, message: 'Please select a platform.' },
-        { check: isClassificationCheckboxSelected, message: 'Please select at least one classification checkbox.' },
-        { check: isTextareaEmpty, message: 'Please enter text in the textarea.' },
-    ];
-
-    const validateForm = () => {
-        const invalidValidation = validations.find((validation) => validation.check());
-
-    if (invalidValidation) {
-        // If a validation condition is true, display the associated error message
-        alert(invalidValidation.message);
-        return false;
-    }
-
-    return true;
-};
-
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("formData", formData);
 
-        if (!validateForm()) {
-            return;
-        }
         fetch('http://localhost:8000/report/form/', {
             method: 'POST',
             headers: {
@@ -130,8 +105,9 @@ const ReportFormComponent = ()=> {
 
                 navigate(
                     '/response', {
-                        state: { response: data }
-                    });
+                        state: {response: data}
+                    }
+                );
             })
             .catch((error) => {
                 console.error('Error:', error);
