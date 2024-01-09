@@ -12,8 +12,11 @@ const ResponsePage =(state)=> {
         window.scrollTo(0, 0);
       }, []); // empty dependency array ensures to only run effect when the component mounts
     
+    const isHateSpeech = res['isHateSpeech:'];
+    const categoryText = isHateSpeech ? `\nCategory: ${res['classifierCategory']}` : '';
+    
     return <>
-        <HeroJustText text={`Hate Speech was ${res['isHateSpeech:'] === true ? "" : "NOT "}Recognized!`} />
+    <HeroJustText text={`Hate Speech was ${isHateSpeech ? '' : 'NOT '}Recognized${categoryText}`} />
         <div className="background-pfad-left">
             <div className="uk-container">
                 <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@l uk-flex uk-flex-middle" data-uk-grid>
