@@ -66,9 +66,6 @@ function Template() {
         const storedToken = localStorage.getItem('token');
     
         if (rememberMeStatus && storedToken) {
-          // Validate the token (you may need to make an API call for this)
-          // If the token is valid, set isAuthenticated to true
-          // In a real-world application, you would have proper token validation logic
           setAuthenticated(true);
         }
       }, []);*/

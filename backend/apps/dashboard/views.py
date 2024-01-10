@@ -55,7 +55,8 @@ def login(request):
     user = auth.authenticate(username=username, password=password)
     
     if user is not None:
-        #token, created = Token.objects.get_or_create(user=user)
+        #Token.objects.get_or_create(
+        token, created = Token.objects.get_or_create(user=user)
         auth.login(request, user)
         print('Login successful')
         return Response(status=status.HTTP_200_OK)
