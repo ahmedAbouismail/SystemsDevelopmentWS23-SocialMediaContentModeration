@@ -13,10 +13,10 @@ const ResponsePage =(state)=> {
       }, []); // empty dependency array ensures to only run effect when the component mounts
     
     const isHateSpeech = res['isHateSpeech:'];
-    const categoryText = isHateSpeech ? `\nCategory: ${res['classifierCategory']}` : '';
-    
+    const categoryText = isHateSpeech ? `- ${res['classifierCategory']}` : '';
+
     return <>
-    <HeroJustText text={`Hate Speech was ${isHateSpeech ? '' : 'NOT '}Recognized${categoryText}`} />
+    <HeroJustText text={`Hate Speech was ${isHateSpeech ? '' : 'NOT '}Recognized ${categoryText}`} />
         <div className="background-pfad-left">
             <div className="uk-container">
                 <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@l uk-flex uk-flex-middle" data-uk-grid>
@@ -104,13 +104,19 @@ const ResponsePage =(state)=> {
                                 </>
                             )}
                         </p>
-                    </div>
+                    {/*  providing link instead of contact form */}
+                        <div >
+                            <a className='uk-button uk-button-secondary'
+                                href="mailto:info@stop-hate-speech">Contact us</a>
+                        </div>
+                    </div>    
                     
-                    {/* potentially providing link instead of contact form */}
-                    <div className='uk-container uk-text-center'>
-                        <p><a href="mailto:info@stop-hate-speech">Contact us</a></p>
+                    <div className="uk-flex-first uk-flex-last@l">
+                        <div className="uk-box-shadow-medium uk-border-rounded uk-background-default responsive-image-height-m">
+                            <img src={"/assets/img/hands-with-smarthphone.jpg"} className="uk-border-rounded" alt="Mann melde Post" />
+                        </div>
                     </div>
-
+{/* 
                     <div>
                         <div className="uk-border-rounded uk-box-shadow-medium uk-padding uk-background-default">
                             <form>
@@ -148,7 +154,7 @@ const ResponsePage =(state)=> {
                                 </fieldset>
                             </form>
                         </div>
-                    </div>
+                    </div> */}
                     
                 </div>
             </div>                
