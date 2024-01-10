@@ -1,12 +1,14 @@
-from nltk.corpus import stopwords
+import nltk
+nltk.download('stopwords')
+nltk.download('punkt')
 import re
 from nltk.stem.snowball import SnowballStemmer
 from nltk.tokenize import word_tokenize
-
+from nltk.corpus import stopwords
 
 class DataPreprocessing:
+    stop_words = list(stopwords.words("english"))
     stemmer = SnowballStemmer("english")
-    stop_words = set(stopwords.words("english"))
     substitutions = {
         r"<[^>]+>": " ",
         r"[^A-Za-zÀ-ž ]": " ",
