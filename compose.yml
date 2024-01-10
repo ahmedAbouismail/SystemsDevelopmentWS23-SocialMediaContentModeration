@@ -13,7 +13,11 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    command: sh -c "/usr/src/hassmelder/backend/wait-for-db.sh db && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: >
+          sh -c "/usr/src/hassmelder/backend/wait-for-db.sh db && 
+          python manage.py makemigrations &&
+          python manage.py migrate &&
+          python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./backend:/usr/src/hassmelder/backend
     ports:
