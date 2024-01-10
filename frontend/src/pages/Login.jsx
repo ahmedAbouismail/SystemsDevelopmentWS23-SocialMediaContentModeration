@@ -83,11 +83,12 @@ const Login = ({ setAuthenticated, history, setRememberMe }) => {
                 setLoginError(false);
                 setAuthenticated(true);
                 navigate('/dashboard');
-
+                //const token = response.json().then(data => data.token);
+                //console.log('Token: ' + token);
                 // Save rememberMe status to localStorage
                 /*if (rememberMe) {
                     localStorage.setItem('rememberMe', 'true');
-                    localStorage.setItem('token', response.token);
+                    localStorage.setItem('token', token);
                 } else {
                     localStorage.removeItem('rememberMe');
                 }*/

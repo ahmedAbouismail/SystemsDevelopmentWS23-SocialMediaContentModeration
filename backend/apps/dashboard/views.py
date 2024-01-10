@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 
 def register(request):
@@ -54,6 +55,7 @@ def login(request):
     user = auth.authenticate(username=username, password=password)
     
     if user is not None:
+        #token, created = Token.objects.get_or_create(user=user)
         auth.login(request, user)
         print('Login successful')
         return Response(status=status.HTTP_200_OK)
