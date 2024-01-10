@@ -341,7 +341,7 @@ p, li {
 }
 
 /* response page */
-b {
+b, a {
   color: #F6A431;
 }
 
