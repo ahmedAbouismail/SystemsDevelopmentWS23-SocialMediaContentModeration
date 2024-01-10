@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.authtoken.models import Token
 
 def register(request):
     if request.method == 'POST':
@@ -52,11 +53,14 @@ def login(request):
     password = request.data['password']
     
     user = auth.authenticate(username=username, password=password)
-    
+
     if user is not None:
+        # create or get token for user
+        token, created = Token.objects.get_or_create(user=user)
         auth.login(request, user)
         print('Login successful')
-        return Response(status=status.HTTP_200_OK)
+        # return token and status to client
+        return Response({'token':token.key}, status=status.HTTP_200_OK)
     else:
         print('Login unsuccessful')
         return Response(status=status.HTTP_401_UNAUTHORIZED)

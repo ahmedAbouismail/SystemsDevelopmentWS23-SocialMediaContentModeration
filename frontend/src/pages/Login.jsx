@@ -81,6 +81,9 @@ class Login extends React.Component {
             });
 
             if (response.ok) {
+                //console.log("Response", response.json().then(data => console.log(data)));
+                const token = response.json().then(data => data.token);
+                console.log("Token", token);
                 // Erfolgreich eingeloggt
                 console.log('Erfolgreich eingeloggt!');
                 this.setState({ loginError: false });
