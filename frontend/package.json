@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.4",
     "datatables.net": "^1.13.8",
+    "file-saver": "^2.0.5",
     "jquery": "^3.7.1",
     "react": "^18.2.0",
     "react-data-table-component": "^7.5.4",
@@ -19,7 +20,8 @@
     "react-router-dom": "^6.21.1",
     "react-scripts": "^5.0.1",
     "uikit": "^3.17.8",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",
