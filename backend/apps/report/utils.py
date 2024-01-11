@@ -46,16 +46,12 @@ def UploadImageToMinio(request_image):
 
 
 def GetImageFromMinio(id: str):
-    config = configparser.ConfigParser(allow_no_value=True)
-    config.read(config_file_path)
-    # #Upload to minio and get url
     minio_client = Minio(
-        config.get("minio", "endpoint"),
-        config.get("minio", "access_key"),
-        config.get("minio", "secret_key"),
-        config.get("minio", "session_token"),
-        config.getboolean("minio", "secure")
-    )
+        endpoint='minio:9000',
+        access_key='minio',
+        secret_key='minio123',
+        secure=False,
+        )
     image_data = minio_client.get_object('images', id)
     format = id.split('.')[1].upper
 
