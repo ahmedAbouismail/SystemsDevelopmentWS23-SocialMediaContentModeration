@@ -32,6 +32,7 @@ services:
     container_name: 'django'
     restart: always
   minio:
+    container_name: 'minio'
     image: minio/minio
     volumes:
       - ./backend/start-minio.sh:/usr/src/hassmelder/backend/start-minio.sh

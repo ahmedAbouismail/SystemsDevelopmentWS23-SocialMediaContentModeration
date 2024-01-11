@@ -79,33 +79,51 @@ const ReportFormComponent = ()=> {
    
     const handleSubmit = (event) => {
         event.preventDefault();
+        
         console.log("formData", formData);
         if (formData.post_content.trim() === '') {
             const textarea = document.getElementById("post_text");            
             textarea.focus();
             return
         }
-        fetch('http://localhost:8000/report/form/', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log('Success:', data, formData);
+        const inputElement = document.getElementById('image');
+        const file = inputElement.files[0];
+        const form = new FormData();
+        form.append('post_image', file);
 
-                navigate(
-                    '/response', {
-                        state: {response: data}
-                    }
-                );
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        fetch('http://localhost:8000/report/form/image',{
+            method: 'POST',
+            body: form,
+        })  .then((response) => response.json())
+            .then((data) =>{
+
+                const imageID = data.image_id;
+                const requestBody = {
+                    ...formData,
+                    image_id: imageID,
+                };
+                fetch('http://localhost:8000/report/form/', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log('Success:', data, formData);
+
+                        navigate(
+                            '/response', {
+                                state: {response: data}
+                            }
+                        );
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+        })
     };
 
     const handleLinkSubmit = async (event) => {
