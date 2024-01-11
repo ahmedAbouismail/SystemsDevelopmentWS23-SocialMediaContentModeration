@@ -79,33 +79,51 @@ const ReportFormComponent = ()=> {
    
     const handleSubmit = (event) => {
         event.preventDefault();
+        
         console.log("formData", formData);
         if (formData.post_content.trim() === '') {
             const textarea = document.getElementById("post_text");            
             textarea.focus();
             return
         }
-        fetch('http://localhost:8000/report/form/', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log('Success:', data, formData);
+        const inputElement = document.getElementById('image');
+        const file = inputElement.files[0];
+        const form = new FormData();
+        form.append('post_image', file);
 
-                navigate(
-                    '/response', {
-                        state: {response: data}
-                    }
-                );
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        fetch('http://localhost:8000/report/form/image',{
+            method: 'POST',
+            body: form,
+        })  .then((response) => response.json())
+            .then((data) =>{
+
+                const imageID = data.image_id;
+                const requestBody = {
+                    ...formData,
+                    image_id: imageID,
+                };
+                fetch('http://localhost:8000/report/form/', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log('Success:', data, formData);
+
+                        navigate(
+                            '/response', {
+                                state: {response: data}
+                            }
+                        );
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+        })
     };
 
     const handleLinkSubmit = async (event) => {
@@ -185,13 +203,13 @@ const ReportFormComponent = ()=> {
                             />
                         <p className="uk-h4">How would you classify this content?</p>
                         <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                            <label><input value='violence' checked={formData.stereotyping} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> negative stereotyping</label>
+                            <label><input value='stereotyping' checked={formData.stereotyping} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> negative stereotyping</label>
                             <label><input value='dehumanization' checked={formData.dehumanization} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> dehumanization</label>
                             <label><input value='violence' checked={formData.violence} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> violence & killing</label>
-                            <label><input value='racism' checked={formData.equation} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> equation</label>
+                            <label><input value='equation' checked={formData.equation} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> equation</label>
                             <label><input value='discrimination' checked={formData.discrimination} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> discrimination</label>
-                            <label><input value='racism' checked={formData.irony} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> disguise as irony</label>
-                            <label><input value='racism' checked={formData.slander} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> harmful slander</label>
+                            <label><input value='irony' checked={formData.irony} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> disguise as irony</label>
+                            <label><input value='slander' checked={formData.slander} className="uk-checkbox" type="checkbox" onChange={handleClassificationChange} /> harmful slander</label>
                         </div>
                         <p className="uk-h4">What is the source of the text?</p>
                         <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid uk-form-controls uk-form-controls-text">

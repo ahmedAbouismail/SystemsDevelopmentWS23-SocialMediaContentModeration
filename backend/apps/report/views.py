@@ -1,11 +1,11 @@
 from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from .serializers import *
 from .utils import *
-
 
 @api_view(['GET'])
 def get_reports(request):
@@ -23,16 +23,9 @@ def post_report(request):
     # LINK - TODO Ahmed
     report['post_link'] = request.data['post_link']
 
-    # NOT WORKING ON JSON, see REST Framework documentation
-    # IMAGE: Get image from request and upload to minIO. Only its id is saved in DB
-    # file = request.data['post_image'] 
-    # if file and file != 'undefined':
-    #     # Handle image upload
-    #     id = UploadImageToMinio(file)
-    #     report['post_image'] = id
-    # else:
-    #     report['post_image'] = 1
-    report['post_image'] = None
+    # GET IMAGE ID
+    
+    report['post_image'] = request.data['image_id']
 
     # USER PREDICTION
     report['user_prediction'] = create_prediction_str(request.data['user_prediction'])
@@ -90,3 +83,27 @@ def download_reports_csv(request):
         response['Content-Disposition'] = 'attachment; filename=reports.csv'
         response.content = ExportReportDBtoCSV()
         return response
+
+
+@api_view(['POST'])
+@parser_classes([MultiPartParser, FormParser])
+def post_screenshot(request):
+    id = 'None'
+    if request.method == 'POST' and 'post_image' in request.FILES:
+        # NOT WORKING ON JSON, see REST Framework documentation
+        # IMAGE: Get image from request and upload to minIO. Only its id is saved in DB
+        file = request.FILES['post_image']
+        if file and file != 'undefined':
+            # Handle image upload
+            id = UploadImageToMinio(file)
+        else:
+            print('File not found')
+        response = {
+            'image_id': id
+        }
+        return Response(data=response, status=status.HTTP_201_CREATED)
+    else:
+        response = {
+            'image_id': id
+        }
+        return Response(data=response, status=status.HTTP_200_OK)

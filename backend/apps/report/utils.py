@@ -12,24 +12,15 @@ import csv
 from .serializers import ClassifierResponseSerializer
 from .models import ClassifierResponse, Platform, Label
 
-current_directory = os.path.dirname(os.path.abspath(__file__))
-relative_path_to_config = '..\..\..\config.ini'
-config_file_path = os.path.join(current_directory, relative_path_to_config)
-print(config_file_path)
-
-
 # Image ----------
 def UploadImageToMinio(request_image):
-    config = configparser.ConfigParser(allow_no_value=True)
-    config.read(config_file_path)
     # #Upload to minio and get url
     minio_client = Minio(
-        config.get("minio", "endpoint"),
-        config.get("minio", "access_key"),
-        config.get("minio", "secret_key"),
-        config.get("minio", "session_token"),
-        config.getboolean("minio", "secure")
-    )
+        endpoint='minio:9000',
+        access_key='minio',
+        secret_key='minio123',
+        secure=False,
+        )
     post_image = request_image  # Access the uploaded file
     id = 'NoImage'
     if minio_client.bucket_exists("images") and post_image:
@@ -55,16 +46,12 @@ def UploadImageToMinio(request_image):
 
 
 def GetImageFromMinio(id: str):
-    config = configparser.ConfigParser(allow_no_value=True)
-    config.read(config_file_path)
-    # #Upload to minio and get url
     minio_client = Minio(
-        config.get("minio", "endpoint"),
-        config.get("minio", "access_key"),
-        config.get("minio", "secret_key"),
-        config.get("minio", "session_token"),
-        config.getboolean("minio", "secure")
-    )
+        endpoint='minio:9000',
+        access_key='minio',
+        secret_key='minio123',
+        secure=False,
+        )
     image_data = minio_client.get_object('images', id)
     format = id.split('.')[1].upper
 
