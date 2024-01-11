@@ -27,21 +27,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='Platform',
-            fields=[
-                ('id', models.IntegerField(primary_key=True)),
-                ('platform_name', models.CharField(max_length=255)),
-                ('reporting_link', models.URLField()),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Label',
-            fields=[
-                ('id', models.IntegerField(primary_key=True)),
-                ('label_name', models.CharField(max_length=255)),
-            ],
-        ),
         migrations.RunPython(insert_report_platform_data),
         migrations.RunPython(insert_report_label_data),
     ]
