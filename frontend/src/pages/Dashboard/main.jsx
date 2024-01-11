@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -49,52 +50,32 @@ const CustomPagination = ({ pagination, data }) => {
   };
 
 const MainDashboard = () => {
-    /***** Hier DB einbinden ****/
-  /*const [data, setData] = useState([]);
+  
+  const [isLoggedIn, setLoggedIn] = useState(true); 
+  const navigate = useNavigate();
+  const handleLogout = async() => {
+    try {
+      const response = await fetch('http://localhost:8000/dashboard/logout', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },       
+      });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        //TODO richtige URL fehlt 
-        const response = await axios.get('http://localhost:8000/report/');
-        setData(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
+      if (response.ok) {
+        console.log('erfolgreich ausgeloggt')
+        setLoggedIn(false);
+        localStorage.removeItem("token");
+        navigate('/login');
+      } else {
+        // Fehler beim Logout
+        console.error('Logout fehlgeschlagen:', response.statusText);
       }
-    };
-
-    fetchData();
-  }, []);
-
-  /**** Daten Vorbereiten ****/
-  /*
-  const columns = [
-    { name: 'Category', selector: 'user_prediction', sortable: true },
-    { name: 'Source', selector: 'post_platform', sortable: true },
-    { name: 'Image', selector: 'post_image', sortable: true },
-    { name: 'Link', selector: 'post_link', sortable: true },
-    { name: 'Text', selector: 'post_content', sortable: true },
-    { name: 'Classifier', selector: 'classifier_response', sortable: true },
-    {
-      name: 'Actions',
-      cell: (row) => (
-        <>
-          <div>
-            <a>
-              <FontAwesomeIcon icon={faEllipsisVertical} />
-            </a>
-            <div id={row.id} data-uk-dropdown="mode:click; animation: uk-animation-slide-top-small; duration: 100">
-              <ul className="uk-nav uk-dropdown-nav">
-                <li><a onClick={() => handleEdit(row)}>Edit</a></li>
-                <li><a onClick={() => handleDelete(row)}>Delete</a></li>
-                <li><a onClick={() => handleDownload(row)}>Download</a></li>
-              </ul>
-            </div>
-          </div>
-        </>
-      ),
-    },
-  ];*/
+    } catch (error) {
+      console.error('Fehler beim Logout:', error.message);
+    }
+  };
   /* Dummy daten löschen und in datatable anpassen */
   const columns = [
     { name: 'Name', selector: 'name', sortable: true },
@@ -103,7 +84,7 @@ const MainDashboard = () => {
     { name: 'Date', selector: 'date', sortable: true },
     { name: 'Text', selector: 'text', sortable: true },
     { name: 'Link', selector: 'link', sortable: true },
-    {
+    /*{
         name: 'Actions',
         cell: (row) => (
           <>
@@ -121,7 +102,7 @@ const MainDashboard = () => {
             </div>
           </>
         ),
-      },
+      },*/
   ];
   
   const data = [
@@ -134,52 +115,37 @@ const MainDashboard = () => {
   
   
   ];
-  /* Options for each data of the dataTable */
-  const handleEdit = (row) => {
-    console.log('Edit', row);
-    // TODO
-  };
 
-  const handleDelete = (row) => {
-    console.log('Delete', row);
-    // TODO
-  };
-
-  const handleDownload = (row) => {
-    console.log('Download', row);
-    // TODO
-  };
  
-  
   return (
             <div className="" id="dashboard-container" data-uk-grid>
-                <div className="uk-width-expand">
+                <div className="uk-width-expand@m">
                     <div className="dashboard-main-menu-container" data-uk-grid>
-                        <div className='uk-width-auto'>
-                            <nav className="">
-                                {/* TODO: write functions */}
-                                <ul className="uk-subnav dashboard-main-menu uk-margin-remove-bottom uk-visible@s">
+                        <div className='uk-width-auto@m uk-width-1-1'>
+                            <p className='h1-dashboard uk-margin-medium-top'>My Dashboard</p>
+                            {/*<nav className="">
+                               {/* <ul className="uk-subnav dashboard-main-menu uk-margin-remove-bottom">
                                     <li>
                                         <p className='h1-dashboard'>My Dashboard</p>
                                     </li>
-                                    <li>
+                                    {/*<li>
                                         <a href="#" className='uk-button button-primary-dashboard'>Add New Entry <FontAwesomeIcon icon={faPlus}  className="button-right-icon"/></a>
                                     </li>
                                     <li>
                                         <a href="#" className='uk-button button-default-dashboard'> <FontAwesomeIcon icon={faMagnifyingGlass} className="button-left-icon" /> Search</a>
                                     </li>
                                 </ul>
-                            </nav>
+                            </nav>*/}
                         </div>
-                        <div className='uk-width-expand'>
-                            <div className='uk-flex uk-flex-right'>
+                        <div className='uk-width-expand@l uk-width-1-1 dashboard-minus-margin-top'>
+                            <div className='uk-flex uk-flex-right@l uk-flex-left'>
                                 <nav className="">
-                                    <ul className="uk-subnav main-menu uk-margin-remove-bottom uk-flex-right uk-visible@s">
-                                        <li>
-                                            <a href="#" className='uk-button button-default-dashboard'>Admin</a>
-                                        </li>
+                                    <ul className="uk-subnav main-menu uk-margin-remove-bottom uk-flex-right">
                                         <li>
                                             <a href="#" className='uk-button button-default-dashboard'>Export <FontAwesomeIcon icon={faDownload} className="button-right-icon" /></a>
+                                        </li>
+                                        <li>
+                                          <button onClick={handleLogout} className='uk-button button-default-dashboard'>Log out</button>
                                         </li>
                                     </ul>
                                 </nav>

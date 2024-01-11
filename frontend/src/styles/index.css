@@ -776,3 +776,18 @@ label {
   font-size: 15px;
   color:#1F2041;
 }
+/* Responsive Dashboard */
+@media only screen and (max-width:1200px){
+  .dashboard-minus-margin-top{
+    margin-top: -30px !important;
+  }
+  .dashboard-main-menu-container{
+    padding: 0px 30px 60px 30px;
+  }
+}
+@media only screen and (max-width:960px){
+  .nav-left-height-responsive{
+    min-height: 50px !important;
+  }
+} 
+

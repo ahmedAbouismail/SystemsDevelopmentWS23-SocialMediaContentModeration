@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const LoginPage = () => {
 
@@ -59,14 +60,20 @@ class LoginInput extends React.Component {
     }
 }
 
-class Login extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            loginError: false,
-        };
-    }
-    handleLogin = async () => {
+const Login = ({ setAuthenticated, history, setRememberMe }) => {
+    const [loginError, setLoginError] = useState(false);
+    const navigate = useNavigate();
+    const [rememberMe, setLocalRememberMe] = useState(false);
+    useEffect(() => {
+        // Check for token in local storage when component mounts
+        const storedToken = localStorage.getItem('token');
+
+        if (storedToken) {
+            setAuthenticated(true);
+            navigate('/dashboard');
+        }
+    }, []); 
+    const handleLogin = async () => {
         const name = document.getElementById('name').value;
         const password = document.getElementById('password').value;
 
@@ -77,49 +84,61 @@ class Login extends React.Component {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, password }), //Anfrage zum Server senden, json.stringify um Zeichenkette zu schicken
+                body: JSON.stringify({ name, password }),
             });
 
             if (response.ok) {
+                //console.log("Response", response.json().then(data => console.log(data)));
+                const token = response.json().then(data => data.token);
+                //console.log("Token", token);
                 // Erfolgreich eingeloggt
                 console.log('Erfolgreich eingeloggt!');
-                this.setState({ loginError: false });
+                setLoginError(false);
+                setAuthenticated(true);
+                navigate('/dashboard');
+                // Save token to localStorage
+                localStorage.setItem('token', token);
+                // Save rememberMe status to localStorage
+                if (rememberMe) {
+                    //console.log(rememberMe);
+                    localStorage.setItem('rememberMe', 'true');
+                } else {
+                    console.log('hier');
+                    localStorage.removeItem('rememberMe');
+                }
             } else {
-                // Fehler beim Einloggen
                 console.error('Fehler beim Einloggen');
-                this.setState({ loginError: true });
+                setLoginError(true);
             }
         } catch (error) {
             console.error('Netzwerkfehler', error);
         }
     };
-    render() {
-        const { loginError } = this.state;
-        return (
-            <div className="uk-container uk-margin-xlarge-top uk-margin-xlarge-bottom">
-                <div data-uk-grid className='uk-flex uk-flex-center'>
-                    <div className='uk-width-1-2 uk-box-shadow-medium uk-border-rounded uk-background-default uk-padding'>
-                        <div data-uk-grid className='uk-flex uk-flex-middle'>
-                            <div className="uk-width-1-2">
-                                <div className="title"><h1>Login</h1></div>
-                                <LoginInput type="text" label="name" id="name" />
-                                <LoginInput type="password" label="password" id="password" />
-                                {loginError && (
-                                    <div className="uk-alert-danger" data-uk-alert>
-                                        <p>Falsches Passwort. Bitte versuchen Sie es erneut.</p>
-                                    </div>
-                                )}
-                                <a className="uk-button uk-button-primary" onClick={this.handleLogin}>Login</a>
-                            </div>
-                            <div className="uk-width-1-2 ">
-                                <img src="/assets/img/logo/nohatenet-blacklogologo-transparent.png" />
-                            </div>
+
+    return (
+        <div className="uk-container uk-margin-xlarge-top uk-margin-xlarge-bottom">
+            <div data-uk-grid className='uk-flex uk-flex-center'>
+                <div className='uk-width-1-2 uk-box-shadow-medium uk-border-rounded uk-background-default uk-padding'>
+                    <div data-uk-grid className='uk-flex uk-flex-middle'>
+                        <div className="uk-width-1-2">
+                            <div className="title"><h1>Login</h1></div>
+                            <LoginInput type="text" label="name" id="name" />
+                            <LoginInput type="password" label="password" id="password" />
+                            {loginError && (
+                                <div className="uk-alert-danger" data-uk-alert>
+                                    <p>Falsches Passwort. Bitte versuchen Sie es erneut.</p>
+                                </div>
+                            )}
+                            <a className="uk-button uk-button-primary" onClick={handleLogin}>Login</a>
+                        </div>
+                        <div className="uk-width-1-2 ">
+                            <img src="/assets/img/logo/nohatenet-blacklogologo-transparent.png" alt="Logo" />
                         </div>
                     </div>
                 </div>
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 export default Login;

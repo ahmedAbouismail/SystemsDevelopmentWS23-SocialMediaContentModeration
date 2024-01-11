@@ -1,4 +1,4 @@
-import React from "react"
+import React,  { useState, useEffect }  from "react"
 import { createRoot } from 'react-dom/client';
 import "/node_modules/uikit/dist/css/uikit.min.css"
 import "/node_modules/uikit/dist/js/uikit.min.js"
@@ -9,13 +9,18 @@ import App from "./App"
 import Footer from "./components/footer"
 import Navbar from "./components/nav"
 import ReportPage from "./pages/ReportPage"
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import NotFoundPage from './pages/NoPage';
 import AboutUs from './pages/AboutUs';
 import HateSpeechPage from "./pages/HateSpeechPage";
 import ResponsePage from "./pages/ResponsePage";
+
 import MainDashboard from './pages/Dashboard/main';
 import Login from './pages/Login';
+import PrivateRoute from './pages/Dashboard/privateRoute';
+
+
+
 
 const navList = [
     {
@@ -37,15 +42,7 @@ const navList = [
 const navListLeftDashboard = [
     {
         name: 'Overview',
-        url: '/dashboard/overview',
-    },
-    {
-        name: 'Analytics',
-        url: '/dashboard/analytics',
-    },
-    {
-        name: 'Settings',
-        url: '/dashboard/settings',
+        url: '/dashboard',
     },
 
 
@@ -53,6 +50,17 @@ const navListLeftDashboard = [
 
 function Template() {
     const getCurrentPath = () => window.location.pathname;
+    const [isAuthenticated, setAuthenticated] = useState(false);
+    const [setRememberMe] = useState(false);
+    useEffect(() => {
+        // Check localStorage for rememberMe status and token
+        const rememberMeStatus = localStorage.getItem('rememberMe') === 'true';
+        const storedToken = localStorage.getItem('token');
+    
+        if (rememberMeStatus && storedToken) {
+          setAuthenticated(true);
+        }
+      }, []);
     return ( 
         <>        
         <BrowserRouter>
@@ -63,9 +71,10 @@ function Template() {
                 <Route path="/about-us" element={<AboutUs></AboutUs>}></Route>
                 <Route path="/hate-speech" element={<HateSpeechPage></HateSpeechPage>}></Route>
                 <Route path="/response" element={<ResponsePage />}></Route>
-                <Route path="/login" element={<Login />} />
-                <Route path="/dashboard" element={<MainDashboard />} />
-
+                <Route path="/login" element={<Login setAuthenticated={setAuthenticated} setRememberMe={setRememberMe}/>}></Route>
+                <Route path='/' element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
+                    <Route path='/dashboard' element={<MainDashboard />}/>
+                </Route>      
             </Routes>
         </BrowserRouter>
         {getCurrentPath() !== "/dashboard" && <Footer />}
@@ -80,30 +89,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Recursive function to try loading the content until the container is found
     const loadContent = () => {
-        // Check if the current path is "/dashboard"
         if (getCurrentPath() === "/dashboard") {
-            // If on the "/dashboard" subpage, try to render the LeftNav
             const dashboardContainer = document.getElementById("dashboard-container");
 
             // Check if the container element exists
             if (dashboardContainer) {
                 // Create a new div for LeftNav
                 const leftNavContainer = document.createElement("div");
-                leftNavContainer.className = "uk-width-1-6";
+                leftNavContainer.className = "uk-width-1-6@l uk-width-1-5@m";
 
                 // Render LeftNav into the new container
                 const leftNavRoot = createRoot(leftNavContainer);
                 leftNavRoot.render(<LeftNav items={navListLeftDashboard} />);
-
-                // Get the first child of dashboardContainer
                 const firstChild = dashboardContainer.firstChild;
 
-                // Insert leftNavContainer as the first child of dashboardContainer
                 dashboardContainer.insertBefore(leftNavContainer, firstChild);
             } else {
                 // If the container element is not found, try loading again after a delay
                 console.error("Container element not found in the DOM");
-                setTimeout(loadContent, 1000); 
+                setTimeout(loadContent, 300); 
             }
         }
     };
