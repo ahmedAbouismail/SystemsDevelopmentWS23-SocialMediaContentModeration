@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const LoginPage = () => {
@@ -64,6 +64,15 @@ const Login = ({ setAuthenticated, history, setRememberMe }) => {
     const [loginError, setLoginError] = useState(false);
     const navigate = useNavigate();
     const [rememberMe, setLocalRememberMe] = useState(false);
+    useEffect(() => {
+        // Check for token in local storage when component mounts
+        const storedToken = localStorage.getItem('token');
+
+        if (storedToken) {
+            setAuthenticated(true);
+            navigate('/dashboard');
+        }
+    }, []); 
     const handleLogin = async () => {
         const name = document.getElementById('name').value;
         const password = document.getElementById('password').value;
@@ -81,21 +90,22 @@ const Login = ({ setAuthenticated, history, setRememberMe }) => {
             if (response.ok) {
                 //console.log("Response", response.json().then(data => console.log(data)));
                 const token = response.json().then(data => data.token);
-                console.log("Token", token);
+                //console.log("Token", token);
                 // Erfolgreich eingeloggt
                 console.log('Erfolgreich eingeloggt!');
                 setLoginError(false);
                 setAuthenticated(true);
                 navigate('/dashboard');
-                //const token = response.json().then(data => data.token);
-                //console.log('Token: ' + token);
+                // Save token to localStorage
+                localStorage.setItem('token', token);
                 // Save rememberMe status to localStorage
-                /*if (rememberMe) {
+                if (rememberMe) {
+                    //console.log(rememberMe);
                     localStorage.setItem('rememberMe', 'true');
-                    localStorage.setItem('token', token);
                 } else {
+                    console.log('hier');
                     localStorage.removeItem('rememberMe');
-                }*/
+                }
             } else {
                 console.error('Fehler beim Einloggen');
                 setLoginError(true);

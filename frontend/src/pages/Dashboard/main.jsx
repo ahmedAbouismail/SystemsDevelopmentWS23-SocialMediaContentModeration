@@ -66,6 +66,7 @@ const MainDashboard = () => {
       if (response.ok) {
         console.log('erfolgreich ausgeloggt')
         setLoggedIn(false);
+        localStorage.removeItem("token");
         navigate('/login');
       } else {
         // Fehler beim Logout
@@ -83,7 +84,7 @@ const MainDashboard = () => {
     { name: 'Date', selector: 'date', sortable: true },
     { name: 'Text', selector: 'text', sortable: true },
     { name: 'Link', selector: 'link', sortable: true },
-    {
+    /*{
         name: 'Actions',
         cell: (row) => (
           <>
@@ -101,7 +102,7 @@ const MainDashboard = () => {
             </div>
           </>
         ),
-      },
+      },*/
   ];
   
   const data = [
@@ -114,41 +115,27 @@ const MainDashboard = () => {
   
   
   ];
-  /* Options for each data of the dataTable */
-  const handleEdit = (row) => {
-    console.log('Edit', row);
-    // TODO
-  };
 
-  const handleDelete = (row) => {
-    console.log('Delete', row);
-    // TODO
-  };
-
-  const handleDownload = (row) => {
-    console.log('Download', row);
-    // TODO
-  };
  
   return (
             <div className="" id="dashboard-container" data-uk-grid>
                 <div className="uk-width-expand@m">
                     <div className="dashboard-main-menu-container" data-uk-grid>
                         <div className='uk-width-auto@m uk-width-1-1'>
-                            <nav className="">
-                                {/* TODO: write functions */}
-                                <ul className="uk-subnav dashboard-main-menu uk-margin-remove-bottom">
+                            <p className='h1-dashboard uk-margin-medium-top'>My Dashboard</p>
+                            {/*<nav className="">
+                               {/* <ul className="uk-subnav dashboard-main-menu uk-margin-remove-bottom">
                                     <li>
                                         <p className='h1-dashboard'>My Dashboard</p>
                                     </li>
-                                    <li>
+                                    {/*<li>
                                         <a href="#" className='uk-button button-primary-dashboard'>Add New Entry <FontAwesomeIcon icon={faPlus}  className="button-right-icon"/></a>
                                     </li>
                                     <li>
                                         <a href="#" className='uk-button button-default-dashboard'> <FontAwesomeIcon icon={faMagnifyingGlass} className="button-left-icon" /> Search</a>
                                     </li>
                                 </ul>
-                            </nav>
+                            </nav>*/}
                         </div>
                         <div className='uk-width-expand@l uk-width-1-1 dashboard-minus-margin-top'>
                             <div className='uk-flex uk-flex-right@l uk-flex-left'>

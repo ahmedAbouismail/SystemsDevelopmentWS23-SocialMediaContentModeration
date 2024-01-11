@@ -42,15 +42,7 @@ const navList = [
 const navListLeftDashboard = [
     {
         name: 'Overview',
-        url: '/dashboard/overview',
-    },
-    {
-        name: 'Analytics',
-        url: '/dashboard/analytics',
-    },
-    {
-        name: 'Settings',
-        url: '/dashboard/settings',
+        url: '/dashboard',
     },
 
 
@@ -59,8 +51,8 @@ const navListLeftDashboard = [
 function Template() {
     const getCurrentPath = () => window.location.pathname;
     const [isAuthenticated, setAuthenticated] = useState(false);
-    const [rememberMe, setRememberMe] = useState(false);
-    /*useEffect(() => {
+    const [setRememberMe] = useState(false);
+    useEffect(() => {
         // Check localStorage for rememberMe status and token
         const rememberMeStatus = localStorage.getItem('rememberMe') === 'true';
         const storedToken = localStorage.getItem('token');
@@ -68,7 +60,7 @@ function Template() {
         if (rememberMeStatus && storedToken) {
           setAuthenticated(true);
         }
-      }, []);*/
+      }, []);
     return ( 
         <>        
         <BrowserRouter>
@@ -79,8 +71,6 @@ function Template() {
                 <Route path="/about-us" element={<AboutUs></AboutUs>}></Route>
                 <Route path="/hate-speech" element={<HateSpeechPage></HateSpeechPage>}></Route>
                 <Route path="/response" element={<ResponsePage />}></Route>
-                {/*<Route path='/dashboard' element={<MainDashboard />}/>
-                <Route path='/login' element={<Login />}/> */}
                 <Route path="/login" element={<Login setAuthenticated={setAuthenticated} setRememberMe={setRememberMe}/>}></Route>
                 <Route path='/' element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
                     <Route path='/dashboard' element={<MainDashboard />}/>
@@ -99,9 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Recursive function to try loading the content until the container is found
     const loadContent = () => {
-        // Check if the current path is "/dashboard"
         if (getCurrentPath() === "/dashboard") {
-            // If on the "/dashboard" subpage, try to render the LeftNav
             const dashboardContainer = document.getElementById("dashboard-container");
 
             // Check if the container element exists
@@ -113,16 +101,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Render LeftNav into the new container
                 const leftNavRoot = createRoot(leftNavContainer);
                 leftNavRoot.render(<LeftNav items={navListLeftDashboard} />);
-
-                // Get the first child of dashboardContainer
                 const firstChild = dashboardContainer.firstChild;
 
-                // Insert leftNavContainer as the first child of dashboardContainer
                 dashboardContainer.insertBefore(leftNavContainer, firstChild);
             } else {
                 // If the container element is not found, try loading again after a delay
                 console.error("Container element not found in the DOM");
-                setTimeout(loadContent, 1000); 
+                setTimeout(loadContent, 300); 
             }
         }
     };
