@@ -34,4 +34,4 @@ class Post(models.Model):
     timestamp = models.DateTimeField().auto_created
 
     def __str__(self) -> str:
-        return f"Post on {self.platform.platform_name} at {self.timestamp}"
+        return f"Posted on {self.post_platform.platform_name if self.post_platform else 'None'} at {self.timestamp}"

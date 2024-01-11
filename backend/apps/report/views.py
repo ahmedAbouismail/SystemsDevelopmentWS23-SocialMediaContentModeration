@@ -9,9 +9,10 @@ from .utils import *
 
 @api_view(['GET'])
 def get_reports(request):
-    data = Post.objects.all()
-    serializer = PostSerializer(data, context={'request': request}, many=True)
-    print('Report post')
+    queryset = Post.objects.all()
+
+    #Serialize data
+    serializer = PostSerializer(queryset, many=True)
     return Response(serializer.data)
 
 
@@ -20,11 +21,10 @@ def post_report(request):
     # Create list with data
     report = {'post_content': request.data['post_content']}
 
-    # LINK - TODO Ahmed
+    # LINK
     report['post_link'] = request.data['post_link']
 
-    # GET IMAGE ID
-    
+    # GET IMAGE ID    
     report['post_image'] = request.data['image_id']
 
     # USER PREDICTION
@@ -40,7 +40,7 @@ def post_report(request):
     else:
         report['classifier_response'] = 1 #default 
 
-
+    # DEF CATEGORY
     category_definitions = {
         'Negative Stereotyping': 'the propagation of discriminatory narratives that unfairly portray individuals or groups based on preconceived notions, fostering an environment of bias and reinforcing harmful stereotypes',
         'Dehumanization': 'the degrading portrayal of individuals or communities, stripping them of their inherent humanity. Content falling under "Dehumanization" often employs language or imagery that diminishes the worth and dignity of its subjects',
