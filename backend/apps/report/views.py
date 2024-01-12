@@ -73,18 +73,6 @@ def post_report(request):
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
-def download_reports_csv(request):
-    if request.method == 'GET':
-        print('GET request')
-        response = HttpResponse(
-            content_type="text/csv",
-        )
-        response['Content-Disposition'] = 'attachment; filename=reports.csv'
-        response.content = ExportReportDBtoCSV()
-        return response
-
-
 @api_view(['POST'])
 @parser_classes([MultiPartParser, FormParser])
 def post_screenshot(request):

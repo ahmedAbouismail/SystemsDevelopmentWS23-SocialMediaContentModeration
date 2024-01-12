@@ -11,8 +11,10 @@ class PostSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         rep = super(PostSerializer, self).to_representation(instance)
-        rep['post_platform'] = instance.post_platform.platform_name
-        rep['classifier_response'] = instance.classifier_response.Label.label_name
+        if (instance.post_platform != None):
+            rep['post_platform'] = instance.post_platform.platform_name
+        if (instance.classifier_response != None):
+            rep['classifier_response'] = instance.classifier_response.Label.label_name
         return rep
     
     def validate_post_link(self, value):

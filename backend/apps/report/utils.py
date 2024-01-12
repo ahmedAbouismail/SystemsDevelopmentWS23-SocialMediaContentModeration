@@ -5,8 +5,6 @@ import os
 from minio import Minio
 from minio.error import S3Error
 from PIL import Image
-import psycopg2
-import csv
 from django.conf import settings
 
 from .serializers import ClassifierResponseSerializer
@@ -73,17 +71,14 @@ def get_platform_id(name):
     if p:
         return p.pk
     else:
-        return 1  # default
+        return '' # Unknown  
 
 
 def get_platform_report_link(name):
-    PLATFORMS = {
-        "Facebook": "https://www.facebook.com/help/reportlinks/",
-        "Instagram": "https://help.instagram.com/2922067214679225",
-        "Reddit": "https://www.reddit.com/report",
-        "X": "https://help.twitter.com/en/rules-and-policies/x-report-violation",
-    }
-    return PLATFORMS.get(name, 'unknown')
+    p = PLATFORMS.filter(platform_name = name).first()
+    if(p):
+        return p.reporting_link    
+    return ''
 
 
 def get_label(id):
@@ -91,7 +86,7 @@ def get_label(id):
     if l:
         return l.label_name
     else:
-        return 1  # default
+        return '' # Unknown 
 
 
 def classify_report(content):
@@ -100,7 +95,6 @@ def classify_report(content):
 
     try:
         output = subprocess.check_output(script_command, shell=True, text=True)
-        #TODO get class and save in DB with label id (like platform)
         class_resp = {'Label': output}
         serializer = ClassifierResponseSerializer(data=class_resp)
         if serializer.is_valid():
