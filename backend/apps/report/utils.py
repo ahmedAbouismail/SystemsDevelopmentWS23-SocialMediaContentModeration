@@ -2,12 +2,12 @@ import io
 import subprocess
 import uuid
 import os
-import configparser
 from minio import Minio
 from minio.error import S3Error
 from PIL import Image
 import psycopg2
 import csv
+from django.conf import settings
 
 from .serializers import ClassifierResponseSerializer
 from .models import ClassifierResponse, Platform, Label
@@ -16,9 +16,9 @@ from .models import ClassifierResponse, Platform, Label
 def UploadImageToMinio(request_image):
     # #Upload to minio and get url
     minio_client = Minio(
-        endpoint='minio:9000',
-        access_key='minio',
-        secret_key='minio123',
+        endpoint=settings.MINIO_ENDPOINT,
+        access_key=settings.MINIO_ACCES,
+        secret_key=settings.MINIO_SECRET,
         secure=False,
         )
     post_image = request_image  # Access the uploaded file
@@ -47,9 +47,9 @@ def UploadImageToMinio(request_image):
 
 def GetImageFromMinio(id: str):
     minio_client = Minio(
-        endpoint='minio:9000',
-        access_key='minio',
-        secret_key='minio123',
+        endpoint=settings.MINIO_ENDPOINT,
+        access_key=settings.MINIO_ACCES,
+        secret_key=settings.MINIO_SECRET,
         secure=False,
         )
     image_data = minio_client.get_object('images', id)
@@ -61,24 +61,6 @@ def GetImageFromMinio(id: str):
 
     image_bytes.seek(0)
     return image_bytes
-
-
-def ExportReportDBtoCSV():
-    directory = current_directory + '../../table.csv'
-    conn = psycopg2.connect("dbname=hassmelder user=postgres password=Casino+Poison+Unsmooth6")
-    cur = conn.cursor()
-    sql = "COPY (SELECT * FROM report_post) TO STDOUT WITH CSV DELIMITER ','"
-    response = None
-    with open(directory, "r+") as file:
-        writer = csv.writer(file)
-        writer.writerow(
-            ["Number", "Post content", "Post link", "Image ID", "User Prediction", "Classifier response", "Platform"])
-
-        cur.copy_expert(sql, file)
-        file.seek(0)
-        response = file.read()
-
-    return response
 
 
 # Report -------
