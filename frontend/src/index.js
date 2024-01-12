@@ -35,7 +35,10 @@ const navList = [
         name: 'About Us',
         url: '/about-us',
     },
-
+    {
+        name: 'Login',
+        url: '/login',
+    },
 
 ]
 /* Dashboard Nav */
