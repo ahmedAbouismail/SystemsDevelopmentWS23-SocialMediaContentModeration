@@ -34,7 +34,7 @@ def post_report(request):
     report['post_platform'] = get_platform_id(request.data['platform'])
 
     # CLASSIFIER    
-    hate_class_id, class_label = classify_report(request.data['post_content'])
+    hate_class_id, class_label = classify_report(request.data['post_content'].replace('"', ''))
     if hate_class_id is not None:
         report['classifier_response'] = hate_class_id
     else:
