@@ -38,8 +38,8 @@ services:
       - ./backend/start-minio.sh:/usr/src/hassmelder/backend/start-minio.sh
       - minio_data:/var/lib/minio/data
     environment:
-      MINIO_ROOT_USER: minio
-      MINIO_ROOT_PASSWORD: minio123
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
     ports:
       - "9000:9000" # Minio server port
       - "9001:9001" # Minio console port (browser access)
@@ -50,6 +50,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./frontend:/usr/src/hassmelder/frontend
+      - /usr/src/hassmelder/frontend/node_modules
     ports:
       - "3000:3000"
     container_name: 'react'
