@@ -13,7 +13,11 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    command: sh -c "/usr/src/hassmelder/backend/wait-for-db.sh db && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: >
+          sh -c "/usr/src/hassmelder/backend/wait-for-db.sh db && 
+          python manage.py makemigrations &&
+          python manage.py migrate &&
+          python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./backend:/usr/src/hassmelder/backend
     ports:
@@ -28,13 +32,14 @@ services:
     container_name: 'django'
     restart: always
   minio:
+    container_name: 'minio'
     image: minio/minio
     volumes:
       - ./backend/start-minio.sh:/usr/src/hassmelder/backend/start-minio.sh
       - minio_data:/var/lib/minio/data
     environment:
-      MINIO_ROOT_USER: minio
-      MINIO_ROOT_PASSWORD: minio123
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
     ports:
       - "9000:9000" # Minio server port
       - "9001:9001" # Minio console port (browser access)
@@ -45,6 +50,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./frontend:/usr/src/hassmelder/frontend
+      - /usr/src/hassmelder/frontend/node_modules
     ports:
       - "3000:3000"
     container_name: 'react'

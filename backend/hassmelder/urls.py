@@ -9,7 +9,7 @@ urlpatterns = [
     #Reports
     path('dashboard/', viewReport.get_reports, name='dashboard'),
     path('report/form/', viewReport.post_report, name='reportForm'),
-    path('report/form/down', viewReport.download_reports_csv, name='download'),
+    path('report/form/image', viewReport.post_screenshot, name='reportImage'),
     #Login etc
     path('dashboard/login', viewDashboard.login, name='login'),
     path('dashboard/register', viewDashboard.register, name='register'),

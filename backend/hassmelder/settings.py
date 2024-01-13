@@ -149,3 +149,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MINIO_ENDPOINT = 'minio:9000'
+MINIO_ACCES = os.environ.get('MINIO_ROOT_USER')
+MINIO_SECRET = os.environ.get('MINIO_ROOT_PASSWORD')

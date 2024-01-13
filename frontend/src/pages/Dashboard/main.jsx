@@ -1,71 +1,78 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical, faPlus, faMagnifyingGlass, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { saveAs } from 'file-saver';
 
 
 const CustomPagination = ({ pagination, data }) => {
-    if (!pagination || !pagination.paginationProps) {
-      return null;
-    }
-  
-    const { paginationProps } = pagination;
-  
-    return (
-      <div className='datatable-pagination'>
-        {/* Rows per page selector */}
-        <label>
-          Rows per page:{' '}
-          <select
-            value={paginationProps.rowsPerPage}
-            onChange={(e) => paginationProps.onChangeRowsPerPage(Number(e.target.value))}
-          >
-            {[5, 10, 20, 50, 100].map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </label>
-  
-        {/* Actual pagination controls */}
-        <div>
-          {paginationProps.rowsPerPage * paginationProps.page < paginationProps.rowsPerPage * paginationProps.rowsPerPage && (
-            <button onClick={() => paginationProps.onNextPage()}>Next</button>
-          )}
-          {' '}
-          {paginationProps.page > 0 && <button onClick={() => paginationProps.onPreviousPage()}>Previous</button>}
-          {' '}
-          <span>
-            Page{' '}
-            <strong>
-              {paginationProps.page + 1} of {Math.ceil(paginationProps.rowsPerPage * data.length / paginationProps.rowsPerPage)}
-            </strong>{' '}
-          </span>
-        </div>
+  if (!pagination || !pagination.paginationProps) {
+    return null;
+  }
+
+  const { paginationProps } = pagination;
+
+  return (
+    <div className='datatable-pagination'>
+      {/* Rows per page selector */}
+      <label>
+        Rows per page:{' '}
+        <select
+          value={paginationProps.rowsPerPage}
+          onChange={(e) => paginationProps.onChangeRowsPerPage(Number(e.target.value))}
+        >
+          {[5, 10, 20, 50, 100].map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      {/* Actual pagination controls */}
+      <div>
+        {paginationProps.rowsPerPage * paginationProps.page < paginationProps.rowsPerPage * paginationProps.rowsPerPage && (
+          <button onClick={() => paginationProps.onNextPage()}>Next</button>
+        )}
+        {' '}
+        {paginationProps.page > 0 && <button onClick={() => paginationProps.onPreviousPage()}>Previous</button>}
+        {' '}
+        <span>
+          Page{' '}
+          <strong>
+            {paginationProps.page + 1} of {Math.ceil(paginationProps.rowsPerPage * data.length / paginationProps.rowsPerPage)}
+          </strong>{' '}
+        </span>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
 const MainDashboard = () => {
-  
-  const [isLoggedIn, setLoggedIn] = useState(true); 
+
+  const [isLoggedIn, setLoggedIn] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [tableData, setTableData] = useState([]);
+  const tableRef = useRef(null);
+
   const navigate = useNavigate();
-  const handleLogout = async() => {
+
+  const handleLogout = async () => {
     try {
       const response = await fetch('http://localhost:8000/dashboard/logout', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },       
+        },
       });
 
       if (response.ok) {
-        console.log('erfolgreich ausgeloggt')
+        console.log('erfolgreich ausgeloggt');
         setLoggedIn(false);
+        localStorage.removeItem("token");
         navigate('/login');
       } else {
         // Fehler beim Logout
@@ -75,114 +82,132 @@ const MainDashboard = () => {
       console.error('Fehler beim Logout:', error.message);
     }
   };
-  /* Dummy daten löschen und in datatable anpassen */
+
+  const handleExportCSV = () => {
+    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    const fileExtension = '.csv';
+    const fileName = 'data';
+
+    const exportToCSV = () => {
+      const blob = new Blob([tableToCSV()], { type: fileType });
+      saveAs(blob, fileName + fileExtension);
+    };
+
+    const tableToCSV = () => {
+      const header = columns.map(column => column.name).join(',');
+      const rows = tableData.map(row => columns.map(column => row[column.selector]).join(','));
+      return [header, ...rows].join('\n');
+    };
+
+    exportToCSV();
+  };
+
+  const handleRowClick = (row) => {
+    console.log('Row clicked:', row);
+  };
+
+
   const columns = [
-    { name: 'Name', selector: 'name', sortable: true },
-    { name: 'Category', selector: 'category', sortable: true },
-    { name: 'Source', selector: 'source', sortable: true },
-    { name: 'Date', selector: 'date', sortable: true },
-    { name: 'Text', selector: 'text', sortable: true },
-    { name: 'Link', selector: 'link', sortable: true },
     {
-        name: 'Actions',
-        cell: (row) => (
-          <>
-            <div>
-              <a>
-                <FontAwesomeIcon icon={faEllipsisVertical} />
-              </a>
-              <div id={row.id} data-uk-dropdown="mode:click; animation: uk-animation-slide-top-small; duration: 100">
-                <ul className="uk-nav uk-dropdown-nav dashboard-dropdow-menu">
-                  <li><a onClick={() => handleEdit(row)}>Edit</a></li>
-                  <li><a onClick={() => handleDelete(row)}>Delete</a></li>
-                  <li><a onClick={() => handleDownload(row)}>Download</a></li>
-                </ul>
-              </div>
-            </div>
-          </>
-        ),
-      },
+      name: 'Post Content',
+      selector: 'post_content',
+      sortable: true,
+      cell: (row) => (
+        <div style={{ whiteSpace: 'normal', wordWrap: 'break-word' }}>
+          {row.post_content.split('\n').map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              <br />
+            </React.Fragment>
+          ))}
+        </div>
+      ),
+    },
+    { name: 'Post Link', selector: 'post_link', sortable: true },
+    { name: 'Post Image', selector: 'post_image', sortable: true },
+    { name: 'User Prediction', selector: 'user_prediction', sortable: true },
+    { name: 'Post Platform', selector: 'post_platform', sortable: true },
+    { name: 'Classifier Response', selector: 'classifier_response', sortable: true },
   ];
-  
-  const data = [
-    { name: 'John Doe', category: 'xenophobic', source: 'Instagram', date: '09/12/2023', text: 'EXAMPLE', link: 'https:example.com' },
-    { name: 'John Doe', category: 'xenophobic', source: 'Instagram', date: '09/12/2023', text: 'EXAMPLE', link: 'https:example.com' },
-    { name: 'John Doe', category: 'xenophobic', source: 'Instagram', date: '09/12/2023', text: 'EXAMPLE', link: 'https:example.com' },
-    { name: 'John Doe', category: 'xenophobic', source: 'Instagram', date: '09/12/2023', text: 'EXAMPLE', link: 'https:example.com' },
-    { name: 'John Doe', category: 'xenophobic', source: 'Instagram', date: '09/12/2023', text: 'EXAMPLE', link: 'https:example.com' },
-    { name: 'John Doe', category: 'xenophobic', source: 'Instagram', date: '09/12/2023', text: 'EXAMPLE', link: 'https:example.com' },
-  
-  
-  ];
-  /* Options for each data of the dataTable */
-  const handleEdit = (row) => {
-    console.log('Edit', row);
-    // TODO
-  };
 
-  const handleDelete = (row) => {
-    console.log('Delete', row);
-    // TODO
-  };
+  useEffect(() => {
+    // Fetch data when the component mounts
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/dashboard');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.error('data', data);
+        setTableData(data);
+        setLoading(false);
+      } catch (error) {
+        // Handle errors
+        setLoading(false);
+      }
+    };
 
-  const handleDownload = (row) => {
-    console.log('Download', row);
-    // TODO
-  };
- 
+    fetchData();
+  }, []); // Empty dependency array ensures this effect runs only once, similar to componentDidMount
+
+  if (loading) {
+    return <p>Loading...</p>; // You can add a loading spinner or message here
+  }
+
   return (
-            <div className="" id="dashboard-container" data-uk-grid>
-                <div className="uk-width-expand@m">
-                    <div className="dashboard-main-menu-container" data-uk-grid>
-                        <div className='uk-width-auto@m uk-width-1-1'>
-                            <nav className="">
-                                {/* TODO: write functions */}
-                                <ul className="uk-subnav dashboard-main-menu uk-margin-remove-bottom">
-                                    <li>
-                                        <p className='h1-dashboard'>My Dashboard</p>
-                                    </li>
-                                    <li>
-                                        <a href="#" className='uk-button button-primary-dashboard'>Add New Entry <FontAwesomeIcon icon={faPlus}  className="button-right-icon"/></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" className='uk-button button-default-dashboard'> <FontAwesomeIcon icon={faMagnifyingGlass} className="button-left-icon" /> Search</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <div className='uk-width-expand@l uk-width-1-1 dashboard-minus-margin-top'>
-                            <div className='uk-flex uk-flex-right@l uk-flex-left'>
-                                <nav className="">
-                                    <ul className="uk-subnav main-menu uk-margin-remove-bottom uk-flex-right">
-                                        <li>
-                                            <a href="#" className='uk-button button-default-dashboard'>Export <FontAwesomeIcon icon={faDownload} className="button-right-icon" /></a>
-                                        </li>
-                                        <li>
-                                          <button onClick={handleLogout} className='uk-button button-default-dashboard'>Log out</button>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='main-datatable'>
-
-                        <DataTable
-                            columns={columns}
-                            data={data}
-                            pagination
-                            selectableRows
-                            striped
-                            //paginationComponent={(props) => <CustomPagination {...props} data={data} />}
-                            //paginationPerPage={25}
-                        />
-
-                    </div>
-                </div>
+    <div className="dashboard-container" id="dashboard-container" data-uk-grid>
+      <div className="uk-width-expand@m">
+        <div className="dashboard-main-menu-container" data-uk-grid>
+          <div className="uk-width-auto@m uk-width-1-1">
+            <p className="h1-dashboard uk-margin-medium-top">My Dashboard</p>
+          </div>
+          <div className="uk-width-expand@l uk-width-1-1 dashboard-minus-margin-top">
+            <div className="uk-flex uk-flex-right@l uk-flex-left">
+              <nav className="">
+                <ul className="uk-subnav main-menu uk-margin-remove-bottom uk-flex-right">
+                  <li>
+                    <button onClick={handleExportCSV} className='uk-button button-default-dashboard'>Export <FontAwesomeIcon icon={faDownload} className="button-right-icon" /> </button>
+                  </li>
+                  <li>
+                    <button onClick={handleLogout} className='uk-button button-default-dashboard'>Log out</button>
+                  </li>
+                </ul>
+              </nav>
             </div>
+          </div>
+        </div>
+        <div className="main-datatable">
+          <DataTable
+            ref={tableRef}
+            columns={columns}
+            data={tableData}
+            pagination
+            selectableRows
+            striped
+            noHeader
+            dense
+            customStyles={{
+              rows: {
+                style: {
+                  minHeight: '75px',
+                  marginBottom: '10px',
+                },
+              },
+              headRow: {
+                style: {
+                  minHeight: '40px',
+                },
+              },
+            }}
+            paginationPerPage={10}
+            paginationRowsPerPageOptions={[5, 10, 15, 20]}
+            onRowClicked={handleRowClick}
 
-
-        
+          />
+        </div>
+      </div>
+    </div>
   );
 }
 

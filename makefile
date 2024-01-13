@@ -14,3 +14,7 @@ start-react:
 # Define shortcut to start both django and react
 start:
 	@make -j2 start-django start-react
+
+restart:
+	docker-compose build --no-cache
+	docker-compose up --force-recreate
