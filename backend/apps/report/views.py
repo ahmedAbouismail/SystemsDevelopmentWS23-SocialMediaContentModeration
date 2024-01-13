@@ -67,7 +67,7 @@ def post_report(request):
     else:
         print('Report nicht gespeichert')
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    
 
 @api_view(['GET'])
 def download_reports_csv(request):

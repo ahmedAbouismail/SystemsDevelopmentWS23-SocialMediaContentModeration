@@ -60,7 +60,7 @@ function Template() {
     const getCurrentPath = () => window.location.pathname;
     const [isAuthenticated, setAuthenticated] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
-    /*useEffect(() => {
+    useEffect(() => {
         // Check localStorage for rememberMe status and token
         const rememberMeStatus = localStorage.getItem('rememberMe') === 'true';
         const storedToken = localStorage.getItem('token');
@@ -71,7 +71,7 @@ function Template() {
           // In a real-world application, you would have proper token validation logic
           setAuthenticated(true);
         }
-      }, []);*/
+      }, []);
     return ( 
         <>        
         <BrowserRouter>

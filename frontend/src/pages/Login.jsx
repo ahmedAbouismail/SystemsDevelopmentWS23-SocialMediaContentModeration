@@ -90,12 +90,12 @@ const Login = ({ setAuthenticated, history, setRememberMe }) => {
                 //const token = response.json().then(data => data.token);
                 //console.log('Token: ' + token);
                 // Save rememberMe status to localStorage
-                /*if (rememberMe) {
+                if (rememberMe) {
                     localStorage.setItem('rememberMe', 'true');
                     localStorage.setItem('token', token);
                 } else {
                     localStorage.removeItem('rememberMe');
-                }*/
+                }
             } else {
                 console.error('Fehler beim Einloggen');
                 setLoginError(true);
