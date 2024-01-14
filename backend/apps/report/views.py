@@ -16,12 +16,16 @@ def get_reports(request):
     return Response(serializer.data)
 
 
+
 @api_view(['POST'])
 def post_report(request):
     # Create list with data
     report = {'post_content': request.data['post_content']}
 
     # LINK
+    # post_link will be always empty, because the link will not be send anymore as a part of this request
+    # for the link there is a sepreated form in the frontend. 
+    # The link will be send to the backend with a sepreated request
     report['post_link'] = request.data['post_link']
 
     # GET IMAGE ID    
@@ -95,3 +99,20 @@ def post_screenshot(request):
             'image_id': id
         }
         return Response(data=response, status=status.HTTP_200_OK)
+    
+
+@api_view(['POST'])
+def post_report_link(request):
+    print("Link REQUST", request.data)
+    report= { 'post_link': request.data['post_link']}
+    # post_content can not be empty, because it is a required field in the serializer
+    report['post_content'] = '-'
+    report['user_prediction'] = '-'
+    serializer  = PostSerializer(data=report)
+    if serializer.is_valid():
+        serializer.save()
+        print('Link gespeichert')
+    else:
+        print('Link nicht gespeichert')
+        print(serializer.errors)
+    return Response(status=status.HTTP_201_CREATED)

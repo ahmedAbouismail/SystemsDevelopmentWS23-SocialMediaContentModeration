@@ -55,9 +55,8 @@ const ReportFormComponent = ()=> {
 
     const handlePostLinkChange = (event) => {
         const linkValue = event.target.value;
-
         setIsLinkValid(isValidLink(linkValue));
-
+        setLink({ ...link, post_link: linkValue });
         setFormData({ ...formData, post_link: event.target.value });
     };
 
@@ -137,7 +136,7 @@ const ReportFormComponent = ()=> {
             return
         }
         try {
-          const response = await fetch('http://localhost:8000/report/form/', { // TODO: add extra endpoint for saving links
+          const response = await fetch('http://localhost:8000/report/link', { // TODO: add extra endpoint for saving links
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -147,8 +146,7 @@ const ReportFormComponent = ()=> {
           });
     
           if (response.ok) {
-            const responseData = await response.json();
-            console.log('Success:', responseData, link);
+            console.log('Success:', link);
     
             setNotification({
               type: 'success',
