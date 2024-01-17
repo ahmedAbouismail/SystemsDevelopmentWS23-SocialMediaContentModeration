@@ -109,7 +109,9 @@ def classify_report(content):
 
 
 def create_prediction_str(predictions):
-    pred_list = ''
-    for p in predictions:
-        pred_list += p
+    if predictions != None:
+        pred_list = ''
+        pred_list = ', '.join(predictions)
+    else:
+        pred_list = None
     return pred_list

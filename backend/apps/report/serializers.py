@@ -18,9 +18,9 @@ class PostSerializer(serializers.ModelSerializer):
         return rep
     
     def validate_post_link(self, value):
+        # in case of empty string or None the vakidation should be skipped
         if value in ('', None):
             return
-        
         patterns = {
             'twitter': r'^https?://(www\.)?twitter\.com/.*',
             'facebook': r'^https?://(www\.)?facebook\.com/.*',
@@ -30,6 +30,7 @@ class PostSerializer(serializers.ModelSerializer):
 
         if not any(re.match(pattern, value) for pattern in patterns.values()):
             raise serializers.ValidationError("Link is not valid")
+        return value
 
 class ClassifierResponseSerializer(serializers.ModelSerializer):
     class Meta:
