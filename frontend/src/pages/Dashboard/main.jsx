@@ -73,7 +73,7 @@ const MainDashboard = () => {
         console.log('erfolgreich ausgeloggt');
         setLoggedIn(false);
         localStorage.removeItem("token");
-        navigate('/login');
+        navigate('/');
       } else {
         // Fehler beim Logout
         console.error('Logout fehlgeschlagen:', response.statusText);
