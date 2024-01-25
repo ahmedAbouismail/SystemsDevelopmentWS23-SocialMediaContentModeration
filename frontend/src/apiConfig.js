@@ -1,5 +1,4 @@
-const apiBaseUrl = "http://localhost:8000";
-// const apiBaseUrl = "141.45.146.238"; // either localhost or server IP
+const apiBaseUrl = `${window.location.protocol}//${window.location.hostname}:8000`;
 
 const apiEndpoints = {
   postReport: `${apiBaseUrl}/report/form`,
@@ -9,5 +8,6 @@ const apiEndpoints = {
   getDashboardLogout: `${apiBaseUrl}/dashboard/logout`,
   postLogin: `${apiBaseUrl}/dashboard/login`,
 };
+
 
 export default apiEndpoints;
