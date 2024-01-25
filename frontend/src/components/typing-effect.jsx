@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 const TypingEffect = ({ text, direction, repeat, speed, classes }) => {
     const textArr = Array.isArray(text) ? text : [text];
-    // console.log(textArr);
     const [message, setMessage] = useState('');
     const [textCount, setTextCount] = useState(0);
     const [repeatCount, setRepeatCount] = useState(repeat);

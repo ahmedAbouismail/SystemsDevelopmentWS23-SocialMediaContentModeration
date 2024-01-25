@@ -6,7 +6,6 @@ import { useLocation } from 'react-router-dom';
 const ResponsePage =(state)=> {
     const location = useLocation();
     const res = location.state?.response || {};
-    console.log("RESPONSE: ", res)
     
     useEffect(() => {
         window.scrollTo(0, 0);

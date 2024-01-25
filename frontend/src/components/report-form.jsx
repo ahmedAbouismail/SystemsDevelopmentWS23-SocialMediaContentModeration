@@ -80,7 +80,6 @@ const ReportFormComponent = ()=> {
     const handleSubmit = (event) => {
         event.preventDefault();
         
-        console.log("formData", formData);
         if (formData.post_content.trim() === '') {
             const textarea = document.getElementById("post_text");            
             textarea.focus();
@@ -112,7 +111,6 @@ const ReportFormComponent = ()=> {
                 })
                     .then((response) => response.json())
                     .then((data) => {
-                        console.log('Success:', data, formData);
 
                         navigate(
                             '/response', {
@@ -128,7 +126,6 @@ const ReportFormComponent = ()=> {
 
     const handleLinkSubmit = async (event) => {
         event.preventDefault();
-        console.log("link", link);
         if (link.post_link.trim() === '') {
             setNotification({
                 type: 'error',
@@ -147,7 +144,6 @@ const ReportFormComponent = ()=> {
           });
     
           if (response.ok) {
-            console.log('Success:', link);
     
             setNotification({
               type: 'success',

@@ -93,11 +93,8 @@ const Login = ({ setAuthenticated, history, setRememberMe }) => {
       });
 
       if (response.ok) {
-        //console.log("Response", response.json().then(data => console.log(data)));
         const token = response.json().then((data) => data.token);
-        //console.log("Token", token);
         // Erfolgreich eingeloggt
-        console.log("Erfolgreich eingeloggt!");
         setLoginError(false);
         setAuthenticated(true);
         navigate("/dashboard");
@@ -105,10 +102,8 @@ const Login = ({ setAuthenticated, history, setRememberMe }) => {
         localStorage.setItem("token", token);
         // Save rememberMe status to localStorage
         if (rememberMe) {
-          //console.log(rememberMe);
           localStorage.setItem("rememberMe", "true");
         } else {
-          console.log("hier");
           localStorage.removeItem("rememberMe");
         }
       } else {

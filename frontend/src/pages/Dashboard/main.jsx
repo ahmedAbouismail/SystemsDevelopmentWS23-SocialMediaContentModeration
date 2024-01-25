@@ -86,7 +86,6 @@ const MainDashboard = () => {
       });
 
       if (response.ok) {
-        console.log("erfolgreich ausgeloggt");
         setLoggedIn(false);
         localStorage.removeItem("token");
         navigate("/");
@@ -121,9 +120,6 @@ const MainDashboard = () => {
     exportToCSV();
   };
 
-  const handleRowClick = (row) => {
-    console.log("Row clicked:", row);
-  };
 
   const columns = [
     {
@@ -245,7 +241,6 @@ const MainDashboard = () => {
             }}
             paginationPerPage={10}
             paginationRowsPerPageOptions={[5, 10, 15, 20]}
-            onRowClicked={handleRowClick}
           />
         </div>
       </div>
