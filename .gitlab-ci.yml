@@ -20,8 +20,9 @@ frontend-test:
     tags:
         - test
     only:
-        changes:
-            - frontend/*
+        - CI
+        #changes:
+        #    - frontend/*
 
 update-frontend-snapshots:
     stage: test
@@ -55,8 +56,9 @@ backend-test:
     tags:
         - test
     only:
-        changes:
-            - backend/*
+        - CI
+        #changes:
+        #    - backend/*
     
 clean-docker:
     stage: publish
