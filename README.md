@@ -77,7 +77,7 @@
    MINIO_ROOT_PASSWORD=your_minio_password
    ```
 
-## Start Docker Compose
+## Build Containers 
    ```
    docker-compose up
    ```
