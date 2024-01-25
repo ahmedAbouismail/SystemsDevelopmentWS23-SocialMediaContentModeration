@@ -19,10 +19,9 @@ frontend-test:
         - echo "skipped"
     tags:
         - test
+        - main
     only:
-        - CI
-        #changes:
-        #    - frontend/*
+        - development
 
 update-frontend-snapshots:
     stage: test
@@ -37,8 +36,8 @@ update-frontend-snapshots:
     tags:
         - test
     only:
-        changes:
-            - frontend/*
+        - development
+        - main
     when: manual
 
 backend-test:
@@ -56,9 +55,8 @@ backend-test:
     tags:
         - test
     only:
-        - CI
-        #changes:
-        #    - backend/*
+        - development
+        - main
     
 clean-docker:
     stage: publish
@@ -71,6 +69,9 @@ clean-docker:
         - docker system df
     tags:
         - publish
+    only:
+        - development
+        - main
     when: manual
 
 publish:
@@ -110,15 +111,11 @@ publish:
     # tag each image
         - docker tag systemsdevelopmentws23-socialmediacontentmoderation-django:latest $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:django_latest
         - docker tag systemsdevelopmentws23-socialmediacontentmoderation-react:latest $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:react_latest
-        - docker tag systemsdevelopmentws23-socialmediacontentmoderation-nginx:latest $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:nginx_latest
-        - docker tag systemsdevelopmentws23-socialmediacontentmoderation-uwsgi:latest $DOCKERHUB_USERNAME/$DOCKERHUB_REPO:uwsgi_latest
 
-      # push each image
+    # push each image
         - docker push -a $DOCKERHUB_USERNAME/$DOCKERHUB_REPO
         - docker logout 
     tags:
         - publish
     only:
-        - development
         - main
-        - CI
