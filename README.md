@@ -1,11 +1,9 @@
-Certainly! Here's the updated README.md incorporating the suggestions:
+# Welcome To NoHateNet
 
----
-
-# Start Application Locally
+## Start Application Locally
 
 ## 1. Start Docker-Desktop
-   To get Docker daemon running
+   To get the Docker daemon running.
 
 ## Clone Repository
    ```
@@ -14,6 +12,7 @@ Certainly! Here's the updated README.md incorporating the suggestions:
    ```
    cd systemsdevelopmentws23-socialmediacontentmoderation/
    ```
+
 ## Tips for Using Vim (Windows and macOS)
    - To quit Vim:
      1. Press `Esc` to ensure you're in Normal mode.
@@ -73,6 +72,7 @@ Certainly! Here's the updated README.md incorporating the suggestions:
    DB_PASSWORD=your_database_password
    DB_HOST=your_database_host
 
+   # MinIO
    MINIO_ROOT_USER=your_minio_user
    MINIO_ROOT_PASSWORD=your_minio_password
    ```
@@ -81,4 +81,3 @@ Certainly! Here's the updated README.md incorporating the suggestions:
    ```
    docker-compose up
    ```
-
