@@ -1,5 +1,6 @@
 import { React, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import apiEndpoints from '../apiConfig';
 
 
 const ReportFormComponent = ()=> {
@@ -79,7 +80,6 @@ const ReportFormComponent = ()=> {
     const handleSubmit = (event) => {
         event.preventDefault();
         
-        console.log("formData", formData);
         if (formData.post_content.trim() === '') {
             const textarea = document.getElementById("post_text");            
             textarea.focus();
@@ -90,7 +90,7 @@ const ReportFormComponent = ()=> {
         const form = new FormData();
         form.append('post_image', file);
 
-        fetch('http://localhost:8000/report/form/image',{
+        fetch(apiEndpoints.postImage,{
             method: 'POST',
             body: form,
         })  .then((response) => response.json())
@@ -101,7 +101,7 @@ const ReportFormComponent = ()=> {
                     ...formData,
                     image_id: imageID,
                 };
-                fetch('http://localhost:8000/report/form/', {
+                fetch(apiEndpoints.postReport, {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -111,7 +111,6 @@ const ReportFormComponent = ()=> {
                 })
                     .then((response) => response.json())
                     .then((data) => {
-                        console.log('Success:', data, formData);
 
                         navigate(
                             '/response', {
@@ -127,7 +126,6 @@ const ReportFormComponent = ()=> {
 
     const handleLinkSubmit = async (event) => {
         event.preventDefault();
-        console.log("link", link);
         if (link.post_link.trim() === '') {
             setNotification({
                 type: 'error',
@@ -136,7 +134,7 @@ const ReportFormComponent = ()=> {
             return
         }
         try {
-          const response = await fetch('http://localhost:8000/report/link', { // TODO: add extra endpoint for saving links
+          const response = await fetch(apiEndpoints.postLink, { // TODO: add extra endpoint for saving links
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -146,7 +144,6 @@ const ReportFormComponent = ()=> {
           });
     
           if (response.ok) {
-            console.log('Success:', link);
     
             setNotification({
               type: 'success',
