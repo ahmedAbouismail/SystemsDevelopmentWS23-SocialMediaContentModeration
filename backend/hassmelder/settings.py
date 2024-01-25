@@ -35,11 +35,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'optional-default-value')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 
 CORS_ORIGIN_WHITELIST = (
-       'http://localhost:3000',
+       'http://localhost:3000', 'http://141.45.146.238:3000',
 )
 # Application definition
 
