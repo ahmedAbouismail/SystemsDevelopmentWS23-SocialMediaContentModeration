@@ -63,7 +63,7 @@
    # Django Settings
    SECRET_KEY=your_secret_key
    DEBUG=True
-   ALLOWED_HOSTS=.localhost,127.0.0.1,0.0.0.0,141.45.146.238,[::1]
+   ALLOWED_HOSTS=.localhost,141.45.146.238,[::1]
 
    # Django DB URL
    DB_ENGINE=django.db.backends.postgresql
