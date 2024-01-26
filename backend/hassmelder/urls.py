@@ -7,8 +7,8 @@ from apps.dashboard import views as viewDashboard
 urlpatterns = [
     path('', viewIndex.index, name='index'),
     #Reports
-    path('dashboard/', viewReport.get_reports, name='dashboard'),
-    path('report/form/', viewReport.post_report, name='reportForm'),
+    path('dashboard', viewReport.get_reports, name='dashboard'),
+    path('report/form', viewReport.post_report, name='reportForm'),
     path('report/form/image', viewReport.post_screenshot, name='reportImage'),
     path('report/link', viewReport.post_report_link, name='reportLink'),
     #Login etc

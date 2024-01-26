@@ -62,7 +62,6 @@
 
                                     if (response.ok) {
                                         const newImage = await response.json();
-                                        console.log(newImage);
                                     } else {
                                         console.error('Error:', response.status);
                                     }
@@ -82,7 +81,7 @@
                                 var file = window.URL.createObjectURL(blob);
                                 window.location.assign(file);
                                 });
-                                console.log(file)
+                                
                             }
                         </script>
                     </div>
