@@ -81,3 +81,14 @@
    ```
    docker-compose up
    ```
+
+## Create Super User
+First enter the django container by running:
+```
+docker exec -it django bash 
+```
+
+Then run the django method to create a super user:
+```
+python manage.py createsuperuser
+```
