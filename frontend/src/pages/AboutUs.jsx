@@ -2,7 +2,7 @@ import { React } from 'react';
 import HeroJustText from '../components/hero-just-text';
 import CardsImageSmall from '../components/cards-image-small';
 
-function ReportPage() {
+function AboutUsPage() {
   return (
     <>
       <HeroJustText text='About us' />
@@ -84,4 +84,4 @@ function ReportPage() {
   );
 }
 
-export default ReportPage;
+export default AboutUsPage;

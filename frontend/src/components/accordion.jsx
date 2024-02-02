@@ -1,22 +1,16 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* because of UIkit template */
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const AccordionComponent = ({ items }) => {
+function AccordionComponent({ items }) {
   return (
     <ul uk-accordion='multiple: true'>
-      {items.map((item, index) => (
-        <li key={index}>
-          <button
-            className='uk-accordion-title'
-            href='#'
-            style={{
-              border: 'none',
-              padding: 0,
-              background: 'none',
-              cursor: 'pointer',
-            }}
-          >
+      {items.map((item) => (
+        <li key={item.index}>
+          <a className='uk-accordion-title' href='#'>
             {item.title}
-          </button>
+          </a>
           <div className='uk-accordion-content'>
             <p>{item.content}</p>
           </div>
@@ -24,6 +18,15 @@ const AccordionComponent = ({ items }) => {
       ))}
     </ul>
   );
+}
+
+AccordionComponent.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default AccordionComponent;

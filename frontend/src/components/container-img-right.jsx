@@ -1,22 +1,36 @@
 import React, { Component } from 'react';
-class ContainerImgRight extends Component {
-    render() {
-        const h1 = this.props.h1;
-        return <div className="uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@m " data-uk-grid>
-            <div>
-                <div>
-                    <p className="small-title-left">{this.props.smallTitle}</p>
-                    {this.props.h1 && <h1>{h1}</h1>}
-                    {this.props.text}
-                </div>
-            </div>
-            <div>
-                <div className="uk-box-shadow-medium uk-border-rounded">
-                    <img src={"/assets/img/"+this.props.image} className="uk-border-rounded" alt={this.props.description} />
-                </div>
-            </div>
-        </div>
+import PropTypes from 'prop-types';
 
-    }
+class CardsImageSmall extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    const { image, alt, name } = this.props;
+
+    return (
+      <div>
+        <div className='uk-card uk-box-shadow-medium uk-border-rounded uk-background-default uk-flex uk-flex-center'>
+          <div className='uk-padding'>
+            <div className='icon uk-text-center uk-margin-small-bottom'>
+              <img src={`/assets/img/${image}`} alt={alt} />
+            </div>
+            <div className='text uk-text-center'>
+              <p>{name}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
-export default ContainerImgRight;
+
+CardsImageSmall.propTypes = {
+  image: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
+
+export default CardsImageSmall;
