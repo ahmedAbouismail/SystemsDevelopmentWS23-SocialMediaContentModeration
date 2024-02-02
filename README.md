@@ -25,7 +25,7 @@
      2. Type `:wq` and press `Enter`.
 
 ## Create .env File
-   Copy the provided `.env.example` file and rename it to `.env`. Fill in the necessary environment variables with your own database and MinIO credentials.
+   Copy the provided `template.env` file and rename it to `.env`. You can enter your own credentials for each variable!
 
    **Example .env File:**
    ```dotenv
@@ -38,8 +38,8 @@
    POSTGRES_PORT=5432
 
    # MinIO
-   MINIO_ROOT_USER=your_minio_user
-   MINIO_ROOT_PASSWORD=your_minio_password
+   MINIO_ROOT_USER=minio
+   MINIO_ROOT_PASSWORD=minio123
    ```
 
 ## Switch Directory to Backend
@@ -48,16 +48,16 @@
    ```
 
 ## Create Another .env File
-   Copy the provided `.env.example` file and rename it to `.env`. Fill in the necessary environment variables with your own database and MinIO credentials.
+   Repeat the step above!
 
    **Example .env File:**
    ```dotenv
    # Postgres DB
-   POSTGRES_DB=your_database_name
-   POSTGRES_USER=your_database_user
-   POSTGRES_PASSWORD=your_database_password
-   POSTGRES_HOST=your_database_host
-   POSTGRES_NAME=your_database_name
+   POSTGRES_DB=hassmelder
+   POSTGRES_USER=postgres
+   POSTGRES_PASSWORD=Casino+Poison+Unsmooth6
+   POSTGRES_HOST=db
+   POSTGRES_NAME=hassmelder
    POSTGRES_PORT=5432
 
    # Django Settings
@@ -67,14 +67,14 @@
 
    # Django DB URL
    DB_ENGINE=django.db.backends.postgresql
-   DB_NAME=your_database_name
-   DB_USER=your_database_user
-   DB_PASSWORD=your_database_password
-   DB_HOST=your_database_host
+   DB_NAME=hassmelder
+   DB_USER=postgres
+   DB_PASSWORD=Casino+Poison+Unsmooth6
+   DB_HOST=db
 
    # MinIO
-   MINIO_ROOT_USER=your_minio_user
-   MINIO_ROOT_PASSWORD=your_minio_password
+   MINIO_ROOT_USER=minio
+   MINIO_ROOT_PASSWORD=minio123
    ```
 
 ## Build Containers 
@@ -83,12 +83,12 @@
    ```
 
 ## Create Super User
-First enter the django container by running:
-```
-docker exec -it django bash 
-```
+   First enter the django container by running:
+   ```
+   docker exec -it django bash 
+   ```
 
-Then run the django method to create a super user:
-```
-python manage.py createsuperuser
-```
+   Then run the django method to create a super user:
+   ```
+   python manage.py createsuperuser
+   ```
