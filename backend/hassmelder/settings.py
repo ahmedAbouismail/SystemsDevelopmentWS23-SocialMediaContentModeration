@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'apps.dashboard.apps.DashboardConfig',
     'apps.report.apps.ReportConfig',
     'apps.index.apps.IndexConfig',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
