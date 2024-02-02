@@ -7,7 +7,7 @@ function AccordionComponent({ items }) {
   return (
     <ul uk-accordion='multiple: true'>
       {items.map((item) => (
-        <li key={item.index}>
+        <li key={item.title}>
           <a className='uk-accordion-title' href='#'>
             {item.title}
           </a>
@@ -23,8 +23,12 @@ function AccordionComponent({ items }) {
 AccordionComponent.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
+      content: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.string),
+      ]).isRequired,
     }),
   ).isRequired,
 };

@@ -6,6 +6,7 @@ import ContentSection from '../components/content-section';
 function HateSpeechPage() {
   const accordionItems = [
     {
+      id: 0,
       title: 'Racism',
       content: [
         // eslint-disable-next-line quotes
@@ -14,6 +15,7 @@ function HateSpeechPage() {
       ],
     },
     {
+      id: 1,
       title: 'Homophobia',
       content: [
         'Homophobia refers to an irrational fear or hatred of, or prejudice and discrimination against, homosexual people.',
@@ -21,6 +23,7 @@ function HateSpeechPage() {
       ],
     },
     {
+      id: 2,
       title: 'Sexism',
       content: [
         'Sexism is the discrimination, stereotyping, or prejudice, typically against women, on the basis of sex.',
@@ -28,6 +31,7 @@ function HateSpeechPage() {
       ],
     },
     {
+      id: 3,
       title: 'Religious discrimination',
       content: [
         'Religious discrimination involves treating individuals unfairly due to their religious beliefs or practices.',
@@ -35,6 +39,7 @@ function HateSpeechPage() {
       ],
     },
     {
+      id: 4,
       title: 'Xenophobia',
       content: [
         'Xenophobia is the irrational fear, dislike, or prejudice against people from other countries.',
@@ -42,6 +47,7 @@ function HateSpeechPage() {
       ],
     },
     {
+      id: 5,
       title: 'Dehumanization',
       content: [
         'Dehumanization involves portraying individuals or groups as less than human, stripping them of their dignity and humanity.',
@@ -52,6 +58,7 @@ function HateSpeechPage() {
 
   const contentBlocks = [
     {
+      id: 0,
       title: 'The Impact of Hate Speech',
       heading: 'The Profound Impact of Hate Speech on Those Affected',
       paragraphs: [
@@ -63,6 +70,7 @@ function HateSpeechPage() {
       ],
     },
     {
+      id: 1,
       title: 'What to do about Hate Speech?',
       heading: 'Recognizing and Naming Hate Speech',
       paragraphs: [
