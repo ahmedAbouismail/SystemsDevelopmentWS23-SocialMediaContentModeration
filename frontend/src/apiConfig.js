@@ -9,5 +9,4 @@ const apiEndpoints = {
   postLogin: `${apiBaseUrl}/dashboard/login`,
 };
 
-
 export default apiEndpoints;

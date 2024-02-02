@@ -1,152 +1,88 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import DataTable from "react-data-table-component";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEllipsisVertical,
-  faPlus,
-  faMagnifyingGlass,
-  faDownload,
-} from "@fortawesome/free-solid-svg-icons";
-import { saveAs } from "file-saver";
-import apiEndpoints from "../../apiConfig";
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import DataTable from 'react-data-table-component';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { saveAs } from 'file-saver';
+import apiEndpoints from '../../apiConfig';
 
-const CustomPagination = ({ pagination, data }) => {
-  if (!pagination || !pagination.paginationProps) {
-    return null;
-  }
-
-  const { paginationProps } = pagination;
-
-  return (
-    <div className="datatable-pagination">
-      {/* Rows per page selector */}
-      <label>
-        Rows per page:{" "}
-        <select
-          value={paginationProps.rowsPerPage}
-          onChange={(e) =>
-            paginationProps.onChangeRowsPerPage(Number(e.target.value))
-          }
-        >
-          {[5, 10, 20, 50, 100].map((option) => (
-            <option
-              key={option}
-              value={option}
-            >
-              {option}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      {/* Actual pagination controls */}
-      <div>
-        {paginationProps.rowsPerPage * paginationProps.page <
-          paginationProps.rowsPerPage * paginationProps.rowsPerPage && (
-          <button onClick={() => paginationProps.onNextPage()}>Next</button>
-        )}{" "}
-        {paginationProps.page > 0 && (
-          <button onClick={() => paginationProps.onPreviousPage()}>
-            Previous
-          </button>
-        )}{" "}
-        <span>
-          Page{" "}
-          <strong>
-            {paginationProps.page + 1} of{" "}
-            {Math.ceil(
-              (paginationProps.rowsPerPage * data.length) /
-                paginationProps.rowsPerPage
-            )}
-          </strong>{" "}
-        </span>
-      </div>
-    </div>
-  );
-};
-
-const MainDashboard = () => {
+function MainDashboard() {
+  // eslint-disable-next-line no-unused-vars
   const [isLoggedIn, setLoggedIn] = useState(true);
   const [loading, setLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
   const tableRef = useRef(null);
-
   const navigate = useNavigate();
+
+  const renderPostContentCell = (row) => (
+    <div style={{ whiteSpace: 'normal', wordWrap: 'break-word' }}>
+      {row.post_content.split('\n').map((line) => (
+        <React.Fragment key={row.index}>
+          {line}
+          <br />
+        </React.Fragment>
+      ))}
+    </div>
+  );
+
+  const columns = [
+    {
+      name: 'Post Content',
+      selector: 'post_content',
+      sortable: true,
+      cell: renderPostContentCell,
+    },
+    { name: 'Post Link', selector: 'post_link', sortable: true },
+    { name: 'Post Image', selector: 'post_image', sortable: true },
+    { name: 'User Prediction', selector: 'user_prediction', sortable: true },
+    { name: 'Post Platform', selector: 'post_platform', sortable: true },
+    {
+      name: 'Classifier Response',
+      selector: 'classifier_response',
+      sortable: true,
+    },
+  ];
 
   const handleLogout = async () => {
     try {
       const response = await fetch(apiEndpoints.getDashboardLogout, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
       });
 
       if (response.ok) {
         setLoggedIn(false);
-        localStorage.removeItem("token");
-        navigate("/");
+        localStorage.removeItem('token');
+        navigate('/');
       } else {
         // Fehler beim Logout
-        console.error("Logout fehlgeschlagen:", response.statusText);
+        console.error('Logout fehlgeschlagen:', response.statusText);
       }
     } catch (error) {
-      console.error("Fehler beim Logout:", error.message);
+      console.error('Fehler beim Logout:', error.message);
     }
   };
 
   const handleExportCSV = () => {
-    const fileType =
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-    const fileExtension = ".csv";
-    const fileName = "data";
+    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    const fileExtension = '.csv';
+    const fileName = 'data';
+    const tableToCSV = () => {
+      const header = columns.map((column) => column.name).join(',');
+      const rows = tableData.map((row) => columns.map((column) => row[column.selector]).join(','));
+      return [header, ...rows].join('\n');
+    };
 
     const exportToCSV = () => {
       const blob = new Blob([tableToCSV()], { type: fileType });
       saveAs(blob, fileName + fileExtension);
     };
 
-    const tableToCSV = () => {
-      const header = columns.map((column) => column.name).join(",");
-      const rows = tableData.map((row) =>
-        columns.map((column) => row[column.selector]).join(",")
-      );
-      return [header, ...rows].join("\n");
-    };
-
     exportToCSV();
   };
-
-
-  const columns = [
-    {
-      name: "Post Content",
-      selector: "post_content",
-      sortable: true,
-      cell: (row) => (
-        <div style={{ whiteSpace: "normal", wordWrap: "break-word" }}>
-          {row.post_content.split("\n").map((line, index) => (
-            <React.Fragment key={index}>
-              {line}
-              <br />
-            </React.Fragment>
-          ))}
-        </div>
-      ),
-    },
-    { name: "Post Link", selector: "post_link", sortable: true },
-    { name: "Post Image", selector: "post_image", sortable: true },
-    { name: "User Prediction", selector: "user_prediction", sortable: true },
-    { name: "Post Platform", selector: "post_platform", sortable: true },
-    {
-      name: "Classifier Response",
-      selector: "classifier_response",
-      sortable: true,
-    },
-  ];
 
   useEffect(() => {
     // Fetch data when the component mounts
@@ -154,10 +90,10 @@ const MainDashboard = () => {
       try {
         const response = await fetch(apiEndpoints.getDashboard);
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.error("data", data);
+        console.error('data', data);
         setTableData(data);
         setLoading(false);
       } catch (error) {
@@ -174,39 +110,34 @@ const MainDashboard = () => {
   }
 
   return (
-    <div
-      className="dashboard-container"
-      id="dashboard-container"
-      data-uk-grid
-    >
-      <div className="uk-width-expand@m">
-        <div
-          className="dashboard-main-menu-container"
-          data-uk-grid
-        >
-          <div className="uk-width-auto@m uk-width-1-1">
-            <p className="h1-dashboard uk-margin-medium-top">My Dashboard</p>
+    <div className='dashboard-container' id='dashboard-container' data-uk-grid>
+      <div className='uk-width-expand@m'>
+        <div className='dashboard-main-menu-container' data-uk-grid>
+          <div className='uk-width-auto@m uk-width-1-1'>
+            <p className='h1-dashboard uk-margin-medium-top'>My Dashboard</p>
           </div>
-          <div className="uk-width-expand@l uk-width-1-1 dashboard-minus-margin-top">
-            <div className="uk-flex uk-flex-right@l uk-flex-left">
-              <nav className="">
-                <ul className="uk-subnav main-menu uk-margin-remove-bottom uk-flex-right">
+          <div className='uk-width-expand@l uk-width-1-1 dashboard-minus-margin-top'>
+            <div className='uk-flex uk-flex-right@l uk-flex-left'>
+              <nav className=''>
+                <ul className='uk-subnav main-menu uk-margin-remove-bottom uk-flex-right'>
                   <li>
                     <button
+                      type='submit'
                       onClick={handleExportCSV}
-                      className="uk-button button-default-dashboard"
+                      className='uk-button button-default-dashboard'
                     >
-                      Export{" "}
+                      Export
                       <FontAwesomeIcon
                         icon={faDownload}
-                        className="button-right-icon"
-                      />{" "}
+                        className='button-right-icon'
+                      />
                     </button>
                   </li>
                   <li>
                     <button
+                      type='submit'
                       onClick={handleLogout}
-                      className="uk-button button-default-dashboard"
+                      className='uk-button button-default-dashboard'
                     >
                       Log out
                     </button>
@@ -216,7 +147,7 @@ const MainDashboard = () => {
             </div>
           </div>
         </div>
-        <div className="main-datatable">
+        <div className='main-datatable'>
           <DataTable
             ref={tableRef}
             columns={columns}
@@ -229,13 +160,13 @@ const MainDashboard = () => {
             customStyles={{
               rows: {
                 style: {
-                  minHeight: "75px",
-                  marginBottom: "10px",
+                  minHeight: '75px',
+                  marginBottom: '10px',
                 },
               },
               headRow: {
                 style: {
-                  minHeight: "40px",
+                  minHeight: '40px',
                 },
               },
             }}
@@ -246,6 +177,6 @@ const MainDashboard = () => {
       </div>
     </div>
   );
-};
+}
 
 export default MainDashboard;
