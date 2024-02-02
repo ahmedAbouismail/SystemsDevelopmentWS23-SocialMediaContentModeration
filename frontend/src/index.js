@@ -9,12 +9,11 @@ import App from "./App"
 import Footer from "./components/footer"
 import Navbar from "./components/nav"
 import ReportPage from "./pages/ReportPage"
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NotFoundPage from './pages/NoPage';
 import AboutUs from './pages/AboutUs';
 import HateSpeechPage from "./pages/HateSpeechPage";
 import ResponsePage from "./pages/ResponsePage";
-
 import MainDashboard from './pages/Dashboard/main';
 import Login from './pages/Login';
 import PrivateRoute from './pages/Dashboard/privateRoute';

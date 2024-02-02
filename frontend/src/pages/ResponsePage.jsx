@@ -38,7 +38,7 @@ const ResponsePage =(state)=> {
                                     Rest assured, your report has been securely stored, and our team will thoroughly review the content.{'\n'}
                                     {res['platform'] !== 'Other' && res['platform'] !== "" && (
                                         <>
-                                             To take immediate action, we encourage you to report the post directly on <b>{res['platform']}</b> by visiting <b><a href={res['reportingLink']} target='_blank'>this link</a></b>.{'\n'}
+                                             To take immediate action, we encourage you to report the post directly on <b>{res['platform']}</b> by visiting <b><a href={res['reportingLink']} target='_blank' rel="noreferrer">this link</a></b>.{'\n'}
                                         </>
                                     )}
                                         Thank you again for being an active advocate for a positive online experience across the internet.
@@ -58,7 +58,7 @@ const ResponsePage =(state)=> {
                                      {res['platform'] !== 'Other' && res['platform'] !== "" && (
                                         <>
                                              If the post feels in violation of <b>{res['platform']}</b>'s community guidelines, we encourage you to report the post directly on <b>{res['platform']}</b> by visiting
-                                            <b><a href={res['reportingLink']} target='_blank'> this link</a></b>.{'\n'}
+                                            <b><a href={res['reportingLink']} target='_blank' rel="noreferrer"> this link</a></b>.{'\n'}
                                         </>
                                     )}
                                         Keep in mind that our AI is still in training, and your additional input on the platform can contribute to its learning process.
