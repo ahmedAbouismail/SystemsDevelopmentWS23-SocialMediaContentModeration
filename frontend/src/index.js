@@ -23,18 +23,22 @@ import PrivateRoute from './pages/Dashboard/privateRoute';
 
 const navList = [
   {
+    id: 'Report',
     name: 'Report',
     url: '/report',
   },
   {
+    id: 'HateSpeech',
     name: 'Hate Speech',
     url: '/hate-speech',
   },
   {
+    id: 'AboutUs',
     name: 'About Us',
     url: '/about-us',
   },
   {
+    id: 'Login',
     name: 'Login',
     url: '/login',
   },

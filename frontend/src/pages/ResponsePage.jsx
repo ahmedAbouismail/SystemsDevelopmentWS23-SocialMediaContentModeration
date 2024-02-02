@@ -139,11 +139,13 @@ function ResponsePage() {
                   name='Read More about Hate Speech'
                   url='/hate-speech'
                   image='hate.png'
+                  alt='hate'
                 />
                 <CardsImageSmall
                   name='Read More about the Consequences of Hate Speech'
                   url='/hate-speech'
                   image='consequence.png'
+                  alt='consequence'
                 />
               </div>
             </div>

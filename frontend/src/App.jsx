@@ -14,7 +14,7 @@ function App() {
     <>
       <HeroImage
         image='phone-women.png'
-        alt=''
+        alt='phone-woman'
         text={heroTextTyping}
         buttonName='Report hate speech now!'
         buttonURL='report'

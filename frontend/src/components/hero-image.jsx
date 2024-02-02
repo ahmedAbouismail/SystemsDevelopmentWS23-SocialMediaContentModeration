@@ -7,8 +7,7 @@ function HeroImage({
   image,
   buttonURL,
   text,
-  description,
-  imageWidth,
+  alt,
 }) {
   return (
     <div className=''>
@@ -24,7 +23,7 @@ function HeroImage({
                   text={text}
                   speed={80}
                   direction='forward'
-                  repeat='-1'
+                  repeat={-1}
                   classes='uk-h1 typing'
                 />
               </div>
@@ -35,8 +34,7 @@ function HeroImage({
             <div className='hero-image uk-width-expand@m uk-width-3-5@s uk-visible@s'>
               <img
                 src={`/assets/img/${image}`}
-                alt={description}
-                width={imageWidth}
+                alt={alt}
               />
             </div>
           </div>
@@ -50,9 +48,8 @@ HeroImage.propTypes = {
   buttonName: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   buttonURL: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  imageWidth: PropTypes.string.isRequired,
+  text: PropTypes.arrayOf(PropTypes.string).isRequired,
+  alt: PropTypes.string.isRequired,
 };
 
 export default HeroImage;

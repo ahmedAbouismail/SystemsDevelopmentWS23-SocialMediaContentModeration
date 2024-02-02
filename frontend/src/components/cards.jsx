@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // eslint-disable-next-line object-curly-newline
-function CardsIcon({ number, image, alt, text }) {
+function CardsIcon({ number, image, description, text }) {
   return (
     <div>
       <div className='uk-card uk-box-shadow-medium uk-border-rounded  uk-background-default'>
@@ -20,7 +20,7 @@ function CardsIcon({ number, image, alt, text }) {
             <img
               src={`/assets/img/${image}`}
               className='card-icon-top'
-              alt={alt}
+              alt={description}
             />
           </div>
           <div className='text uk-text-center'>
@@ -36,7 +36,7 @@ CardsIcon.propTypes = {
   number: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
 };
 
 export default CardsIcon;

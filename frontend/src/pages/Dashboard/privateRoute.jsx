@@ -8,6 +8,6 @@ function PrivateRoute({ isAuthenticated }) {
 }
 
 PrivateRoute.propTypes = {
-  isAuthenticated: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 export default PrivateRoute;

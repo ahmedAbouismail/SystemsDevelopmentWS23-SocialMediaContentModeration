@@ -69,11 +69,13 @@ function AboutUsPage() {
                   name='Hochschule für Technik und Wirtschaft Berlin'
                   url='https://www.htw-berlin.de/'
                   image='partners/htw.png'
+                  alt='htw'
                 />
                 <CardsImageSmall
                   name='City of Berlin'
                   url='https://www.berlin.de/deeptech/standort/kompetenzfeld-it-security/'
                   image='partners/berlin.png'
+                  alt='berlin'
                 />
               </div>
             </div>
