@@ -6,14 +6,42 @@ import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { saveAs } from 'file-saver';
 import apiEndpoints from '../../apiConfig';
 
-const MainDashboard = () => {
+function MainDashboard() {
   // eslint-disable-next-line no-unused-vars
   const [isLoggedIn, setLoggedIn] = useState(true);
   const [loading, setLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
   const tableRef = useRef(null);
-
   const navigate = useNavigate();
+
+  const renderPostContentCell = (row) => (
+    <div style={{ whiteSpace: 'normal', wordWrap: 'break-word' }}>
+      {row.post_content.split('\n').map((line) => (
+        <React.Fragment key={row.index}>
+          {line}
+          <br />
+        </React.Fragment>
+      ))}
+    </div>
+  );
+
+  const columns = [
+    {
+      name: 'Post Content',
+      selector: 'post_content',
+      sortable: true,
+      cell: renderPostContentCell,
+    },
+    { name: 'Post Link', selector: 'post_link', sortable: true },
+    { name: 'Post Image', selector: 'post_image', sortable: true },
+    { name: 'User Prediction', selector: 'user_prediction', sortable: true },
+    { name: 'Post Platform', selector: 'post_platform', sortable: true },
+    {
+      name: 'Classifier Response',
+      selector: 'classifier_response',
+      sortable: true,
+    },
+  ];
 
   const handleLogout = async () => {
     try {
@@ -39,53 +67,22 @@ const MainDashboard = () => {
   };
 
   const handleExportCSV = () => {
-    const fileType =
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
     const fileExtension = '.csv';
     const fileName = 'data';
+    const tableToCSV = () => {
+      const header = columns.map((column) => column.name).join(',');
+      const rows = tableData.map((row) => columns.map((column) => row[column.selector]).join(','));
+      return [header, ...rows].join('\n');
+    };
 
     const exportToCSV = () => {
       const blob = new Blob([tableToCSV()], { type: fileType });
       saveAs(blob, fileName + fileExtension);
     };
 
-    const tableToCSV = () => {
-      const header = columns.map((column) => column.name).join(',');
-      const rows = tableData.map((row) =>
-        columns.map((column) => row[column.selector]).join(',')
-      );
-      return [header, ...rows].join('\n');
-    };
-
     exportToCSV();
   };
-
-  const columns = [
-    {
-      name: 'Post Content',
-      selector: 'post_content',
-      sortable: true,
-      cell: (row) => (
-        <div style={{ whiteSpace: 'normal', wordWrap: 'break-word' }}>
-          {row.post_content.split('\n').map((line, index) => (
-            <React.Fragment key={index}>
-              {line}
-              <br />
-            </React.Fragment>
-          ))}
-        </div>
-      ),
-    },
-    { name: 'Post Link', selector: 'post_link', sortable: true },
-    { name: 'Post Image', selector: 'post_image', sortable: true },
-    { name: 'User Prediction', selector: 'user_prediction', sortable: true },
-    { name: 'Post Platform', selector: 'post_platform', sortable: true },
-    {
-      name: 'Classifier Response',
-      selector: 'classifier_response',
-      sortable: true,
-    },
-  ];
 
   useEffect(() => {
     // Fetch data when the component mounts
@@ -125,18 +122,20 @@ const MainDashboard = () => {
                 <ul className='uk-subnav main-menu uk-margin-remove-bottom uk-flex-right'>
                   <li>
                     <button
+                      type='submit'
                       onClick={handleExportCSV}
                       className='uk-button button-default-dashboard'
                     >
-                      Export{' '}
+                      Export
                       <FontAwesomeIcon
                         icon={faDownload}
                         className='button-right-icon'
-                      />{' '}
+                      />
                     </button>
                   </li>
                   <li>
                     <button
+                      type='submit'
                       onClick={handleLogout}
                       className='uk-button button-default-dashboard'
                     >
@@ -178,6 +177,6 @@ const MainDashboard = () => {
       </div>
     </div>
   );
-};
+}
 
 export default MainDashboard;
