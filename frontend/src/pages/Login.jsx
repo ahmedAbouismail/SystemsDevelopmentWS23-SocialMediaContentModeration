@@ -1,68 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import apiEndpoints from '../apiConfig';
 
-class LoginInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      focused: false,
-      value: '',
-    };
-  }
+function LoginInput({ type, label, id }) {
+  const [value, setValue] = useState('');
 
-  focusField() {
-    const { focused } = this.state;
-    this.setState({
-      focused: !focused,
-    });
-  }
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
 
-  handleChange(event) {
-    const { target } = event;
-    const { value } = target;
-    this.setState({
-      value: value,
-    });
-  }
+  const focusField = (event) => {
+    const input = event.target;
+    input.classList.toggle('focused', !input.classList.contains('focused'));
+  };
 
-  render() {
-    const { type, label, style, id } = this.props;
-    const { focused, value } = this.state;
+  const inputClass = `login-input ${value ? 'login-input-open' : ''}`;
 
-    let inputClass = 'login-input';
-    if (focused) {
-      inputClass += ' login-input-focus';
-    } else if (value !== '') {
-      inputClass += ' login-input-open';
-    }
-
-    return (
-      <div className={inputClass} style={style}>
-        <div className='login-input-holder'>
-          <input
-            className='login-input-input'
-            type={type}
-            id={id}
-            onFocus={this.focusField.bind(this)}
-            onBlur={this.focusField.bind(this)}
-            onChange={this.handleChange.bind(this)}
-            autoComplete='off'
-          />
-          <label className='login-input-label' htmlFor={id}>
-            {label}
-          </label>
-        </div>
+  return (
+    <div className={inputClass}>
+      <div className='login-input-holder'>
+        <input
+          className='login-input-input'
+          type={type}
+          id={id}
+          onFocus={focusField}
+          onBlur={focusField}
+          onChange={handleChange}
+          autoComplete='off'
+        />
+        <label className='login-input-label' htmlFor={id}>
+          {label}
+        </label>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-const Login = ({ setAuthenticated, history, setRememberMe }) => {
+function Login({ setAuthenticated }) {
   const [loginError, setLoginError] = useState(false);
-  const navigate = useNavigate();
   // eslint-disable-next-line no-unused-vars
-  const [rememberMe, setLocalRememberMe] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
     try {
       const storedToken = localStorage.getItem('token');
@@ -91,14 +71,13 @@ const Login = ({ setAuthenticated, history, setRememberMe }) => {
       });
 
       if (response.ok) {
-        const token = response.json().then((data) => data.token);
-        // Erfolgreich eingeloggt
+        const data = await response.json();
+        const { token } = data;
         setLoginError(false);
         setAuthenticated(true);
         navigate('/dashboard');
-        // Save token to localStorage
         localStorage.setItem('token', token);
-        // Save rememberMe status to localStorage
+
         if (rememberMe) {
           localStorage.setItem('rememberMe', 'true');
         } else {
@@ -132,6 +111,7 @@ const Login = ({ setAuthenticated, history, setRememberMe }) => {
               <button
                 className='uk-button uk-button-primary'
                 onClick={handleLogin}
+                type='submit'
               >
                 Login
               </button>
@@ -147,6 +127,16 @@ const Login = ({ setAuthenticated, history, setRememberMe }) => {
       </div>
     </div>
   );
+}
+
+Login.propTypes = {
+  setAuthenticated: PropTypes.func.isRequired,
+};
+
+LoginInput.propTypes = {
+  type: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default Login;

@@ -28,5 +28,6 @@ module.exports = {
       { ignore: ['css', 'js', 'uk-accordion'] },
     ],
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    // 'import/no-extraneous-dependencies': ['error', { devDependencies: true }], // needed for prop types
   },
 };
