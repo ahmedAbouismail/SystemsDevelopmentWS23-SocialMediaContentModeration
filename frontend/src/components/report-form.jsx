@@ -362,13 +362,13 @@ const ReportFormComponent = () => {
                   />
                 </div>
                 <div>
-                  <a
+                  <button
                     className="uk-button uk-button-secondary"
                     type="submit"
                     onClick={handleSubmit}
                   >
                     Send
-                  </a>
+                  </button>
                 </div>
               </div>
               <div className="uk-flex-first uk-flex-last@l">
@@ -410,12 +410,12 @@ const ReportFormComponent = () => {
                       )}
                     </div>
                     <div>
-                      <a
+                      <button
                         className="uk-button uk-button-secondary"
                         onClick={handleLinkSubmit}
                       >
                         Send
-                      </a>
+                      </button>
                     </div>
                   </fieldset>
                 </form>
