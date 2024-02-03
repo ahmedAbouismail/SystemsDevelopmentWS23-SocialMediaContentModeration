@@ -2,7 +2,7 @@
 import os
 import pandas as pd
 import argparse
-from data_processing.data_preprocessing import DataPreprocessing
+from classifier.hate_speech_service.data_processing.data_preprocessing import DataPreprocessing
 
 
 class SVM:
