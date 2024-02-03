@@ -1,8 +1,32 @@
+# Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Welcome To NoHateNet](#welcome-to-nohatenet)
+- [Quickstart](#quickstart)
+  - [Start Docker-Desktop](#start-docker-desktop)
+  - [Tips for Using Vim (Windows and macOS)](#tips-for-using-vim-windows-and-macos)
+  - [Create .env File](#create-env-file)
+  - [Switch Directory to Backend](#switch-directory-to-backend)
+  - [Create Another .env File](#create-another-env-file)
+  - [Build Containers](#build-containers)
+  - [Create Super User](#create-super-user)
+- [Testing](#testing)
+
+
 # Welcome To NoHateNet
+ <p align="center"><img src="frontend/public/assets/img/logo/blue-yellow-logo.png" width="300" alt="Logo"/></p>
 
-## Start Application Locally
+- Our app, NoHate, strives to eliminate negativity on social platforms.
+- You can report negative posts by others to us.
+- We have an ML model that identifies the category of hate a post falls under and suggests subsequent actions.
+- Data scientists can view all the posts reported by users on our website.
 
-## 1. Start Docker-Desktop
+<br/>
+<br/>
+<br/>
+
+# Quickstart
+
+## Start Docker-Desktop
    To get the Docker daemon running.
 
 
@@ -19,7 +43,7 @@
 
 ## Create .env File
    Copy the provided `template.env` file and rename it to `.env`. 
-   You can also enter your own credentials for each variable!
+   <br/>You can also enter your own credentials for each variable!
 
    **Example .env File:**
    ```dotenv
@@ -37,8 +61,8 @@
    ```
 
 ## Switch Directory to Backend
-   ```
-   cd backend/
+   ``` bash
+   cd backend
    ```
 
 ## Create Another .env File
@@ -69,28 +93,30 @@
    ```
 
 ## Build Containers 
-   ```
+   ``` bash
    docker-compose up
    ```
 
 ## Create Super User
    First enter the django container by running:
-   ```
+   ``` bash
    docker exec -it django bash 
    ```
 
    Then run the django method to create a super user:
-   ```
+   ``` bash
    python manage.py createsuperuser
    ```
 
-## Testing
+# Testing
 
-### Django
+   Django
+   <br/>
+
    Our Test Coverage for the Django Backend <br />
    <img src="test_coverage\Coverage_2024-02-03.png" width="600" alt="Test Coverage Django"/>
 
    To run the tests go to the backend path and run in console:
-   ```
+   ``` bash
    pytest
    ```
