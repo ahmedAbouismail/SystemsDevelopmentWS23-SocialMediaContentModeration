@@ -66,7 +66,7 @@ class Navbar extends Component {
                   <nav className='nav'>
                     <ul className='uk-subnav main-menu uk-margin-remove-bottom uk-flex-right uk-visible@s'>
                       {items.map((item) => (
-                        <li key={item.index}>
+                        <li key={item.id}>
                           <a href={item.url}>{item.name}</a>
                         </li>
                       ))}
@@ -98,7 +98,7 @@ class Navbar extends Component {
         >
           <ul className='uk-nav uk-nav-default uk-hidden@s'>
             {items.map((item) => (
-              <li key={item.index}>
+              <li key={item.id}>
                 <a href={item.url}>{item.name}</a>
               </li>
             ))}

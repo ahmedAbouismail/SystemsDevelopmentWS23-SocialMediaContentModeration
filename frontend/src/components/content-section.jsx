@@ -4,13 +4,11 @@ import PropTypes from 'prop-types';
 function ContentBlock({ title, heading, paragraphs }) {
   return (
     <div>
-      <div>
-        <p className='small-title-left'>{title}</p>
-        <h3 className='uk-h1'>{heading}</h3>
-        {paragraphs.map((paragraph) => (
-          <p key={paragraph.index}>{paragraph}</p>
-        ))}
-      </div>
+      <p className='small-title-left'>{title}</p>
+      <h3 className='uk-h1'>{heading}</h3>
+      {paragraphs.map((paragraph) => (
+        <p key={paragraph.id}>{paragraph}</p>
+      ))}
     </div>
   );
 }
@@ -23,13 +21,10 @@ ContentBlock.propTypes = {
 
 function ContentSection({ blocks }) {
   return (
-    <div
-      className='uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@l'
-      data-uk-grid
-    >
+    <div className='uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@l' data-uk-grid>
       {blocks.map((block) => (
         <ContentBlock
-          key={block.index}
+          key={block.id}
           title={block.title}
           heading={block.heading}
           paragraphs={block.paragraphs}
