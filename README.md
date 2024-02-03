@@ -13,7 +13,7 @@
 
 
 # Welcome To NoHateNet
- <p align="center"><img src="frontend/public/assets/img/logo/blue-yellow-logo.png" width="300" alt="Logo"/></p>
+<p align="center"><img src="frontend/public/assets/img/logo/blue-yellow-logo.png" width="300" alt="Logo"/></p>
 
 - Our app, NoHate, strives to eliminate negativity on social platforms.
 - You can report negative posts by others to us.
@@ -114,7 +114,7 @@
    <br/>
 
    Our Test Coverage for the Django Backend <br />
-   <img src="test_coverage\Coverage_2024-02-03.png" width="600" alt="Test Coverage Django"/>
+   <img src="test_coverage/Coverage_2024-02-03.png" width="600" alt="Test Coverage Django"/>
 
    To run the tests go to the backend path and run in console:
    ``` bash
