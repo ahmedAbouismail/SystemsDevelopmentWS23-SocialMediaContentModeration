@@ -88,7 +88,7 @@
 
 ### Django
    Our Test Coverage for the Django Backend
-   <img src="backend\test_coverage\Coverage 2024-02-03.png width="700" alt="Test Coverage">
+   <img src="backend\test_coverage\Coverage 2024-02-03.png" width="700" alt=Test Coverage">
 
    To run the tests go to the backend path and run in console:
    ```
