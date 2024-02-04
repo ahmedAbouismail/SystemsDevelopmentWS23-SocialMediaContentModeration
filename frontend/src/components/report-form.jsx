@@ -27,9 +27,9 @@ function ReportFormComponent() {
     post_link: '',
   });
 
-  const isValidLink = () => {
+  const isValidLink = (linkUrl) => {
     const linkRegex = /^(https?:\/\/)?(www\.)?(facebook\.com|reddit\.com|instagram\.com|x\.com|twitter\.com)\/.*/i;
-    return linkRegex.test(link);
+    return linkRegex.test(linkUrl);
   };
 
   const isValidImageType = (fileType) => {
