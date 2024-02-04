@@ -7,28 +7,47 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from .serializers import *
 from .utils import *
 
+
 @api_view(['GET'])
 def get_reports(request):
+    """
+    Retrieve a list of all reports.
+
+    This endpoint retrieves all reports from the database and returns them
+    in the form of serialized data.
+
+    Returns:
+        Response: A JSON response containing serialized report data.
+    """
     queryset = Post.objects.all()
 
-    #Serialize data
+    # Serialize data
     serializer = PostSerializer(queryset, many=True)
     return Response(serializer.data)
 
 
-
 @api_view(['POST'])
 def post_report(request):
+    """
+    Create a new report.
+
+    This endpoint creates a new report based on the provided data in the request body.
+    The report includes information such as post content, post link, image ID, user prediction,
+    platform, classifier response, and category definition.
+
+    Args:
+        request (Request): The HTTP request object containing the report data.
+
+    Returns:
+        Response: A JSON response indicating the success or failure of the report creation.
+    """
     # Create list with data
     report = {'post_content': request.data['post_content']}
 
     # LINK
-    # post_link will be always empty, because the link will not be send anymore as a part of this request
-    # for the link there is a sepreated form in the frontend. 
-    # The link will be send to the backend with a sepreated request
     report['post_link'] = request.data['post_link']
 
-    # GET IMAGE ID    
+    # GET IMAGE ID
     report['post_image'] = request.data['image_id']
 
     # USER PREDICTION
@@ -42,7 +61,7 @@ def post_report(request):
     if hate_class_id is not None:
         report['classifier_response'] = hate_class_id
     else:
-        report['classifier_response'] = 1 #default 
+        report['classifier_response'] = 1  # default
 
     # DEF CATEGORY
     category_definitions = {
@@ -75,11 +94,26 @@ def post_report(request):
     else:
         print('Report nicht gespeichert')
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 @api_view(['POST'])
 @parser_classes([MultiPartParser, FormParser])
 def post_screenshot(request):
+    """
+    Upload a screenshot.
+
+    This endpoint allows users to upload a screenshot, which is then processed and stored.
+    The image is uploaded to MinIO, and only its ID is saved in the database.
+
+    Args:
+        request (Request): The HTTP request object containing the screenshot data.
+
+    Returns:
+        Response: A JSON response containing the ID of the uploaded image.
+
+    Note:
+        This endpoint expects a POST request with the 'post_image' key containing the image file.
+    """
     id = 'None'
     if request.method == 'POST' and 'post_image' in request.FILES:
         # NOT WORKING ON JSON, see REST Framework documentation
@@ -103,16 +137,32 @@ def post_screenshot(request):
 
 @api_view(['POST'])
 def post_report_link(request):
+    """
+    Submit a report with a link.
+
+    This endpoint allows users to submit a report containing a link.
+    The link is validated and stored if it meets the required criteria.
+
+    Args:
+        request (Request): The HTTP request object containing the report data.
+
+    Returns:
+        Response: A JSON response indicating the status of the operation.
+
+    Raises:
+        HTTP_400_BAD_REQUEST: If the request data is invalid.
+    """
     print("Link REQUST", request.data)
-    report= { 'post_link': request.data['post_link']}
+    report = {'post_link': request.data['post_link']}
     # post_content can not be empty, because it is a required field in the serializer
     report['post_content'] = '-'
     report['user_prediction'] = '-'
-    serializer  = PostSerializer(data=report)
+    serializer = PostSerializer(data=report)
     if serializer.is_valid():
         serializer.save()
         print('Link gespeichert')
+        return Response(status=status.HTTP_201_CREATED)
     else:
         print('Link nicht gespeichert')
         print(serializer.errors)
-    return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
