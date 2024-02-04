@@ -111,7 +111,7 @@ def classify_report(content):
 def create_prediction_str(predictions):
     if predictions != None:
         pred_list = ''
-        pred_list = ', '.join(predictions)
+        pred_list = '/ '.join(predictions)
     else:
         pred_list = None
     return pred_list
