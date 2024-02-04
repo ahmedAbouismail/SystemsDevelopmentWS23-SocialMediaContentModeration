@@ -112,7 +112,8 @@ def post_report_link(request):
     if serializer.is_valid():
         serializer.save()
         print('Link gespeichert')
+        return Response(status=status.HTTP_201_CREATED)
     else:
         print('Link nicht gespeichert')
         print(serializer.errors)
-    return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
