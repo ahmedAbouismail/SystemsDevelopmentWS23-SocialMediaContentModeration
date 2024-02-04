@@ -146,7 +146,6 @@ function ReportFormComponent() {
     }
     try {
       const response = await fetch(apiEndpoints.postLink, {
-        // TODO: add extra endpoint for saving links
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -160,11 +159,15 @@ function ReportFormComponent() {
           type: 'success',
           message: 'Link sent successfully!',
         });
-
-        // Reload the page after a short delay
         setTimeout(() => {
           window.location.reload();
         }, 1000);
+      } else if (response.status === 400) {
+        console.error('Error:', response.statusText);
+        setNotification({
+          type: 'error',
+          message: 'Invalid link. Please try again with a valid link.',
+        });
       } else {
         console.error('Error:', response.statusText);
         setNotification({
