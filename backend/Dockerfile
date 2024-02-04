@@ -8,6 +8,9 @@ ENV PYTHONUNBUFFERED 1
 # Set the working directory in the container
 WORKDIR /usr/src/hassmelder/backend
 
+# Set PYTHONPATH to include the /app directory
+ENV PYTHONPATH /usr/src/hassmelder/backend
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*

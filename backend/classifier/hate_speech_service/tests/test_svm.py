@@ -2,8 +2,9 @@ from unittest import TestCase
 from unittest.mock import patch, MagicMock
 from classifier.hate_speech_service.svm import SVM
 
+
 class TestSVM(TestCase):
-    @patch('classifier.hate_speech_service.svm.DataPreprocessing.clean_text')
+    @patch('classifier.hate_speech_service.data_processing.data_preprocessing.DataPreprocessing.clean_text')
     @patch('classifier.hate_speech_service.svm.pd.read_pickle')
     @patch('classifier.hate_speech_service.svm.os.path.join')
 
