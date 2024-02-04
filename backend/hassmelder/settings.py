@@ -53,9 +53,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.dashboard.apps.DashboardConfig',
-    'apps.report.apps.ReportConfig',
-    'apps.index.apps.IndexConfig',
+    'apps.dashboard',
+    'apps.report',
+    'apps.index',
     'drf_yasg',
 ]
 
