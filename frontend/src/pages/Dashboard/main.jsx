@@ -1,23 +1,24 @@
-import React, { useState, useEffect, useRef } from 'react';
+/* eslint-disable import/no-extraneous-dependencies */
+import React, { useState, useEffect, forwardRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { saveAs } from 'file-saver';
+import { v4 as uuidv4 } from 'uuid';
 import apiEndpoints from '../../apiConfig';
 
-function MainDashboard() {
+const MainDashboard = forwardRef((props, ref) => {
   // eslint-disable-next-line no-unused-vars
   const [isLoggedIn, setLoggedIn] = useState(true);
   const [loading, setLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
-  const tableRef = useRef(null);
   const navigate = useNavigate();
 
   const renderPostContentCell = (row) => (
     <div style={{ whiteSpace: 'normal', wordWrap: 'break-word' }}>
       {row.post_content.split('\n').map((line) => (
-        <React.Fragment key={row.index}>
+        <React.Fragment key={uuidv4()}>
           {line}
           <br />
         </React.Fragment>
@@ -28,18 +29,36 @@ function MainDashboard() {
   const columns = [
     {
       name: 'Post Content',
-      selector: 'post_content',
+      selector: (row) => renderPostContentCell(row),
       sortable: true,
-      cell: renderPostContentCell,
+      cell: (row) => renderPostContentCell(row),
     },
-    { name: 'Post Link', selector: 'post_link', sortable: true },
-    { name: 'Post Image', selector: 'post_image', sortable: true },
-    { name: 'User Prediction', selector: 'user_prediction', sortable: true },
-    { name: 'Post Platform', selector: 'post_platform', sortable: true },
+    {
+      name: 'Post Link',
+      selector: (row) => row.post_link,
+      sortable: true,
+    },
+    {
+      name: 'Post Image',
+      selector: (row) => row.post_image,
+      sortable: true,
+    },
+    {
+      name: 'User Prediction',
+      selector: (row) => row.user_prediction,
+      sortable: true,
+      cell: (row) => row.user_prediction,
+    },
+    {
+      name: 'Post Platform',
+      selector: (row) => row.post_platform,
+      sortable: true,
+    },
     {
       name: 'Classifier Response',
-      selector: 'classifier_response',
+      selector: (row) => row.classifier_response,
       sortable: true,
+      cell: (row) => row.classifier_response,
     },
   ];
 
@@ -71,8 +90,8 @@ function MainDashboard() {
     const fileExtension = '.csv';
     const fileName = 'data';
     const tableToCSV = () => {
-      const header = columns.map((column) => column.name).join(',');
-      const rows = tableData.map((row) => columns.map((column) => row[column.selector]).join(','));
+      const header = columns.map((column) => column.name).join('/');
+      const rows = tableData.map((row) => columns.map((column) => column.cell(row)).join(','));
       return [header, ...rows].join('\n');
     };
 
@@ -93,7 +112,6 @@ function MainDashboard() {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.error('data', data);
         setTableData(data);
         setLoading(false);
       } catch (error) {
@@ -149,7 +167,7 @@ function MainDashboard() {
         </div>
         <div className='main-datatable'>
           <DataTable
-            ref={tableRef}
+            ref={ref}
             columns={columns}
             data={tableData}
             pagination
@@ -177,6 +195,6 @@ function MainDashboard() {
       </div>
     </div>
   );
-}
+});
 
 export default MainDashboard;
