@@ -30,7 +30,7 @@ function LeftNav({ items }) {
               <nav className='navLeft'>
                 <ul className='dashboard-main-left-menu uk-margin-remove-bottom uk-flex-right uk-visible@m'>
                   {items.map((item) => (
-                    <li key={item.index}>
+                    <li key={item.id}>
                       <a href={item.url}>{item.name}</a>
                     </li>
                   ))}
@@ -62,7 +62,7 @@ function LeftNav({ items }) {
       >
         <ul className='uk-nav uk-nav-default uk-hidden@m'>
           {items.map((item) => (
-            <li key={item.index}>
+            <li key={item.id}>
               <a href={item.url}>{item.name}</a>
             </li>
           ))}
@@ -75,6 +75,7 @@ function LeftNav({ items }) {
 LeftNav.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       url: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     }),
