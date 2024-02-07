@@ -91,10 +91,10 @@ function MainDashboard() {
       } else {
         // Fehler beim Logout
         // console.error('Logout fehlgeschlagen:', response.statusText);
-        UIkit.notification('Logout fehlgeschlagen');
+        UIkit.notification('Logout failed');
       }
     } catch (error) {
-      UIkit.notification('Fehler beim Logout:');
+      UIkit.notification('Failed logout');
       // console.error('Fehler beim Logout:', error.message);
     }
   };
@@ -138,7 +138,8 @@ function MainDashboard() {
       downloadLink.click();
       URL.revokeObjectURL(blobUrl);
     } catch (error) {
-      console.error('Fehler beim holen vom Bild');
+      // console.error('Fehler beim holen vom Bild');
+      UIkit.notification('Error while loading image');
     }
   }
 
