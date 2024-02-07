@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UIkit from 'uikit';
 import PropTypes from 'prop-types';
 import apiEndpoints from '../apiConfig';
 
@@ -52,7 +53,8 @@ function Login({ setAuthenticated }) {
         navigate('/dashboard');
       }
     } catch (error) {
-      console.error('Error while checking for token:', error.message);
+      // console.error('Error while checking for token:', error.message);
+      UIkit.notification('Error while checking for token');
     }
   }, [navigate, setAuthenticated]);
 
@@ -84,11 +86,13 @@ function Login({ setAuthenticated }) {
           localStorage.removeItem('rememberMe');
         }
       } else {
-        console.error('Fehler beim Einloggen');
+        UIkit.notification('Error while logging in');
+        // console.error('Fehler beim Einloggen');
         setLoginError(true);
       }
     } catch (error) {
-      console.error('Netzwerkfehler', error);
+      UIkit.notification('Network Error');
+      // console.error('Netzwerkfehler', error);
     }
   };
 
