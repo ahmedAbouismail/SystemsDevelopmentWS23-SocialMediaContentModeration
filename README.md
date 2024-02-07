@@ -120,3 +120,26 @@
    ``` bash
    pytest
    ```
+# Swagger Doc
+
+   Swagger URL: http://localhost:8000/swagger/
+
+# Troubleshooting
+
+   ## Problem: `django | minio.error.S3Error: S3 operation failed; code: AccessDenied`
+
+   If you encounter the error `minio.error.S3Error: S3 operation failed; code: AccessDenied` in Django, it might indicate problems with accessing MinIO settings.
+
+   ### Solution:
+
+   To temporarily resolve this issue, you can consider replacing the `access_key` and `secret_key` values in the `UploadImageToMinio` and `GetImageFromMinio` functions located in `File backend\apps\report\utils.py` with the actual credentials of the MinIO user.
+
+   Here's what you can do:
+
+   1. Locate the `UploadImageToMinio` and `GetImageFromMinio` functions in the `utils.py` file.
+
+   2. Replace the `access_key` and `secret_key` values with the credentials of the MinIO user from env.
+
+      ```python
+      access_key = "your_minio_access_key",
+      secret_key = "your_minio_secret_key",
