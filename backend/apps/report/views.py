@@ -9,6 +9,7 @@ from .utils import *
 
 @api_view(['GET'])
 def get_reports(request):
+    
     if request.user.is_authenticated:
         queryset = Post.objects.all()
         #Serialize data
