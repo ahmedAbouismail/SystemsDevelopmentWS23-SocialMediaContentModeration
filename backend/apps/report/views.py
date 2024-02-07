@@ -7,6 +7,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from .serializers import *
 from .utils import *
 
+import base64
+
 
 @api_view(['GET'])
 def get_reports(request):
@@ -24,7 +26,6 @@ def get_reports(request):
     # Serialize data
     serializer = PostSerializer(queryset, many=True)
     return Response(serializer.data)
-
 
 @api_view(['POST'])
 def post_report(request):
@@ -114,7 +115,7 @@ def post_screenshot(request):
     Note:
         This endpoint expects a POST request with the 'post_image' key containing the image file.
     """
-    id = 'None'
+    id = 'NoImage'
     if request.method == 'POST' and 'post_image' in request.FILES:
         # NOT WORKING ON JSON, see REST Framework documentation
         # IMAGE: Get image from request and upload to minIO. Only its id is saved in DB
@@ -165,4 +166,31 @@ def post_report_link(request):
     else:
         print('Link nicht gespeichert')
         print(serializer.errors)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def download_screenshot(request, id):
+    """
+    Get an image from MinIO by id.
+
+    This endpoint allows users to request an image saved in MinIO, using its id.
+
+    Args:
+        request (Request): The HTTP request object containing the id of the image.
+
+    Returns:
+        Response: A JSON response indicating the status of the operation and the image corresponding to the request.
+
+    Raises:
+        HTTP_400_BAD_REQUEST: If the request data is invalid.
+    """
+    image = GetImageFromMinio(id)
+    if image != None:
+        image_data = base64.b64encode(image.read()).decode('utf-8')
+        response = {
+                'image': image_data
+            }
+        return Response(data=response, status=status.HTTP_200_OK)
+    else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
