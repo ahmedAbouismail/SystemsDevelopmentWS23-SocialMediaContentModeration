@@ -9,11 +9,13 @@ from .utils import *
 
 @api_view(['GET'])
 def get_reports(request):
-    queryset = Post.objects.all()
-
-    #Serialize data
-    serializer = PostSerializer(queryset, many=True)
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        queryset = Post.objects.all()
+        #Serialize data
+        serializer = PostSerializer(queryset, many=True)
+        return Response(serializer.data)
+    else:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
 

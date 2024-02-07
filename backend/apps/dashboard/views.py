@@ -53,7 +53,7 @@ def login(request):
     username = request.data['name']
     password = request.data['password']
     
-    user = auth.authenticate(username=username, password=password)
+    user = auth.authenticate(request=request, username=username, password=password)
 
     if user is not None:
         # create or get token for user
@@ -69,5 +69,6 @@ def login(request):
 @api_view(['POST']) #TODO control authentication
 def logout(request):
     auth.logout(request)
+    print('user after out: ', request.user.is_authenticated)
     print(request, 'Logout successful')
     return Response(status=status.HTTP_200_OK)
