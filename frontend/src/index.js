@@ -92,9 +92,8 @@ function Template() {
 document.addEventListener('DOMContentLoaded', () => {
   // Function to get the current URL path
   const getCurrentPath = () => window.location.pathname;
-
   // Check if the current path is not "/dashboard"
-  if (getCurrentPath() !== '/dashboard') {
+  if (getCurrentPath() !== '/dashboard' && getCurrentPath() !== '/login') {
     // If not on the "/dashboard" page, render the Navbar
     const headerRoot = createRoot(document.getElementById('header'));
     headerRoot.render(<Navbar items={navList} />);
