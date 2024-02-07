@@ -76,6 +76,7 @@ function MainDashboard() {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: `Token ${localStorage.getItem('token') || ''}`,
         },
       });
 
@@ -117,7 +118,14 @@ function MainDashboard() {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(apiEndpoints.getDashboard);
+        const response = await fetch(apiEndpoints.getDashboard, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Token ${localStorage.getItem('token') || ''}`,
+          },
+        });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

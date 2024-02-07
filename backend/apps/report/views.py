@@ -19,11 +19,13 @@ def get_reports(request):
     Returns:
         Response: A JSON response containing serialized report data.
     """
-    queryset = Post.objects.all()
-
-    # Serialize data
-    serializer = PostSerializer(queryset, many=True)
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        queryset = Post.objects.all()
+        #Serialize data
+        serializer = PostSerializer(queryset, many=True)
+        return Response(serializer.data)
+    else:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
 @api_view(['POST'])
