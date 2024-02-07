@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
 import DataTable from 'react-data-table-component';
@@ -14,7 +14,6 @@ function MainDashboard() {
   const [isLoggedIn, setLoggedIn] = useState(true);
   const [loading, setLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
-  const tableRef = useRef(null);
   const navigate = useNavigate();
 
   const renderPostContentCell = (row) => (
@@ -185,7 +184,6 @@ function MainDashboard() {
         </div>
         <div className='main-datatable'>
           <DataTable
-            ref={tableRef}
             columns={columns}
             data={tableData}
             pagination
