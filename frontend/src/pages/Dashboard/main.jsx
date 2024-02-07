@@ -117,6 +117,31 @@ function MainDashboard() {
     exportToCSV();
   };
 
+  async function handleGetImage(id) {
+    try {
+      const url = apiEndpoints.downloadImage.concat('/', id);
+      const response = await fetch(url);
+      const data = await response.json();
+      const imageBase64 = data.image;
+      // Convert base64 image data to Blob
+      const byteCharacters = atob(imageBase64);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i += 1) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'image/*' });//  Adjust to "any"
+      const blobUrl = URL.createObjectURL(blob);
+      const downloadLink = document.createElement('a');
+      downloadLink.href = blobUrl;
+      downloadLink.download = 'image.png';
+      downloadLink.click();
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error('Fehler beim holen vom Bild');
+    }
+  }
+
   useEffect(() => {
     // Fetch data when the component mounts
     const fetchData = async () => {
@@ -133,7 +158,11 @@ function MainDashboard() {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        setTableData(data);
+        const updatedData = data.map((item) => ({
+          ...item,
+          post_image: item.post_image !== 'NoImage' ? <button type='button' onClick={() => { handleGetImage(item.post_image); }}>Download Image</button> : ' ',
+        }));
+        setTableData(updatedData);
         setLoading(false);
       } catch (error) {
         // Handle errors
