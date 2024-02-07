@@ -16,6 +16,7 @@ function MainDashboard() {
   const [isLoggedIn, setLoggedIn] = useState(true);
   const [loading, setLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
+  const [initData, setInitData] = useState([]);
   const navigate = useNavigate();
 
   const renderPostContentCell = (row) => (
@@ -105,7 +106,7 @@ function MainDashboard() {
     const fileName = 'data';
     const tableToCSV = () => {
       const header = columns.map((column) => column.name).join(',');
-      const rows = tableData.map((row) => columns.map((column) => column.selector(row)).join(','));
+      const rows = initData.map((row) => columns.map((column) => column.selector(row)).join(','));
       return [header, ...rows].join('\n');
     };
 
@@ -159,6 +160,7 @@ function MainDashboard() {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        setInitData(data);
         const updatedData = data.map((item) => ({
           ...item,
           post_image: item.post_image !== 'NoImage' ? <button type='button' onClick={() => { handleGetImage(item.post_image); }}>Download Image</button> : ' ',
