@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,35 +11,47 @@ function MainDashboard() {
   const [isLoggedIn, setLoggedIn] = useState(true);
   const [loading, setLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
-  const tableRef = useRef(null);
   const navigate = useNavigate();
 
   const renderPostContentCell = (row) => (
     <div style={{ whiteSpace: 'normal', wordWrap: 'break-word' }}>
-      {row.post_content.split('\n').map((line) => (
-        <React.Fragment key={row.index}>
-          {line}
-          <br />
-        </React.Fragment>
-      ))}
+      {row.post_content.split('\n').map((line, index) => {
+        const uniqueKey = `${row.index}-${index}`;
+        return (
+          <React.Fragment key={uniqueKey}>
+            {line}
+            <br />
+          </React.Fragment>
+        );
+      })}
     </div>
   );
 
   const columns = [
     {
       name: 'Post Content',
-      selector: 'post_content',
-      sortable: true,
-      cell: renderPostContentCell,
+      selector: (row) => renderPostContentCell(row),
+      cell: (row) => renderPostContentCell(row),
     },
-    { name: 'Post Link', selector: 'post_link', sortable: true },
-    { name: 'Post Image', selector: 'post_image', sortable: true },
-    { name: 'User Prediction', selector: 'user_prediction', sortable: true },
-    { name: 'Post Platform', selector: 'post_platform', sortable: true },
+    {
+      name: 'Post Link',
+      selector: (row) => row.post_link,
+    },
+    {
+      name: 'Post Image',
+      selector: (row) => row.post_image,
+    },
+    {
+      name: 'User Prediction',
+      selector: (row) => row.user_prediction,
+    },
+    {
+      name: 'Post Platform',
+      selector: (row) => row.post_platform,
+    },
     {
       name: 'Classifier Response',
-      selector: 'classifier_response',
-      sortable: true,
+      selector: (row) => row.classifier_response,
     },
   ];
 
@@ -93,7 +105,6 @@ function MainDashboard() {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.error('data', data);
         setTableData(data);
         setLoading(false);
       } catch (error) {
@@ -149,11 +160,9 @@ function MainDashboard() {
         </div>
         <div className='main-datatable'>
           <DataTable
-            ref={tableRef}
             columns={columns}
             data={tableData}
             pagination
-            selectableRows
             striped
             noHeader
             dense
