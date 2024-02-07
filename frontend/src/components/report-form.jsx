@@ -2,12 +2,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/no-unknown-property */
 import { React, useState } from 'react';
+import UIkit from 'uikit';
 import { useNavigate } from 'react-router-dom';
 import apiEndpoints from '../apiConfig';
 
 function ReportFormComponent() {
   const navigate = useNavigate();
-  const [notification, setNotification] = useState(null);
   const [isLinkValid, setIsLinkValid] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -81,7 +81,7 @@ function ReportFormComponent() {
     if (imageFile && isValidImageType(imageFile.type)) {
       setFormData({ ...formData, post_image: imageFile });
     } else {
-      alert('Please upload a valid image file.');
+      UIkit.notification('Please upload a valid image file. ');
     }
   };
 
@@ -130,7 +130,7 @@ function ReportFormComponent() {
           })
           .catch((error) => {
             setLoading(false);
-            console.error('Error:', error);
+            UIkit.notification('An Error has occured. Please try again.', error);
           });
       });
   };
@@ -138,9 +138,19 @@ function ReportFormComponent() {
   const handleLinkSubmit = async (event) => {
     event.preventDefault();
     if (link.post_link.trim() === '') {
-      setNotification({
-        type: 'error',
-        message: 'Link is empty!',
+      UIkit.notification({
+        message: 'Link is empty.',
+        status: 'warning',
+      });
+      return;
+    }
+    const hasHttp = link.post_link.startsWith('http://');
+    const hasHttps = link.post_link.startsWith('https://');
+
+    if (!hasHttp && !hasHttps) {
+      UIkit.notification({
+        message: 'Please include "https://" or "http://" in the link',
+        status: 'warning',
       });
       return;
     }
@@ -155,32 +165,17 @@ function ReportFormComponent() {
       });
 
       if (response.ok) {
-        setNotification({
-          type: 'success',
-          message: 'Link sent successfully!',
+        UIkit.notification({
+          message: 'Link sent successfully.',
+          status: 'success',
         });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+        setFormData({ ...formData, post_link: '' });
+        setLink({ ...link, post_link: '' });
       } else if (response.status === 400) {
-        console.error('Error:', response.statusText);
-        setNotification({
-          type: 'error',
-          message: 'Invalid link. Please try again with a valid link.',
-        });
-      } else {
-        console.error('Error:', response.statusText);
-        setNotification({
-          type: 'error',
-          message: 'Failed to send link. Please try again.',
-        });
+        UIkit.notification('Invalid link. Please try again with a valid link.');
       }
     } catch (error) {
-      console.error('Error:', error);
-      setNotification({
-        type: 'error',
-        message: 'An unexpected error occurred. Please try again.',
-      });
+      UIkit.notification('An unexpected error occurred. Please try again.');
     }
   };
 
@@ -423,14 +418,7 @@ function ReportFormComponent() {
                 </fieldset>
               </form>
             </div>
-            {/* Notification Component */}
-            <div>
-              {notification && (
-                <div className={`notification ${notification.type}`}>
-                  {notification.message}
-                </div>
-              )}
-            </div>
+            <br />
           </div>
           <div className='uk-flex-first uk-flex-last@l'>
             <p className='small-title-left'>Send a Link</p>

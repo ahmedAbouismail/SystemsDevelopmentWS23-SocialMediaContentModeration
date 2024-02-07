@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createRoot } from 'react-dom/client';
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { saveAs } from 'file-saver';
 import apiEndpoints from '../../apiConfig';
+import LeftNav from '../../components/left-nav';
+import Navbar from '../../components/nav';
 
 function MainDashboard() {
   // eslint-disable-next-line no-unused-vars
   const [isLoggedIn, setLoggedIn] = useState(true);
   const [loading, setLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
-  const tableRef = useRef(null);
   const navigate = useNavigate();
 
   const renderPostContentCell = (row) => (
@@ -24,6 +26,29 @@ function MainDashboard() {
       ))}
     </div>
   );
+
+  const navList = [
+    {
+      id: 'Report',
+      name: 'Report',
+      url: '/report',
+    },
+    {
+      id: 'HateSpeech',
+      name: 'Hate Speech',
+      url: '/hate-speech',
+    },
+    {
+      id: 'AboutUs',
+      name: 'About Us',
+      url: '/about-us',
+    },
+    {
+      id: 'Login',
+      name: 'Login',
+      url: '/login',
+    },
+  ];
 
   const columns = [
     {
@@ -50,6 +75,7 @@ function MainDashboard() {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: `Token ${localStorage.getItem('token') || ''}`,
         },
       });
 
@@ -57,6 +83,9 @@ function MainDashboard() {
         setLoggedIn(false);
         localStorage.removeItem('token');
         navigate('/');
+        // Render the Navbar after logout
+        const headerRoot = createRoot(document.getElementById('header'));
+        headerRoot.render(<Navbar items={navList} />);
       } else {
         // Fehler beim Logout
         console.error('Logout fehlgeschlagen:', response.statusText);
@@ -113,7 +142,14 @@ function MainDashboard() {
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch(apiEndpoints.getDashboard);
+        const response = await fetch(apiEndpoints.getDashboard, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Token ${localStorage.getItem('token') || ''}`,
+          },
+        });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -122,7 +158,6 @@ function MainDashboard() {
           ...item,
           post_image: item.post_image !== 'NoImage' ? <button type='button' onClick={() => { handleGetImage(item.post_image); }}>Download Image</button> : ' ',
         }));
-        console.error('data', data);
         setTableData(updatedData);
         setLoading(false);
       } catch (error) {
@@ -137,9 +172,16 @@ function MainDashboard() {
   if (loading) {
     return <p>Loading...</p>; // You can add a loading spinner or message here
   }
-
+  /* Dashboard Nav */
+  const navListLeftDashboard = [
+    {
+      name: 'Overview',
+      url: '/dashboard',
+    },
+  ];
   return (
     <div className='dashboard-container' id='dashboard-container' data-uk-grid>
+      <LeftNav items={navListLeftDashboard} />
       <div className='uk-width-expand@m'>
         <div className='dashboard-main-menu-container' data-uk-grid>
           <div className='uk-width-auto@m uk-width-1-1'>
@@ -178,7 +220,6 @@ function MainDashboard() {
         </div>
         <div className='main-datatable'>
           <DataTable
-            ref={tableRef}
             columns={columns}
             data={tableData}
             pagination
