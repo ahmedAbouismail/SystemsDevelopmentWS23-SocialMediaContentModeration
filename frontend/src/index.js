@@ -8,7 +8,6 @@ import '/node_modules/uikit/dist/css/uikit.min.css';
 import '/node_modules/uikit/dist/js/uikit.min.js';
 import '/node_modules/uikit/dist/js/uikit-core.min.js';
 import './styles/index.css';
-import LeftNav from './components/left-nav';
 import App from './App';
 import Footer from './components/footer';
 import Navbar from './components/nav';
@@ -41,13 +40,6 @@ const navList = [
     id: 'Login',
     name: 'Login',
     url: '/login',
-  },
-];
-/* Dashboard Nav */
-const navListLeftDashboard = [
-  {
-    name: 'Overview',
-    url: '/dashboard',
   },
 ];
 
@@ -95,39 +87,6 @@ function Template() {
     </>
   );
 }
-
-// Render NavbarLeft using createRoot Dashboard
-document.addEventListener('DOMContentLoaded', () => {
-  // Function to get the current URL path
-  const getCurrentPath = () => window.location.pathname;
-
-  // Recursive function to try loading the content until the container is found
-  const loadContent = () => {
-    if (getCurrentPath() === '/dashboard') {
-      const dashboardContainer = document.getElementById('dashboard-container');
-
-      // Check if the container element exists
-      if (dashboardContainer) {
-        // Create a new div for LeftNav
-        const leftNavContainer = document.createElement('div');
-        leftNavContainer.className = 'uk-width-1-6@l uk-width-1-5@m';
-
-        // Render LeftNav into the new container
-        const leftNavRoot = createRoot(leftNavContainer);
-        leftNavRoot.render(<LeftNav items={navListLeftDashboard} />);
-        const { firstChild } = dashboardContainer;
-
-        dashboardContainer.insertBefore(leftNavContainer, firstChild);
-      } else {
-        // If the container element is not found, try loading again after a delay
-        setTimeout(loadContent, 300);
-      }
-    }
-  };
-
-  // Initial attempt to load the content
-  loadContent();
-});
 
 // Render Navbar using createRoot
 document.addEventListener('DOMContentLoaded', () => {

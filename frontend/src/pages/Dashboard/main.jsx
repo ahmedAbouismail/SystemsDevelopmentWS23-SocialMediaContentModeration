@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { saveAs } from 'file-saver';
 import apiEndpoints from '../../apiConfig';
+import LeftNav from '../../components/left-nav';
 
 function MainDashboard() {
   // eslint-disable-next-line no-unused-vars
@@ -108,9 +109,16 @@ function MainDashboard() {
   if (loading) {
     return <p>Loading...</p>; // You can add a loading spinner or message here
   }
-
+  /* Dashboard Nav */
+  const navListLeftDashboard = [
+    {
+      name: 'Overview',
+      url: '/dashboard',
+    },
+  ];
   return (
     <div className='dashboard-container' id='dashboard-container' data-uk-grid>
+      <LeftNav items={navListLeftDashboard} />
       <div className='uk-width-expand@m'>
         <div className='dashboard-main-menu-container' data-uk-grid>
           <div className='uk-width-auto@m uk-width-1-1'>

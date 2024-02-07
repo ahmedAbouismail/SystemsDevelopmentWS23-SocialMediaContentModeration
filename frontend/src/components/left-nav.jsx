@@ -11,7 +11,7 @@ function LeftNav({ items }) {
   };
 
   return (
-    <>
+    <div className='uk-width-1-6@l uk-width-1-5@m'>
       <div
         className='uk-background-secondary nav-left-height-responsive'
         data-uk-height-viewport
@@ -68,7 +68,7 @@ function LeftNav({ items }) {
           ))}
         </ul>
       </div>
-    </>
+    </div>
   );
 }
 
