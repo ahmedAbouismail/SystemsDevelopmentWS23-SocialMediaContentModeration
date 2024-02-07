@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
@@ -5,6 +6,7 @@ import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { saveAs } from 'file-saver';
+import UIkit from 'uikit';
 import apiEndpoints from '../../apiConfig';
 import LeftNav from '../../components/left-nav';
 import Navbar from '../../components/nav';
@@ -18,10 +20,10 @@ function MainDashboard() {
 
   const renderPostContentCell = (row) => (
     <div style={{ whiteSpace: 'normal', wordWrap: 'break-word' }}>
-      {row.post_content.split('\n').map((line) => (
-        <React.Fragment key={row.index}>
+      {row.post_content.split('\n').map((line, index) => (
+        <React.Fragment key={index}>
           {line}
-          <br />
+          <br key={index} />
         </React.Fragment>
       ))}
     </div>
@@ -53,17 +55,17 @@ function MainDashboard() {
   const columns = [
     {
       name: 'Post Content',
-      selector: 'post_content',
+      selector: (row) => row.post_content,
       sortable: true,
       cell: renderPostContentCell,
     },
-    { name: 'Post Link', selector: 'post_link', sortable: true },
-    { name: 'Post Image', selector: 'post_image', sortable: true },
-    { name: 'User Prediction', selector: 'user_prediction', sortable: true },
-    { name: 'Post Platform', selector: 'post_platform', sortable: true },
+    { name: 'Post Link', selector: (row) => row.post_link, sortable: true },
+    { name: 'Post Image', selector: (row) => row.post_image, sortable: true },
+    { name: 'User Prediction', selector: (row) => row.user_prediction, sortable: true },
+    { name: 'Post Platform', selector: (row) => row.post_platform, sortable: true },
     {
       name: 'Classifier Response',
-      selector: 'classifier_response',
+      selector: (row) => row.classifier_response,
       sortable: true,
     },
   ];
@@ -88,10 +90,12 @@ function MainDashboard() {
         headerRoot.render(<Navbar items={navList} />);
       } else {
         // Fehler beim Logout
-        console.error('Logout fehlgeschlagen:', response.statusText);
+        // console.error('Logout fehlgeschlagen:', response.statusText);
+        UIkit.notification('Logout fehlgeschlagen');
       }
     } catch (error) {
-      console.error('Fehler beim Logout:', error.message);
+      UIkit.notification('Fehler beim Logout:');
+      // console.error('Fehler beim Logout:', error.message);
     }
   };
 
@@ -101,7 +105,7 @@ function MainDashboard() {
     const fileName = 'data';
     const tableToCSV = () => {
       const header = columns.map((column) => column.name).join(',');
-      const rows = tableData.map((row) => columns.map((column) => row[column.selector]).join(','));
+      const rows = tableData.map((row) => columns.map((column) => column.selector(row)).join(','));
       return [header, ...rows].join('\n');
     };
 
@@ -129,7 +133,6 @@ function MainDashboard() {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        // console.error('data', data);
         setTableData(data);
         setLoading(false);
       } catch (error) {
@@ -137,12 +140,11 @@ function MainDashboard() {
         setLoading(false);
       }
     };
-
     fetchData();
-  }, []); // Empty dependency array ensures this effect runs only once, similar to componentDidMount
+  }, []); // Empty dependency array ensures this effect runs only once
 
   if (loading) {
-    return <p>Loading...</p>; // You can add a loading spinner or message here
+    return <p>Loading...</p>;
   }
   /* Dashboard Nav */
   const navListLeftDashboard = [
