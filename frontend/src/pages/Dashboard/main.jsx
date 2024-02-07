@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createRoot } from 'react-dom/client';
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { saveAs } from 'file-saver';
 import apiEndpoints from '../../apiConfig';
+import LeftNav from '../../components/left-nav';
+import Navbar from '../../components/nav';
 
 function MainDashboard() {
   // eslint-disable-next-line no-unused-vars
@@ -24,6 +27,29 @@ function MainDashboard() {
       ))}
     </div>
   );
+
+  const navList = [
+    {
+      id: 'Report',
+      name: 'Report',
+      url: '/report',
+    },
+    {
+      id: 'HateSpeech',
+      name: 'Hate Speech',
+      url: '/hate-speech',
+    },
+    {
+      id: 'AboutUs',
+      name: 'About Us',
+      url: '/about-us',
+    },
+    {
+      id: 'Login',
+      name: 'Login',
+      url: '/login',
+    },
+  ];
 
   const columns = [
     {
@@ -57,6 +83,9 @@ function MainDashboard() {
         setLoggedIn(false);
         localStorage.removeItem('token');
         navigate('/');
+        // Render the Navbar after logout
+        const headerRoot = createRoot(document.getElementById('header'));
+        headerRoot.render(<Navbar items={navList} />);
       } else {
         // Fehler beim Logout
         console.error('Logout fehlgeschlagen:', response.statusText);
@@ -93,7 +122,7 @@ function MainDashboard() {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.error('data', data);
+        // console.error('data', data);
         setTableData(data);
         setLoading(false);
       } catch (error) {
@@ -108,9 +137,16 @@ function MainDashboard() {
   if (loading) {
     return <p>Loading...</p>; // You can add a loading spinner or message here
   }
-
+  /* Dashboard Nav */
+  const navListLeftDashboard = [
+    {
+      name: 'Overview',
+      url: '/dashboard',
+    },
+  ];
   return (
     <div className='dashboard-container' id='dashboard-container' data-uk-grid>
+      <LeftNav items={navListLeftDashboard} />
       <div className='uk-width-expand@m'>
         <div className='dashboard-main-menu-container' data-uk-grid>
           <div className='uk-width-auto@m uk-width-1-1'>

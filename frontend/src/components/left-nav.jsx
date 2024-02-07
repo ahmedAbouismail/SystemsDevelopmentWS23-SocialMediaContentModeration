@@ -11,7 +11,7 @@ function LeftNav({ items }) {
   };
 
   return (
-    <>
+    <div className='uk-width-1-6@l uk-width-1-5@m'>
       <div
         className='uk-background-secondary nav-left-height-responsive'
         data-uk-height-viewport
@@ -29,11 +29,14 @@ function LeftNav({ items }) {
             <div className='uk-width-1-2 uk-width-1-1@m'>
               <nav className='navLeft'>
                 <ul className='dashboard-main-left-menu uk-margin-remove-bottom uk-flex-right uk-visible@m'>
-                  {items.map((item) => (
-                    <li key={item.index}>
-                      <a href={item.url}>{item.name}</a>
-                    </li>
-                  ))}
+                  {items.map((item) => {
+                    const uniqueKey = item.name.replace(/\s+/g, '-').toLowerCase();
+                    return (
+                      <li key={uniqueKey}>
+                        <a href={item.url}>{item.name}</a>
+                      </li>
+                    );
+                  })}
                 </ul>
                 <div className='uk-text-right main-menu-mobile uk-margin-bottom-remove uk-hidden@m'>
                   <a
@@ -61,14 +64,17 @@ function LeftNav({ items }) {
         data-uk-offcanvas
       >
         <ul className='uk-nav uk-nav-default uk-hidden@m'>
-          {items.map((item) => (
-            <li key={item.index}>
-              <a href={item.url}>{item.name}</a>
-            </li>
-          ))}
+          {items.map((item) => {
+            const uniqueKey = item.name.replace(/\s+/g, '-').toLowerCase();
+            return (
+              <li key={uniqueKey}>
+                <a href={item.url}>{item.name}</a>
+              </li>
+            );
+          })}
         </ul>
       </div>
-    </>
+    </div>
   );
 }
 
