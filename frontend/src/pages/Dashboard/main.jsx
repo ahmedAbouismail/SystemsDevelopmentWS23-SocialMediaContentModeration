@@ -198,7 +198,7 @@ function MainDashboard() {
         setInitData(data);
         const updatedData = data.map((item) => ({
           ...item,
-          post_image: item.post_image !== 'NoImage' ? <button type='button' onClick={() => { handleGetImage(item.post_image); }}>Download Image</button> : ' ',
+          post_image: item.post_image !== 'NoImage' && item.post_image !== null ? <button type='button' onClick={() => { handleGetImage(item.post_image); }}>Download Image</button> : ' ',
         }));
         setTableData(updatedData);
         setLoading(false);
