@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import apiEndpoints from '../apiConfig';
 
 /**
- * Report component: Represents the report form on start page / and /report  
+ * Report component: Represents the report form on start page / and /report
  * Manages the submission of reporting text and link forms, empowering users to classify reports.
  * Optionally, users can attach images to reports.
  * @returns {JSX.Element} - JSX for rendering
@@ -45,7 +45,7 @@ function ReportFormComponent() {
   };
 
   /**
-   * handles state of reporting text 
+   * handles state of reporting text
    */
   const handleInputChange = (e) => {
     setFormData({

@@ -6,15 +6,14 @@ import CardsImageSmall from '../components/cards-image-small';
 /**
  * ResponsePage Component: Represents the response page on submitted texts.
  * Loads reponse of classifier
- * @returns {JSX.Element} for rendering 
+ * @returns {JSX.Element} for rendering
  */
 function ResponsePage() {
   const location = useLocation();
   const res = location.state?.response || {};
-  
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []); 
+  }, []);
 
   const isHateSpeech = res['isHateSpeech:'];
   const categoryText = isHateSpeech ? `- ${res.classifierCategory}` : '';

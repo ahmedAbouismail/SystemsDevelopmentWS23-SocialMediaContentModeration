@@ -4,7 +4,7 @@ import ReportFormComponent from '../components/report-form';
 
 /**
  * Renders the ReportFormComponent for submitting reports.
- * @returns {JSX.Element} JSX 
+ * @returns {JSX.Element} JSX
  */
 function ReportPage() {
   return (
