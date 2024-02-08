@@ -3,6 +3,11 @@ import HeroJustText from '../components/hero-just-text';
 import AccordionComponent from '../components/accordion';
 import ContentSection from '../components/content-section';
 
+/**
+ * HateSpeechPage Component: Represents the Hate Speech page.
+ * Provides information about various forms of hate speech, examples, and ways to address it.
+ * @returns {JSX.Element} JSX for rendering the HateSpeechPage component.
+ */
 function HateSpeechPage() {
   const accordionItems = [
     {
@@ -85,14 +90,17 @@ function HateSpeechPage() {
 
   return (
     <>
+      {/* Hero section with just text */}
       <HeroJustText text='Hate Speech' />
-
+      {/* Main content section */}
       <div className='background-pfad-left'>
         <div className='uk-container'>
+          {/* Grid layout for main content */}
           <div
             className='uk-margin-large-top uk-margin-large-bottom uk-child-width-1-1 uk-child-width-1-2@l'
             data-uk-grid
           >
+            {/* Left column - Examples of Hate Speech */}
             <div>
               <div>
                 <p className='small-title-left'>Examples of Hate Speech</p>
@@ -100,6 +108,7 @@ function HateSpeechPage() {
                 <AccordionComponent items={accordionItems} />
               </div>
             </div>
+            {/* Right column - Image */}
             <div className='uk-flex-first uk-flex-last@l'>
               <div className='uk-box-shadow-medium uk-border-rounded uk-background-default'>
                 <img
