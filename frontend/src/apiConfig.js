@@ -7,7 +7,7 @@ const apiEndpoints = {
   getDashboard: `${apiBaseUrl}/dashboard`,
   getDashboardLogout: `${apiBaseUrl}/dashboard/logout`,
   postLogin: `${apiBaseUrl}/dashboard/login`,
+  downloadImage: `${apiBaseUrl}/dashboard/download`,
 };
-
 
 export default apiEndpoints;

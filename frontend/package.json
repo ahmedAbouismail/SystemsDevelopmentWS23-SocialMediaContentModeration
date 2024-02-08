@@ -13,12 +13,14 @@
     "datatables.net": "^1.13.8",
     "file-saver": "^2.0.5",
     "jquery": "^3.7.1",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-data-table-component": "^7.5.4",
     "react-dom": "^18.2.0",
     "react-router": "^6.21.1",
     "react-router-dom": "^6.21.1",
     "react-scripts": "^5.0.1",
+    "styled-components": "^5.3.11",
     "uikit": "^3.17.8",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
@@ -46,5 +48,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0"
   }
 }

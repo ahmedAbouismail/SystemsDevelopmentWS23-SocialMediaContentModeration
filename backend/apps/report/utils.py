@@ -50,15 +50,12 @@ def GetImageFromMinio(id: str):
         secret_key=settings.MINIO_SECRET,
         secure=False,
         )
-    image_data = minio_client.get_object('images', id)
-    format = id.split('.')[1].upper
-
-    image_bytes = io.BytesIO()
-    for data in image_data.stream(32 * 1024):
-        image_bytes.write(data)
-
-    image_bytes.seek(0)
-    return image_bytes
+    try:
+        image = minio_client.get_object('images', id)
+        return image
+    except S3Error as err:
+        print(f"Error: {err}")
+        return None
 
 
 # Report -------
@@ -111,7 +108,7 @@ def classify_report(content):
 def create_prediction_str(predictions):
     if predictions != None:
         pred_list = ''
-        pred_list = ', '.join(predictions)
+        pred_list = '/ '.join(predictions)
     else:
         pred_list = None
     return pred_list

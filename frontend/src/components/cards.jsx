@@ -1,26 +1,42 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class CardsIcon extends Component {
-    state = {}
-    render() {
-        return <>
-            <div>
-                <div className="uk-card uk-box-shadow-medium uk-border-rounded  uk-background-default">
-                    {this.props.number && <div data-uk-grid><div className="uk-width-auto"><div className="card-number"><p>{this.props.number}</p></div></div></div>}
-                    <div className="uk-padding-large uk-padding-remove-top">
-
-                        <div className="icon uk-text-center uk-margin-small-bottom">
-                            <img src={"/assets/img/" + this.props.image} className="card-icon-top" alt={this.props.alt} />
-                        </div>
-                        <div className="text uk-text-center"><p>{this.props.text}</p></div>
-                    </div>
-
-
-                </div>
+// eslint-disable-next-line object-curly-newline
+function CardsIcon({ number, image, description, text }) {
+  return (
+    <div>
+      <div className='uk-card uk-box-shadow-medium uk-border-rounded  uk-background-default'>
+        {number && (
+          <div data-uk-grid>
+            <div className='uk-width-auto'>
+              <div className='card-number'>
+                <p>{number}</p>
+              </div>
             </div>
-        </>
-
-    }
+          </div>
+        )}
+        <div className='uk-padding-large uk-padding-remove-top'>
+          <div className='icon uk-text-center uk-margin-small-bottom'>
+            <img
+              src={`/assets/img/${image}`}
+              className='card-icon-top'
+              alt={description}
+            />
+          </div>
+          <div className='text uk-text-center'>
+            <p>{text}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
+
+CardsIcon.propTypes = {
+  number: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+};
 
 export default CardsIcon;
