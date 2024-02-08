@@ -1,6 +1,10 @@
 import { React } from 'react';
 import HeroJustText from '../components/hero-just-text';
 
+/**
+ * NoPage Component: Represents the page for 404 errors.
+ * @returns {JSX.Element} - JSX for rendering the NoPage component.
+ */
 function NoPage() {
   return (
     <>
