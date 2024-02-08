@@ -43,7 +43,19 @@ const navList = [
   },
 ];
 
+/**
+ * Template Component
+ * This component sets up the main structure of the React application with routing.
+ * It includes the application layout, navigation, and routes using react-router-dom.
+ * The Template component uses createRoot to render the Navbar and the main application content.
+ * It also handles authentication and remembers user login status.
+ * @returns JSX element
+ */
 function Template() {
+  /**
+   * Function to get the current URL path
+   * @returns {string} Current URL path
+   */
   const getCurrentPath = () => window.location.pathname;
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [setRememberMe] = useState(false);

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * CardsImageSmall Component: Represents a card with an image, alt text, and name.
+ */
 class CardsImageSmall extends Component {
   constructor(props) {
     super(props);

@@ -3,12 +3,20 @@ import CardsIcon from './components/cards';
 import HeroImage from './components/hero-image';
 import ReportFormComponent from './components/report-form';
 
+/**
+ * Array of texts for the typing effect in the HeroImage component.
+ * @type {Array<string>}
+ */
 const heroTextTyping = [
   'United Against Hate, Mute the Dissonance',
   'Stand for Respect, Speak Against Hate.',
   'Erase Hate, Embrace Unity.',
 ];
 
+/**
+ * App Component: Main application component representing the homepage of the NoHateNet platform.
+ * @returns {JSX.Element} - JSX for rendering the App component.
+ */
 function App() {
   return (
     <>

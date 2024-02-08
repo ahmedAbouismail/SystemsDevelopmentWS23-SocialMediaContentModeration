@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * HeroJustText Component: Represents a hero section with just text.
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.text - The text content of the hero section.
+ * @returns {JSX.Element} - JSX for rendering the HeroJustText component.
+ */
 function HeroJustText({ text }) {
   return (
     <div className='curly-overlay-header uk-margin-xlarge-bottom uk-background-secondary'>
