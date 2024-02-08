@@ -1,8 +1,9 @@
-from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import MultiPartParser, FormParser
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 from .serializers import *
 from .utils import *
@@ -29,6 +30,25 @@ def get_reports(request):
     else:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
+@swagger_auto_schema(
+    method='post',
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        required=['post_content'],
+        properties={
+            'post_content': openapi.Schema(type=openapi.TYPE_STRING),
+            'post_link': openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_URI, default=""),
+            'image_id': openapi.Schema(type=openapi.TYPE_STRING),
+            'user_prediction': openapi.Schema(type=openapi.TYPE_STRING),
+            'platform': openapi.Schema(type=openapi.TYPE_STRING),
+            'classifier_response': openapi.Schema(type=openapi.TYPE_STRING),
+        },
+    ),
+    responses={
+        201: 'Created - Report submitted successfully',
+        400: 'Bad Request - Missing required fields or invalid data',
+    }
+)
 @api_view(['POST'])
 def post_report(request):
     """
@@ -44,20 +64,13 @@ def post_report(request):
     Returns:
         Response: A JSON response indicating the success or failure of the report creation.
     """
-    # Create list with data
-    report = {'post_content': request.data['post_content']}
-
-    # LINK
-    report['post_link'] = request.data['post_link']
-
-    # GET IMAGE ID
-    report['post_image'] = request.data['image_id']
-
-    # USER PREDICTION
-    report['user_prediction'] = create_prediction_str(request.data['user_prediction'])
-
-    # PLATFORM 
-    report['post_platform'] = get_platform_id(request.data['platform'])
+    report = {
+        'post_content': request.data['post_content'],
+        'post_link': request.data['post_link'],
+        'post_image': request.data['image_id'],
+        'user_prediction': create_prediction_str(request.data['user_prediction']),
+        'post_platform': get_platform_id(request.data['platform']),
+    }
 
     # CLASSIFIER    
     hate_class_id, class_label = classify_report(request.data['post_content'].replace('"', ''))
@@ -98,7 +111,13 @@ def post_report(request):
         print('Report nicht gespeichert')
         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+@swagger_auto_schema(
+    method='post',
+    responses={
+        201: 'Created - Image uploaded successfully',
+        200: 'OK - Image not found or not uploaded'
+    }
+)
 @api_view(['POST'])
 @parser_classes([MultiPartParser, FormParser])
 def post_screenshot(request):
@@ -125,19 +144,32 @@ def post_screenshot(request):
         if file and file != 'undefined':
             # Handle image upload
             id = UploadImageToMinio(file)
+            response = {
+                'image_id': id
+            }
+            return Response(data=response, status=status.HTTP_201_CREATED)
         else:
             print('File not found')
-        response = {
-            'image_id': id
-        }
-        return Response(data=response, status=status.HTTP_201_CREATED)
-    else:
-        response = {
-            'image_id': id
-        }
-        return Response(data=response, status=status.HTTP_200_OK)
-    
+    response = {
+        'image_id': id
+    }
+    return Response(data=response, status=status.HTTP_200_OK)
 
+
+@swagger_auto_schema(
+    method='post',
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        required=['post_link'],
+        properties={
+            'post_link': openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_URI)
+        }
+    ),
+    responses={
+        201: 'Created',
+        400: 'Bad Request'
+    }
+)
 @api_view(['POST'])
 def post_report_link(request):
     """
@@ -155,7 +187,7 @@ def post_report_link(request):
     Raises:
         HTTP_400_BAD_REQUEST: If the request data is invalid.
     """
-    print("Link REQUST", request.data)
+    print("Link REQUEST", request.data)
     report = {'post_link': request.data['post_link']}
     # post_content can not be empty, because it is a required field in the serializer
     report['post_content'] = '-'
