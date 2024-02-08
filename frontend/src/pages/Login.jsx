@@ -4,6 +4,14 @@ import UIkit from 'uikit';
 import PropTypes from 'prop-types';
 import apiEndpoints from '../apiConfig';
 
+/**
+ * LoginInput Component: Represents an input field in the login form.
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.type - The type of the input field ('text' or 'password').
+ * @param {string} props.label - The label for the input field.
+ * @param {string} props.id - The identifier for the input field.
+ * @returns {JSX.Element} - JSX for rendering the LoginInput component.
+ */
 function LoginInput({ type, label, id }) {
   const [value, setValue] = useState('');
 
@@ -38,6 +46,12 @@ function LoginInput({ type, label, id }) {
   );
 }
 
+/**
+ * Login Component: Represents the login page.
+ * @param {Object} props - The properties passed to the component.
+ * @param {function} props.setAuthenticated - The function to set the authentication state.
+ * @returns {JSX.Element} - JSX for rendering the Login component.
+ */
 function Login({ setAuthenticated }) {
   const [loginError, setLoginError] = useState(false);
   // eslint-disable-next-line no-unused-vars

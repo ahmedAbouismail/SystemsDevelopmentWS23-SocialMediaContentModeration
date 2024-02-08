@@ -3,6 +3,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * AccordionComponent gi: Represents an accordion component
+ * to display a list of items with titles and content.
+ * @param {Object} props - The component properties.
+ * @param {Array} props.items - An array of accordion items.
+ * @returns {JSX.Element} - JSX for rendering the AccordionComponent.
+ */
 function AccordionComponent({ items }) {
   return (
     <ul uk-accordion='multiple: true'>

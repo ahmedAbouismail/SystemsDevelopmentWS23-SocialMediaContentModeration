@@ -3,6 +3,19 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * TypingEffect Component: Simulates a typing effect with options for
+ * direction, repetition, and speed.
+ * @param {Object} props - The properties passed to the component.
+ * @param {string | Array<string>} props.text - The text content or an
+ * array of text content to display.
+ * @param {string} props.direction - The direction of the typing effect
+ * ('forward', 'backward', or 'both').
+ * @param {number} props.repeat - The number of times to repeat the typing effect.
+ * @param {number} props.speed - The speed of the typing effect (in milliseconds).
+ * @param {string} props.classes - Additional CSS classes for styling the component.
+ * @returns {JSX.Element} - JSX for rendering the TypingEffect component.
+ */
 function TypingEffect({ text, direction, repeat, speed, classes }) {
   const textArr = Array.isArray(text) ? text : [text];
   // console.log(textArr);

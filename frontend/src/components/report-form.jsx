@@ -6,12 +6,18 @@ import UIkit from 'uikit';
 import { useNavigate } from 'react-router-dom';
 import apiEndpoints from '../apiConfig';
 
+/**
+ * Report component: Represents the report form on start page / and /report
+ * Manages the submission of reporting text and link forms, empowering users to classify reports.
+ * Optionally, users can attach images to reports.
+ * @returns {JSX.Element} - JSX for rendering
+ */
 function ReportFormComponent() {
   const navigate = useNavigate();
   const [isLinkValid, setIsLinkValid] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  // manage form data
+  // State to manage form data
   const [formData, setFormData] = useState({
     post_content: '',
     post_link: '',
@@ -22,7 +28,7 @@ function ReportFormComponent() {
     usermail: '',
   });
 
-  // link
+  // State to manage link
   const [link, setLink] = useState({
     post_link: '',
   });
@@ -38,6 +44,9 @@ function ReportFormComponent() {
     return acceptedImageTypes.includes(fileType);
   };
 
+  /**
+   * handles state of reporting text
+   */
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
@@ -45,6 +54,10 @@ function ReportFormComponent() {
     });
   };
 
+  /**
+   * Sets the user classification if it exists.
+   * @param {boolean} predictionInput - Indicates if the classification is checked or not.
+   */
   const handleClassificationChange = (event) => {
     const { value } = event.target;
     const isChecked = event.target.checked;
@@ -64,10 +77,18 @@ function ReportFormComponent() {
     }
   };
 
+  /**
+   * Handles the selection of platform options based on user interaction.
+   * @param {*} event user interaction
+   */
   const handleSourceChange = (event) => {
     setFormData({ ...formData, platform: event.target.value });
   };
 
+  /**
+   * Validates the provided link in the form and sets the state of formData.
+   * @param {string} link - The link to be validated.
+   */
   const handlePostLinkChange = (event) => {
     const linkValue = event.target.value;
     setIsLinkValid(isValidLink(linkValue));
@@ -75,6 +96,11 @@ function ReportFormComponent() {
     setFormData({ ...formData, post_link: event.target.value });
   };
 
+  /**
+   * Handles file upload and updates state in formData.
+   * Only accepts image types.
+   * @param {Object} event - The event containing the uploaded image.
+   */
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
 
@@ -85,6 +111,14 @@ function ReportFormComponent() {
     }
   };
 
+  /**
+   * Handles the submission of a report, including text and an optional image attachment.
+   * If the report text is empty, focuses on the text area and prevents further execution.
+   * Uploads the attached image to the server.
+   * Sends a request to the API to post the report with the attached image ID.
+   * Navigates to the response page upon successful submission.
+   * @param {Event} event - The event object representing the form submission.
+   */
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -135,6 +169,12 @@ function ReportFormComponent() {
       });
   };
 
+  /**
+   * Handles the submission of a link.
+   * Validates the submitted link
+   * Sends a request to the API to post the link.
+   * @param {Event} event - The event object representing the form submission.
+   */
   const handleLinkSubmit = async (event) => {
     event.preventDefault();
     if (link.post_link.trim() === '') {

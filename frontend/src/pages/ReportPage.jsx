@@ -2,6 +2,10 @@ import { React } from 'react';
 import HeroJustText from '../components/hero-just-text';
 import ReportFormComponent from '../components/report-form';
 
+/**
+ * Renders the ReportFormComponent for submitting reports.
+ * @returns {JSX.Element} JSX
+ */
 function ReportPage() {
   return (
     <>

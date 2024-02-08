@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes as faX } from '@fortawesome/free-solid-svg-icons';
 
+/**
+ * LeftNav Component: Represents a responsive left navigation menu.
+ * @param {Object} props - The properties passed to the component.
+ * @param {Array} props.items - An array of objects representing each navigation item.
+ * @param {string} props.items[].url - The URL for the navigation item.
+ * @param {string} props.items[].name - The text content of the navigation item.
+ * @returns {JSX.Element} - JSX for rendering the LeftNav component.
+ */
 function LeftNav({ items }) {
   const [isOffcanvasOpen, setIsOffcanvasOpen] = useState(false);
 

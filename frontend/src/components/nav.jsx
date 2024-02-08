@@ -4,6 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 
+/**
+ * Navbar Component: Represents a responsive navigation bar.
+ * @param {Object} props - The properties passed to the component.
+ * @param {Array} props.items - An array of objects representing each navigation item.
+ * @param {string} props.items[].id - The unique identifier for the navigation item.
+ * @param {string} props.items[].url - The URL for the navigation item.
+ * @param {string} props.items[].name - The text content of the navigation item.
+ * @returns {JSX.Element} - JSX for rendering the Navbar component.
+ */
 class Navbar extends Component {
   constructor(props) {
     super(props);

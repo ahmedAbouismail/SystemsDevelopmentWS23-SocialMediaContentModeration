@@ -2,6 +2,11 @@ import { React } from 'react';
 import HeroJustText from '../components/hero-just-text';
 import CardsImageSmall from '../components/cards-image-small';
 
+/**
+ * AboutUsPage Component: Represents the About Us page.
+ * Displays information about the platform, its mission, values, and partners.
+ * @returns {JSX.Element} JSX for rendering the AboutUsPage component.
+ */
 function AboutUsPage() {
   return (
     <>

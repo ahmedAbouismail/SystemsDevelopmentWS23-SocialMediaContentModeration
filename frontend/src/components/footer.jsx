@@ -1,6 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 
+/**
+ * Footer Component: Represents the footer section of the website.
+ * @returns {JSX.Element} - JSX for rendering the Footer component.
+ */
 function Footer() {
   return (
     <footer className='curly-overlay'>

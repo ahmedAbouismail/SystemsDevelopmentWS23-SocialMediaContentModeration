@@ -2,6 +2,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * HeroSlider Component: Represents a slider with images and navigation buttons.
+ * @param {Object} props - The properties passed to the component.
+ * @param {Array} props.items - An array of objects representing each slide in the slider.
+ * @param {string} props.items[].name - The image filename for the slide.
+ * @param {string} props.items[].caption - The caption text for the slide.
+ * @param {string} props.items[].buttonURL - The URL for the button on the slide.
+ * @param {string} props.items[].buttonName - The text content of the button on the slide.
+ * @returns {JSX.Element} - JSX for rendering the HeroSlider component.
+ */
 function HeroSlider({ items }) {
   return (
     <div className='main-container-slider uk-position-relative uk-margin-large-bottom'>

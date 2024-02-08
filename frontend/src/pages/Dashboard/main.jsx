@@ -11,6 +11,13 @@ import apiEndpoints from '../../apiConfig';
 import LeftNav from '../../components/left-nav';
 import Navbar from '../../components/nav';
 
+/**
+ * MainDashboard Component: Represents the main dashboard of the application.
+ * Manages user login, fetches and displays data, handles user actions like logout and CSV export.
+ * Utilizes state variables, effect hooks, and UI components such as DataTable.
+ * @returns {JSX.Element} JSX for rendering the MainDashboard component.
+ */
+
 function MainDashboard() {
   // eslint-disable-next-line no-unused-vars
   const [isLoggedIn, setLoggedIn] = useState(true);
@@ -19,6 +26,12 @@ function MainDashboard() {
   const [initData, setInitData] = useState([]);
   const navigate = useNavigate();
 
+  /**
+   * Renders the content of the "Post Content" cell in DataTable.
+   * Breaks lines based on newline characters in the post content.
+   * @param {Object} row - Data row for a specific post.
+   * @returns {JSX.Element} JSX for rendering post content in DataTable cell.
+   */
   const renderPostContentCell = (row) => (
     <div style={{ whiteSpace: 'normal', wordWrap: 'break-word' }}>
       {row.post_content.split('\n').map((line, index) => (
@@ -71,6 +84,11 @@ function MainDashboard() {
     },
   ];
 
+  /**
+   * Handles user logout by sending a request to the server and updating the UI accordingly.
+   * Displays notifications in case of success or failure.
+   * @returns {void}
+   */
   const handleLogout = async () => {
     try {
       const response = await fetch(apiEndpoints.getDashboardLogout, {
@@ -100,6 +118,11 @@ function MainDashboard() {
     }
   };
 
+  /**
+   * Exports the DataTable content to CSV file.
+   * Converts the data to CSV format and triggers a file download.
+   * @returns {void}
+   */
   const handleExportCSV = () => {
     const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
     const fileExtension = '.csv';
@@ -118,6 +141,13 @@ function MainDashboard() {
     exportToCSV();
   };
 
+  /**
+   * Fetches and downloads an image from the server based on the provided ID.
+   * Converts base64 image data to a Blob and triggers the image download.
+   * Displays a notification in case of an error.
+   * @param {string} id - ID of the image to be fetched and downloaded.
+   * @returns {void}
+   */
   async function handleGetImage(id) {
     try {
       const url = apiEndpoints.downloadImage.concat('/', id);
@@ -144,8 +174,13 @@ function MainDashboard() {
     }
   }
 
+  /**
+   * Effect hook to fetch data when the component mounts.
+   * Initiates a request to retrieve dashboard data and updates state variables accordingly.
+   * Handles loading state and errors during the data fetch.
+   * @returns {void}
+   */
   useEffect(() => {
-    // Fetch data when the component mounts
     const fetchData = async () => {
       try {
         const response = await fetch(apiEndpoints.getDashboard, {
@@ -163,7 +198,7 @@ function MainDashboard() {
         setInitData(data);
         const updatedData = data.map((item) => ({
           ...item,
-          post_image: item.post_image !== 'NoImage' ? <button type='button' onClick={() => { handleGetImage(item.post_image); }}>Download Image</button> : ' ',
+          post_image: item.post_image !== 'NoImage' && item.post_image !== null ? <button type='button' onClick={() => { handleGetImage(item.post_image); }}>Download Image</button> : ' ',
         }));
         setTableData(updatedData);
         setLoading(false);

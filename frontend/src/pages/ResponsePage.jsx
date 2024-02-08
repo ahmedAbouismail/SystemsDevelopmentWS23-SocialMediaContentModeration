@@ -3,14 +3,17 @@ import { React, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import HeroJustText from '../components/hero-just-text';
 import CardsImageSmall from '../components/cards-image-small';
-
+/**
+ * ResponsePage Component: Represents the response page on submitted texts.
+ * Loads reponse of classifier
+ * @returns {JSX.Element} for rendering
+ */
 function ResponsePage() {
   const location = useLocation();
   const res = location.state?.response || {};
-
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []); // empty dependency array ensures to only run effect when the component mounts
+  }, []);
 
   const isHateSpeech = res['isHateSpeech:'];
   const categoryText = isHateSpeech ? `- ${res.classifierCategory}` : '';

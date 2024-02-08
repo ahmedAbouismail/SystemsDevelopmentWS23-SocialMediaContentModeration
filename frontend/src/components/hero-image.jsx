@@ -2,6 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TypingEffect from './typing-effect';
 
+/**
+ * HeroImage Component: Represents the hero section with an image, text, and button.
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.buttonName - The text displayed on the button.
+ * @param {string} props.image - The image source for the hero section.
+ * @param {string} props.buttonURL - The URL the button navigates to.
+ * @param {string[]} props.text - An array of strings for the typing effect text.
+ * @param {string} props.alt - The alt text for the hero image.
+ * @returns {JSX.Element} - JSX for rendering the HeroImage component.
+ */
 function HeroImage({
   buttonName,
   image,
