@@ -7,13 +7,18 @@ class Platform(models.Model):
 
     def __str__(self) -> str:
         return self.platform_name
-
+    class Meta:
+        app_label = "apps.report"
 
 class Label(models.Model):
     label_name = models.CharField(max_length=255)
 
     def __str__(self) -> str:
         return self.label_name
+    
+    class Meta:
+        app_label = "apps.report"
+
 
 
 class ClassifierResponse(models.Model):
@@ -22,6 +27,10 @@ class ClassifierResponse(models.Model):
 
     def __str__(self) -> str:
         return f"{self.Label.label_name if self.Label else 'No Label'} at {self.timestamp}"
+
+    class Meta:
+        abstract: True
+        
 
 
 class Post(models.Model):
@@ -32,6 +41,9 @@ class Post(models.Model):
     post_platform = models.ForeignKey(Platform, on_delete=models.SET_NULL, null=True, blank=True)
     classifier_response = models.ForeignKey(ClassifierResponse, on_delete=models.SET_NULL, null=True)
     timestamp = models.DateTimeField().auto_created
-
+    
     def __str__(self) -> str:
         return f"Posted on {self.post_platform.platform_name if self.post_platform else 'None'} at {self.timestamp}"
+
+    class Meta:
+        app_label = "apps.report"

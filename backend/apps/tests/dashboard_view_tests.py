@@ -1,7 +1,6 @@
-# In dashboard/tests/test_views.py and report/tests/test_views.py
 from rest_framework.test import APIClient
 from django.test import TestCase
-from .tests.factories import UserFactory, PlatformFactory, LabelFactory, ClassifierResponseFactory
+from .factories import UserFactory, PlatformFactory, LabelFactory, ClassifierResponseFactory
 
 
 class DashboardViewTest(TestCase):
